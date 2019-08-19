@@ -1,12 +1,12 @@
 # spot4zik-core
 
-A new project soon... its goal is suspense for now ;-)
+A new project soon... its goal is a suspense for now ;-)
 
 ## API usage
 
 ### zik-resources
 
-A zik-resource is a resource saved and used in spot4zik.  
+A zik-resource is a Web resource saved and used in spot4zik.  
 It looks like:
 ```json
 {
@@ -31,20 +31,21 @@ It looks like:
 
 #### Create a zik-resource (`POST /zik-resources`)
 
-Your first usage will be to save in spot4zik a resource you found on the web.  
-So, this resource has an url, and this url is the only field mandatory to create a zik-resource.  
-The operation to do: `POST /zik-resources`  
-In the body of the request, you'll have at least an url, as we said but, a musician resource is about a song, so it's better to add an artist and a title of a song:
+Your first usage will be to save in spot4zik a resource you found on the web to play music (like a tab, a tutorial, etc).  
+The operation to use: `POST /zik-resources`    
+The resource has at least an url, and to use it easily a title. These two fields are the mandatory fields to create a zik-resource. 
+So, an example of the body of your request could be:
 ```json
 {
   "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
-  "artist": "Tool",
   "title": "Sober"
 }
 ```
+But, you can see above in the example of a whole zik-resource, you can add other information, like an artist (of a song), and some tags.  
+The tags are here to let you free to add information you need. But you can't add more than 10 tags.  
 
 **Responses**    
 In addition to the usual `40*` and (hope not) `50*` responses, you'll have:  
  
-- `201 Created` if everything is ok, and so your zik-resource is created.
+- `201 Created` if everything is ok, and so your zik-resource has been created.
 - `401 Unauthorized` if you are not logged in.
