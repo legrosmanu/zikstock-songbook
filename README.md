@@ -42,6 +42,10 @@ It looks like:
     {
       "label": "difficulty",
        "value": "intermediate"
+    },
+    {
+      "label": "",
+      "value": "My personal tag"
     }
   ],
   "creation_date": "2019-08-19T01:33:39Z",
