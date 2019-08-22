@@ -9,6 +9,14 @@ So what is the value to use spot4zik? It's because, you'll be able to share easi
 
 To be continued...
 
+## How to run it
+
+When you are in the root folder of the Dockerfile, first, you have to create the docker image:  
+`docker build -t=spot4zik-core .`  
+After that, you just have to run it:  
+`docker run -p 5000:80 spot4zik-core`
+If you did no changes, you'll be able to use it on http://localhost:5000/zik-resources. 
+
 ## API usage
 
 ### Errors  
