@@ -1,0 +1,21 @@
+{
+  "name": "spot4zik-core",
+  "version": "0.0.1",
+  "description": "spot4zik is a platform for musicians. spot4zik-core is the repo for the main functionalities, with a Web API.",
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Emmanuel LEGROS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legrosmanu/spot4zik-core.git"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^6.2.0"
+  }
+}
