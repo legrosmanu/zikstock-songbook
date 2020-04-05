@@ -11,16 +11,10 @@
     "url": "https://github.com/legrosmanu/spot4zik-core.git"
   },
   "scripts": {
-    "start": "node src/index.js",
-    "test": "mocha --timeout 10000"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "@godaddy/terminus": "^4.2.0",
     "express": "^4.17.1"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "mocha": "^6.2.0"
   }
 }
