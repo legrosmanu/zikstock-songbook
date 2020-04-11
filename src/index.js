@@ -2,12 +2,18 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const bodyParser = require('body-parser');
-const healthCheckConfig = require('./health-check-config.js');
+const healthCheckConfig = require('./config/health-check-config.js');
 
 app.use(bodyParser.json()); // for parsing application/json
 
+// API defintions
+const ZikResourcesAPI = require('./api/zik-resources-api');
+zikResourcesAPI = new ZikResourcesAPI(app);
+zikResourcesAPI.setRoutes();
+
+// Run the server
 const server = http.createServer(app);
 healthCheckConfig.createHealthCheck(server);
-server.listen(process.env.PORT || 3000);
-
-module.exports = { app, server };
+server.listen(process.env.PORT || 3000, () => {
+    console.log('The spot4zik-core is running.');
+});
