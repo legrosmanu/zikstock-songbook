@@ -7,7 +7,7 @@ const healthCheckConfig = require('./config/health-check-config.js');
 app.use(bodyParser.json()); // for parsing application/json
 
 // API defintions
-const ZikResourcesAPI = require('./api/zik-resources-api');
+const ZikResourcesAPI = require('./api/zik-resource-api');
 zikResourcesAPI = new ZikResourcesAPI(app);
 zikResourcesAPI.setRoutes();
 

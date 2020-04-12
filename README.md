@@ -26,7 +26,7 @@ The example of an error below shows you the format of the error you'll always ha
 ```json
 {
   "code": "403-1",
-  "more_info" : "http://a-link-to-the-doc-of-this-error",
+  "info" : "http://a-link-to-the-doc-of-this-error",
   "message" : "You can't delete a zik-resource you didn't create"
 }
 ```  
@@ -58,8 +58,8 @@ It looks like:
       "value": "My personal tag"
     }
   ],
-  "creation_date": "2019-08-19T01:33:39Z",
-  "added_by": "legrosmanu"
+  "creationDate": "2019-08-19T01:33:39Z",
+  "addedBy": "legrosmanu"
 }
 ```
 
