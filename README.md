@@ -14,7 +14,7 @@ To be continued...
 When you are in the root folder of the Dockerfile, first, you have to create the docker image:  
 `docker build -t=spot4zik-core .`  
 After that, you just have to run it:  
-`docker run -p 3000:3000 spot4zik-core`  
+`docker-compose up`  
 If you did no changes, you'll be able to use it on <http://localhost:3000/zik-resources.>
 
 ## API usage
@@ -40,7 +40,7 @@ It looks like:
 
 ```json
 {
-  "id": "e4c44f7c-ee6a-40e8-a0cf-5ff67e1504ab",
+  "_id": "e4c44f7c-ee6a-40e8-a0cf-5ff67e1504ab",
   "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
   "artist": "Tool",
   "title": "Sober",
