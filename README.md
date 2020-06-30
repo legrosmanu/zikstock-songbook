@@ -14,7 +14,7 @@ To be continued...
 When you are in the root folder of the Dockerfile, first, you have to create the docker image:  
 `docker build -t=spot4zik-core .`  
 After that, you just have to run it:  
-`docker-compose up`  
+`docker-compose up -V`  
 If you did no changes, you'll be able to use it on <http://localhost:3000/zik-resources.>
 
 ## API usage
@@ -26,7 +26,6 @@ The example of an error below shows you the format of the error you'll always ha
 ```json
 {
   "code": "403-1",
-  "info" : "http://a-link-to-the-doc-of-this-error",
   "message" : "You can't delete a zik-resource you didn't create"
 }
 ```  
