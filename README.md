@@ -1,9 +1,9 @@
 # spot4zik-core
 
 spot4zik is a platform to help the musicians to play music.  
-And because spot4zik is very new, we propose only one functionality: **save in spot4zik the musical resources you need to play music**.  
+And because spot4zik is very new, we propose only one functionality for now: **save in spot4zik the musical resources you need to play music**.  
 
-A musical resource is a Web link to a tab, tutorial, movies, all you need to play music alone or together.  
+A musical resource is a Web link to a tablature, tutorial, movies, all you need to play music alone or together.  
 So you'll find in one place all the Web links you saved to play music. But, you certainly already have them saved in your browser. Isn't it?  
 So what is the value to use spot4zik? It's because, you'll be able to share easily all your musical resources with your friends, and it's only a beginning.  
 
@@ -53,7 +53,7 @@ It looks like:
        "value": "intermediate"
     },
     {
-      "label": "",
+      "label": "to learn",
       "value": "My personal tag"
     }
   ],
@@ -91,11 +91,11 @@ The tags are here to let you free to add information you need. But you can't add
 
 After creating some zik-resources, you'll want to get them.  
 To get your zik-resources, you just have to do a `GET /zik-resources?added-by={your-username}`.
-Of course, you have to replace `you-username` by your spot4zik username, but you can also get the zik-resources of another user for example to see what learn if you want to play with him.
+Of course, you have to replace `you-username` by your spot4zik username, but you can also get the zik-resources of another user for example to see what to learn if you want to play with her/him.
 
 ##### Responses
 
-- `200 OK` with the array of the zik-resources in the body or an empty array if no zik-resources has been found.
+- `200 OK` with the array of the zik-resources in the body or an empty array if no zik-resource has been found.
 
 #### Get a zik-resource (`GET /zik-resources/{id}`)
 
