@@ -1,8 +1,14 @@
 const express = require('express');
-const app = express();
-const port = 3000;
-
 const ZikResourceRoutes = require('./api/zik-resource-routes');
-const zikResourcesRoutes = new ZikResourceRoutes(app);
 
-module.exports = app;
+class Server {
+
+    constructor() {
+        this.express = express();
+        this.zikResourceRoutes = new ZikResourceRoutes(this.express);
+        this.zikResourceRoutes.setRoutes();
+    }
+
+}
+
+module.exports = new Server().express;
