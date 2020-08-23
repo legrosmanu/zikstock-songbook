@@ -1,15 +1,17 @@
 {
   "name": "spot4zik-core",
   "version": "1.0.0",
-  "main": "./src/main/server.js",
+  "main": "./src/index.js",
   "desciption": "spot4zik-core is proposing the web API for the main functionnalities of spot4zik.",
   "repository": "https://github.com/legrosmanu/spot4zik-core.git",
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest --detectOpenHandles",
+    "start": "node ./src/index.js"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.2",
     "jest": "^26.4.0",
     "supertest": "^4.0.2"
   },
@@ -18,6 +20,7 @@
     "yarn": "1.x"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^3.6.0"
   }
 }
