@@ -1,4 +1,4 @@
-class ZikResourceRoutes {
+class ZikResourceApi {
 
     constructor(app) {
         this.app = app;
@@ -29,4 +29,4 @@ class ZikResourceRoutes {
 
 }
 
-module.exports = ZikResourceRoutes;
+module.exports = ZikResourceApi;
