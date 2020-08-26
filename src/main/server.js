@@ -1,11 +1,11 @@
 const express = require('express');
-const ZikResourceRoutes = require('./api/zik-resource-routes');
+const ZikResourceApi = require('./api/zik-resource-api');
 
 class Server {
 
     constructor() {
         this.express = express();
-        this.zikResourceRoutes = new ZikResourceRoutes(this.express);
+        this.zikResourceRoutes = new ZikResourceApi(this.express);
         this.zikResourceRoutes.setRoutes();
     }
 
