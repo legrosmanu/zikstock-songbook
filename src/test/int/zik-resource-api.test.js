@@ -4,7 +4,7 @@ const MongoClient = require('mongodb');
 
 let connection = null;
 
-describe('zik-resource-routes', () => {
+describe('zik-resource-api', () => {
 
   beforeAll(async () => {
     connection = await MongoClient.connect(process.env.MONGO_URL, {
