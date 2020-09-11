@@ -1,4 +1,5 @@
 const ZikStockError = require('../helpers/zik-stock-error');
+const ZikResource = require('../dto/zik-resource');
 
 class ZikResourceBlo {
 
@@ -7,7 +8,9 @@ class ZikResourceBlo {
     }
 
     async createZikResource(data) {
+        let zikResource = new ZikResource();
         this.checkValidData(data);
+        return zikResource;
     }
 
     checkValidData(data) {

@@ -7,7 +7,7 @@
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --detectOpenHandles",
+    "test": "jest --watchAll",
     "start": "node ./src/index.js"
   },
   "devDependencies": {
@@ -16,7 +16,6 @@
     "supertest": "^4.0.2"
   },
   "engines": {
-    "node": "14.8.x",
     "yarn": "1.x"
   },
   "dependencies": {
