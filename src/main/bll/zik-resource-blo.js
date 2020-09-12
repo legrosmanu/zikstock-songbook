@@ -8,9 +8,13 @@ class ZikResourceBlo {
     }
 
     async createZikResource(data) {
-        let zikResource = new ZikResource();
-        this.checkValidData(data);
-        return zikResource;
+        try {
+            let zikResource = new ZikResource(data);
+            this.checkValidData(data);
+            return zikResource;
+        } catch (error) {
+            throw error;
+        }
     }
 
     checkValidData(data) {
