@@ -12,8 +12,7 @@
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.2",
-    "jest": "^26.4.0",
-    "supertest": "^4.0.2"
+    "jest": "^26.4.0"
   },
   "engines": {
     "yarn": "1.x"

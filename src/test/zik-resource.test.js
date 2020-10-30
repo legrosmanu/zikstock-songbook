@@ -62,7 +62,7 @@ describe('zik-resource', () => {
         expect(data1.equals(data2)).toBe(false);
     });
 
-    it('should not be equals even if on tags are differents', () => {
+    it('should not be equals only because tags are differents', () => {
         let data1 = new ZikResource({
             "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
             "artist": "Tool",

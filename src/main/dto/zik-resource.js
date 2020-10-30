@@ -8,32 +8,37 @@ class ZikResource {
         this.tags = inputs.tags;
     }
 
-    equals(otherResource) {
+    equals(otherZikResource) {
 
         let isEquals = true;
 
-        isEquals = isEquals && this.addedBy === otherResource.addedBy;
-        isEquals = isEquals && this.artist === otherResource.artist;
-        isEquals = isEquals && this.title === otherResource.title;
-        isEquals = isEquals && this.url === otherResource.url;
+        isEquals = isEquals && this.addedBy === otherZikResource.addedBy;
+        isEquals = isEquals && this.artist === otherZikResource.artist;
+        isEquals = isEquals && this.title === otherZikResource.title;
+        isEquals = isEquals && this.url === otherZikResource.url;
 
-        isEquals = isEquals && this.tags.length === otherResource.tags.length;
-        if (isEquals && this.tags.length > 0) {
-            for (let tag of otherResource.tags) {
-                // We check if we have the exact same tag on this.
-                let tagFound = false;
-                for (let i = 0 ; i < this.tags.length && !tagFound ; i++) {
-                    tagFound = this.tags[i].label === tag.label && this.tags[i].value === tag.value;
-                }
-                isEquals = isEquals && tagFound;
+        // We check if we have the exact same tags in both objects.
+        if (otherZikResource.tags) {
+            isEquals = isEquals && (this.tags.length === otherZikResource.tags.length);
+            for (let iTag = 0; iTag < otherZikResource.tags.length && isEquals; iTag++) {
+                let tag = otherZikResource.tags[iTag];
+                isEquals = isEquals && this.containsTag(tag);
             }
         }
 
-        if (otherResource.hasOwnProperty("_id")) {
-            isEquals = isEquals && this._id === otherResource._id;
+        if (otherZikResource.hasOwnProperty("_id")) {
+            isEquals = isEquals && this._id === otherZikResource._id;
         }
 
         return isEquals;
+    }
+
+    containsTag(tag) {
+        let tagFound = false;
+        for (let i = 0; i < this.tags.length && !tagFound; i++) {
+            tagFound = (this.tags[i].label === tag.label) && (this.tags[i].value === tag.value);
+        }
+        return tagFound;
     }
 
 }
