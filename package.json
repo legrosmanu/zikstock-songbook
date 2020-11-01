@@ -14,9 +14,6 @@
     "@shelf/jest-mongodb": "^1.2.2",
     "jest": "^26.4.0"
   },
-  "engines": {
-    "yarn": "1.x"
-  },
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^3.6.0"
