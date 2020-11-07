@@ -1,2 +1,4 @@
 node_modules
 globalConfig.json
+coverage
+**/.DS_store

@@ -107,7 +107,8 @@ describe('zik-resource-blo', () => {
             ]
         };
         let zikResource = await blo.createZikResource(data);
-
+        expect(zikResource !== undefined).toBe(true);
+        expect(zikResource instanceof ZikResource).toBe(true);
     });
 
 });
