@@ -29,7 +29,7 @@ class ZikResource {
             }
         }
 
-        if (otherResource.hasOwnProperty("_id")) {
+        if (Object.prototype.hasOwnProperty.call(otherResource,"_id")) {
             isEquals = isEquals && this._id === otherResource._id;
         }
 

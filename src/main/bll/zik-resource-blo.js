@@ -8,21 +8,20 @@ class ZikResourceBlo {
     }
 
     async createZikResource(data) {
-        try {
-            let zikResource = new ZikResource(data);
-            this.checkValidData(data);
-            return zikResource;
-        } catch (error) {
-            throw error;
-        }
+        let zikResource = new ZikResource(data);
+        this.checkValidData(data);
+        return zikResource;
     }
 
     checkValidData(data) {
-        if (!data || !data.hasOwnProperty('url') || !data.hasOwnProperty('title')
+        // url and title are mandatory fields
+        if (!data || !Object.prototype.hasOwnProperty.call(data,'url') 
+            || !Object.prototype.hasOwnProperty.call(data, 'title')
             || data.url.length < 1 || data.title.length < 1) {
             throw new ZikStockError("400-1");
         }
-        if (data.hasOwnProperty('tags') && data.tags.length > 10) {
+        // the resource must not have more than 10 tags
+        if (Object.prototype.hasOwnProperty.call(data,'tags') && data.tags.length > 10) {
             throw new ZikStockError("400-2");
         }
     }

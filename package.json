@@ -7,16 +7,16 @@
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest",
+    "lint": "eslint . ./src/**/*.js",
+    "prepush": "npm run lint && npm test",
+    "test": "jest --coverage",
     "start": "node ./src/index.js"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.2",
+    "eslint": "^7.13.0",
     "jest": "^26.4.0",
     "supertest": "^4.0.2"
-  },
-  "engines": {
-    "yarn": "1.x"
   },
   "dependencies": {
     "express": "^4.17.1",
