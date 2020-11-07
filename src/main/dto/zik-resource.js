@@ -1,11 +1,11 @@
 class ZikResource {
 
-    constructor(inputs) {
-        this.url = inputs.url;
-        this.artist = inputs.artist;
-        this.title = inputs.title;
-        this.addedBy = inputs.addedBy;
-        this.tags = inputs.tags;
+    constructor(url, artist, title, addedBy, tags) {
+        this.url = url;
+        this.artist = artist;
+        this.title = title;
+        this.addedBy = addedBy;
+        this.tags = tags;
     }
 
 }
