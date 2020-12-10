@@ -2,11 +2,11 @@
     "messages" : [
         {
             "code" : "400-1",
-            "message" : "The URL and the title are the mandatory fields to create a zikresource."
+            "message" : "ZikResource validation failed: the data are not correct to create a zikresource."
         },
         {
-            "code" : "400-2",
-            "message" : "A zikresource must not have more than 10 tags."
+            "code" : "404-1",
+            "message" : "The ZikResource doesn't exist."
         }
     ]
 }

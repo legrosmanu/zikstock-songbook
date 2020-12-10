@@ -1,3 +1,7 @@
-const app = require('./main/server');
+const express = require('express');
 
-app.listen(process.env.NODE_PORT || 3000);
+const http = require('http');
+
+const app = express();
+const server = http.createServer(app);
+server.listen(process.env.NODE_PORT || 3000);

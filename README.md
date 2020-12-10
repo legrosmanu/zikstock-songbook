@@ -45,11 +45,8 @@ It looks like:
   "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
   "artist": "Tool",
   "title": "Sober",
+  "type" : "tablature",
   "tags" : [
-    {
-      "label": "type",
-      "value": "tab"
-    },
     {
       "label": "difficulty",
        "value": "intermediate"
@@ -59,7 +56,8 @@ It looks like:
       "value": "My personal tag"
     }
   ],
-  "creationDate": "2019-08-19T01:33:39Z",
+  "createdAt": "2019-08-19T01:33:39Z",
+  "updatedAt": "2019-12-10T10:33:39Z",
   "addedBy": "legrosmanu"
 }
 ```
