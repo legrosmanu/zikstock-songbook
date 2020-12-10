@@ -1,14 +1,13 @@
-const ZikResourceBlo = require('../main/bll/zik-resource-blo');
-const ZikResource = require('../main/dto/zik-resource');
+const ZikResourceDao = require('../main/dll/dao/zik-resource-dao');
 const ZikStockError = require('../main/helpers/zik-stock-error');
 
-describe('zik-resource-blo', () => {
+const dbHandler = require('./memory-db-handler');
 
-    let blo = null;
+describe('zik-resource-dao', () => {
 
-    beforeAll(() => {
-        blo = new ZikResourceBlo();
-    });
+    beforeAll(async () => await dbHandler.connect());
+    afterEach(async () => await dbHandler.clearDatabase());
+    afterAll(async () => await dbHandler.closeDatabase());
 
     // Check if the 2 mandatory fiels (url and title) are here
     // and if the zikResource doesn't have more than 10 tags
@@ -18,11 +17,10 @@ describe('zik-resource-blo', () => {
         // url is missing
         let data = {
             "artist": "Tool",
-            "title": "Sober",
-            "addedBy": "test"
+            "title": "Sober"
         };
         try {
-            await blo.createZikResource(data);
+            await ZikResourceDao.createZikResource(data);
         } catch (err) {
             error = err;
         }
@@ -31,11 +29,10 @@ describe('zik-resource-blo', () => {
 
         // title is missing
         data = {
-            "url": "Tool",
-            "addedBy": "test"
+            "url": "Tool"
         };
         try {
-            await blo.createZikResource(data);
+            await ZikResourceDao.createZikResource(data);
         } catch (err) {
             error = err;
         }
@@ -46,7 +43,6 @@ describe('zik-resource-blo', () => {
         data = {
             "url": "Tool",
             "title": "Sober",
-            "addedBy": "test",
             "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
             { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
             { "label": "tag5", "value": "tag5" }, { "label": "tag6", "value": "tag6" },
@@ -55,12 +51,12 @@ describe('zik-resource-blo', () => {
             { "label": "tag11", "value": "tag11" }]
         };
         try {
-            await blo.createZikResource(data);
+            await ZikResourceDao.createZikResource(data);
         } catch (err) {
             error = err;
         }
         expect(error instanceof ZikStockError).toBe(true);
-        expect(error.code).toEqual("400-2");
+        expect(error.code).toEqual("400-1");
 
     });
 
@@ -69,7 +65,6 @@ describe('zik-resource-blo', () => {
             "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
             "artist": "Tool",
             "title": "Sober",
-            "addedBy": "test",
             "tags": [
                 {
                     "label": "type",
@@ -85,9 +80,12 @@ describe('zik-resource-blo', () => {
                 }
             ]
         };
-        let zikResource = await blo.createZikResource(data);
-        expect(zikResource !== undefined).toBe(true);
-        expect(zikResource instanceof ZikResource).toBe(true);
+        try {
+            let zikResource = await ZikResourceDao.createZikResource(data);
+            expect(zikResource != null).toBe(true);
+        } catch (err) {
+            expect(false).toBe(true);
+        }
     });
 
 });
