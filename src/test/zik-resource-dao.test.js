@@ -133,7 +133,7 @@ describe('zik-resource-dao-removal', () => {
         expect(isDeleted).toBe(true);
     });
 
-    it("should return false if zikResource doesn't exist. Indeed the database is empty.", async () => {
+    it("should return false if zikResource doesn't exist.", async () => {
         let zikResource = new ZikResource();
         expect(await ZikResourceDao.deleteZikResource(zikResource)).toBe(false);
     });
