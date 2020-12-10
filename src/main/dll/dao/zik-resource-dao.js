@@ -1,7 +1,7 @@
 const ZikResource = require('../dto/zik-resource');
 const ZikStockError = require('../../helpers/zik-stock-error');
 
-let createZikResource = async (data) => {
+let saveZikResource = async (data) => {
 
     try {
         let zikResource = new ZikResource(data);
@@ -17,4 +17,11 @@ let createZikResource = async (data) => {
 
 };
 
-module.exports.createZikResource = createZikResource;
+// Return true if the zikResource has been deleted, else it'll return false
+let deleteZikResource = async (zikResource) => {
+    const result = await ZikResource.deleteOne({_id: zikResource._id});
+    return (result.deletedCount === 1);
+};
+
+module.exports.saveZikResource = saveZikResource;
+module.exports.deleteZikResource = deleteZikResource;

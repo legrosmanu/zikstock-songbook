@@ -1,13 +1,16 @@
 const ZikResourceDao = require('../main/dll/dao/zik-resource-dao');
 const ZikStockError = require('../main/helpers/zik-stock-error');
+const ZikResource = require('../main/dll/dto/zik-resource');
 
 const dbHandler = require('./memory-db-handler');
 
-describe('zik-resource-dao', () => {
+describe('zik-resource-dao-creation', () => {
 
     beforeAll(async () => await dbHandler.connect());
-    afterEach(async () => await dbHandler.clearDatabase());
-    afterAll(async () => await dbHandler.closeDatabase());
+    afterAll(async () => {
+        await dbHandler.clearDatabase();
+        await dbHandler.closeDatabase();
+    });
 
     // Check if the 2 mandatory fiels (url and title) are here
     // and if the zikResource doesn't have more than 10 tags
@@ -20,7 +23,7 @@ describe('zik-resource-dao', () => {
             "title": "Sober"
         };
         try {
-            await ZikResourceDao.createZikResource(data);
+            await ZikResourceDao.saveZikResource(data);
         } catch (err) {
             error = err;
         }
@@ -32,7 +35,7 @@ describe('zik-resource-dao', () => {
             "url": "Tool"
         };
         try {
-            await ZikResourceDao.createZikResource(data);
+            await ZikResourceDao.saveZikResource(data);
         } catch (err) {
             error = err;
         }
@@ -51,7 +54,7 @@ describe('zik-resource-dao', () => {
             { "label": "tag11", "value": "tag11" }]
         };
         try {
-            await ZikResourceDao.createZikResource(data);
+            await ZikResourceDao.saveZikResource(data);
         } catch (err) {
             error = err;
         }
@@ -61,7 +64,8 @@ describe('zik-resource-dao', () => {
     });
 
     it('should create a zikresource if the data are valid to create it', async () => {
-        let data = {
+
+        let correctData = {
             "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
             "artist": "Tool",
             "title": "Sober",
@@ -80,12 +84,58 @@ describe('zik-resource-dao', () => {
                 }
             ]
         };
-        try {
-            let zikResource = await ZikResourceDao.createZikResource(data);
-            expect(zikResource != null).toBe(true);
-        } catch (err) {
-            expect(false).toBe(true);
-        }
+        let zikResource = await ZikResourceDao.saveZikResource(correctData);
+        expect(zikResource != null).toBe(true);
+    });
+
+});
+
+describe('zik-resource-dao-removal', () => {
+
+    let zikResourceTest = null;
+
+    beforeAll(async () => {
+        await dbHandler.connect();
+        let correctData = {
+            "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
+            "artist": "Tool",
+            "title": "Sober",
+            "tags": [
+                {
+                    "label": "type",
+                    "value": "tab"
+                },
+                {
+                    "label": "difficulty",
+                    "value": "intermediate"
+                },
+                {
+                    "label": "",
+                    "value": "My personal tag"
+                }
+            ]
+        };
+        let zikResource = new ZikResource(correctData);
+        zikResourceTest = await zikResource.save();
+    });
+    afterAll(async () => {
+        await dbHandler.clearDatabase();
+        await dbHandler.closeDatabase();
+    });
+
+
+    it('should delete a zikResource if the resource exists', async () => {
+        let zikResources = await ZikResource.find({});
+        expect(zikResources.length === 1).toBe(true);
+        const isDeleted = await ZikResourceDao.deleteZikResource(zikResourceTest);
+        zikResources = await ZikResource.find({});
+        expect(zikResources.length === 0).toBe(true);
+        expect(isDeleted).toBe(true);
+    });
+
+    it("should return false if zikResource doesn't exist. Indeed the database is empty.", async () => {
+        let zikResource = new ZikResource();
+        expect(await ZikResourceDao.deleteZikResource(zikResource)).toBe(false);
     });
 
 });
