@@ -124,12 +124,11 @@ describe('zik-resource-dao-removal', () => {
     });
 
 
-    it('should delete a zikResource if the resource exists', async () => {
-        let zikResources = await ZikResource.find({});
-        expect(zikResources.length === 1).toBe(true);
+    it('should delete a zikResource if the resource exists and return true.', async () => {
+        let nbZikResourcesBefore = await ZikResource.estimatedDocumentCount();
         const isDeleted = await ZikResourceDao.deleteZikResource(zikResourceTest);
-        zikResources = await ZikResource.find({});
-        expect(zikResources.length === 0).toBe(true);
+        let nbZikResourcesAfter = await ZikResource.estimatedDocumentCount();
+        expect(nbZikResourcesBefore === nbZikResourcesAfter + 1).toBe(true);
         expect(isDeleted).toBe(true);
     });
 
