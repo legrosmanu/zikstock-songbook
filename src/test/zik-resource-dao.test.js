@@ -124,17 +124,23 @@ describe('zik-resource-dao-removal', () => {
     });
 
 
-    it('should delete a zikResource if the resource exists and return true.', async () => {
+    it('should delete a zikResource if the resource exists.', async () => {
         let nbZikResourcesBefore = await ZikResource.estimatedDocumentCount();
-        const isDeleted = await ZikResourceDao.deleteZikResource(zikResourceTest);
+        await ZikResourceDao.deleteZikResource(zikResourceTest);
         let nbZikResourcesAfter = await ZikResource.estimatedDocumentCount();
         expect(nbZikResourcesBefore === nbZikResourcesAfter + 1).toBe(true);
-        expect(isDeleted).toBe(true);
     });
 
-    it("should return false if zikResource doesn't exist.", async () => {
+    it("should throw an exception if zikResource doesn't exist.", async () => {
         let zikResource = new ZikResource();
-        expect(await ZikResourceDao.deleteZikResource(zikResource)).toBe(false);
+        let error = null;
+        try {
+            await ZikResourceDao.deleteZikResource(zikResource)
+        } catch (err) {
+            error = err;
+        }
+        expect(error instanceof ZikStockError).toBe(true);
+        expect(error.code).toEqual("404-1");
     });
 
 });

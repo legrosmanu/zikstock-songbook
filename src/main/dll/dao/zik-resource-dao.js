@@ -19,8 +19,10 @@ let saveZikResource = async (data) => {
 
 // Return true if the zikResource has been deleted, else it'll return false
 let deleteZikResource = async (zikResource) => {
-    const result = await ZikResource.deleteOne({_id: zikResource._id});
-    return (result.deletedCount === 1);
+    const result = await ZikResource.deleteOne({ _id: zikResource._id });
+    if (result.deletedCount === 0) {
+        throw new ZikStockError("404-1");
+    }
 };
 
 module.exports.saveZikResource = saveZikResource;
