@@ -29,7 +29,7 @@ let retrieveZikResourceById = async (id) => {
 // TODO: retrieve the ZikResources of a user will be done after the basic auth implementation
 
 let updateZikResource = async (zikResource) => {
-    await zikResource.save();
+    return await zikResource.save();
 };
 
 module.exports.saveZikResource = saveZikResource;

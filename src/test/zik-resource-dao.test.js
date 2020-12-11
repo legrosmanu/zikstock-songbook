@@ -32,6 +32,9 @@ describe('zik-resource-dao', () => {
     afterEach(async () => await dbHandler.clearDatabase());
     afterAll(async () => await dbHandler.closeDatabase());
 
+    /************************************************************************************************
+     * Creation tests
+     ***********************************************************************************************/
     it("should throw an exception if the ZikResource doesn't have a url.", async () => {
 
         // Given a simple ZikResource only with a title, and so without the url field
@@ -120,7 +123,9 @@ describe('zik-resource-dao', () => {
         expect(correctData.tags.length === zikResource.tags.length).toBe(true);
     });
 
-
+    /************************************************************************************************
+     * Removal tests
+     ***********************************************************************************************/
     it('should delete a zikResource if the resource exists.', async () => {
         // Given one ZikResource in the database (because afterEach, we clear the DB)
         let zikResource = new ZikResource(correctData);
@@ -142,6 +147,9 @@ describe('zik-resource-dao', () => {
         expect(await ZikResource.estimatedDocumentCount() === 0).toBe(true);
     });
 
+    /************************************************************************************************
+     * Retrieve tests
+     ***********************************************************************************************/
     it('should return the zikResource expected.', async () => {
         // Given one ZikResource in the database (because afterEach, we clear the DB)
         let zikResource = new ZikResource(correctData);
@@ -160,6 +168,35 @@ describe('zik-resource-dao', () => {
         let zikResourceRetrieved = await ZikResourceDao.retrieveZikResourceById(null);
         // Then the zikResource got is null
         expect(zikResourceRetrieved).toBeNull();
+    });
+
+    /************************************************************************************************
+     * Update tests
+     ***********************************************************************************************/
+    it("should return an exception if the input is not an instance of ZikResource Schema", async () => {
+        // Given the zikResource to update is a simple JSON and not a ZikResource Schema instance
+        let zikResource = correctData;
+        // When we try to update it
+        let error = null;
+        try {
+            await ZikResourceDao.updateZikResource(zikResource);
+        } catch (err) {
+            error = err;
+        }
+        // Then we have an exception
+        expect(error).not.toBeNull();
+    });
+
+    it("should update the ZikResource if the ZikResource exists.", async () => {
+        // Given one ZikResource in the database (because afterEach, we clear the DB)
+        let zikResource = new ZikResource(correctData);
+        zikResourceTest = await zikResource.save();
+        expect(await ZikResource.estimatedDocumentCount() === 1).toBe(true);
+        // When we try to update it
+        zikResourceTest.title = "Not so sober";
+        let zikResourceUpdated = await ZikResourceDao.updateZikResource(zikResourceTest);
+        // Then the ZikResource is updated
+        expect(zikResourceTest._id.equals(zikResourceUpdated._id) && zikResourceUpdated.title === "Not so sober").toBe(true);
     });
 
 });
