@@ -1,6 +1,7 @@
 const ZikResource = require('../dto/zik-resource');
 const ZikStockError = require('../../helpers/zik-stock-error');
 
+// Save the zikResource in the database, with the constrains defined in the Mongoose Schema
 let saveZikResource = async (data) => {
 
     try {
@@ -17,13 +18,21 @@ let saveZikResource = async (data) => {
 
 };
 
-// Return true if the zikResource has been deleted, else it'll return false
 let deleteZikResource = async (zikResource) => {
-    const result = await ZikResource.deleteOne({ _id: zikResource._id });
-    if (result.deletedCount === 0) {
-        throw new ZikStockError("404-1");
-    }
+    await ZikResource.deleteOne({ _id: zikResource._id });
+};
+
+let retrieveZikResourceById = async (id) => {
+    return await ZikResource.findById(id);
+};
+
+// TODO: retrieve the ZikResources of a user will be done after the basic auth implementation
+
+let updateZikResource = async (zikResource) => {
+    return await zikResource.save();
 };
 
 module.exports.saveZikResource = saveZikResource;
 module.exports.deleteZikResource = deleteZikResource;
+module.exports.retrieveZikResourceById = retrieveZikResourceById;
+module.exports.updateZikResource = updateZikResource;
