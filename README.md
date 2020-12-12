@@ -28,7 +28,7 @@ The example of an error below shows you the format of the error you'll always ha
 ```json
 {
   "code": "403-1",
-  "message" : "You can't delete a zik-resource you didn't create"
+  "details" : "You can't delete a zik-resource you didn't create"
 }
 ```  
 

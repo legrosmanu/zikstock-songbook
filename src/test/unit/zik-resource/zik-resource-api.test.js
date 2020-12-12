@@ -25,6 +25,7 @@ describe('/POST zikresource', () => {
         const res = await request(app).post('/api/zikresources').send({});
         // We have a 400 HTTP code
         expect(res.statusCode).toEqual(400);
+        expect(res.body.code).toEqual("400-1");
     });
 
 });

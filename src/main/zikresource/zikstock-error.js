@@ -10,9 +10,10 @@ class ZikStockError extends Error {
     }
 
     getMessage() {
-        let message = errorMessages.find(element => element.code === this.code);
-        if (message === undefined) {
-            message = "";
+        let message = "";
+        let error = errorMessages.find(element => element.code === this.code);
+        if (error != null) {
+            message = error.message;
         }
         return message;
     }

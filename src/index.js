@@ -2,7 +2,12 @@ const http = require('http');
 const app = require('./main/app');
 const mongoose = require('mongoose');
 
-const connect = mongoose.connect('mongodb://localhost:27017/zikstock'); // TODO : change to use env var
+// TODO : change to use env var
+const connect = mongoose.connect('mongodb://localhost:27017/zikstock',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
 connect.then(() => {
     console.log("Connected to MongoDB");
 }, (err) => { console.log(err); });
