@@ -17,4 +17,19 @@ zikResourceRouter.post('/', async (req, res, next) => {
 
 });
 
+zikResourceRouter.get('/:id', async (req, res, next) => {
+
+    try {
+        let zikResource = await ZikResourceDao.retrieveZikResourceById(req.param.id);
+        if (zikResource != null) {
+            res.status(200).json(zikResource);
+        } else {
+            res.sendStatus(404);
+        }
+    } catch (err) {
+        next(err);
+    }
+
+});
+
 module.exports = zikResourceRouter;
