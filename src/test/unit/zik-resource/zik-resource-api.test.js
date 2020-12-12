@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../index');
+const app = require('../../../main/app');
 const ZikResourceDao = require('../../../main/zikresource/zikresource-dao');
 const ZikStockError = require('../../../main/zikresource/zikstock-error');
 
