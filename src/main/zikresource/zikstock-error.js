@@ -1,10 +1,11 @@
-const errorMessages = require('./zik-stock-error-messages.json').messages; // must be replace by a document in MongodDB
+const errorMessages = require('./zikstock-error-messages.json').messages; // must be replace by a document in MongodDB
 
 class ZikStockError extends Error {
 
     constructor(code) {
         super();
         this.code = code;
+        if (code && code.length >= 3) { this.status =  parseInt(code.substring(0, 3)); }
         this.message = this.getMessage();
     }
 
