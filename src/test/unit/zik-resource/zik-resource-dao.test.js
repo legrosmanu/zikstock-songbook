@@ -194,7 +194,7 @@ describe('zik-resource-dao', () => {
         expect(await ZikResource.estimatedDocumentCount() === 1).toBe(true);
         // When we try to update it
         zikResourceTest.title = "Not so sober";
-        let zikResourceUpdated = await ZikResourceDao.updateZikResource(zikResourceTest);
+        let zikResourceUpdated = await ZikResourceDao.updateZikResource(zikResourceTest._id, zikResourceTest);
         // Then the ZikResource is updated
         expect(zikResourceTest._id.equals(zikResourceUpdated._id) && zikResourceUpdated.title === "Not so sober").toBe(true);
     });

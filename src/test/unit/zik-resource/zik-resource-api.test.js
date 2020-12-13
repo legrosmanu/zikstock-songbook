@@ -7,6 +7,9 @@ describe('/POST zikresource', () => {
 
     afterEach(() => {
         jest.spyOn(ZikResourceDao, 'saveZikResource').mockReset();
+        jest.spyOn(ZikResourceDao, 'retrieveZikResourceById').mockReset();
+        jest.spyOn(ZikResourceDao, 'deleteZikResource').mockReset();
+        jest.spyOn(ZikResourceDao, 'updateZikResource').mockReset();
     });
 
     it("should return a 201 HTTP code and the ZikResource as response", async () => {
@@ -32,25 +35,20 @@ describe('/POST zikresource', () => {
 
 });
 
-describe('/GET ZikResource', () => {
+describe('/GET zikresource', () => {
 
     it("should return a 200 HTTP code and the resource expected according to the given id.", async () => {
         // Given an id of a resource
         let id = "9875ed60-d11d-4126-b7e0-56c01d9c3ea3";
         jest.spyOn(ZikResourceDao, 'retrieveZikResourceById').mockImplementationOnce(() => {
-            let data = {
-                _id: "9875ed60-d11d-4126-b7e0-56c01d9c3ea3",
-                url: "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
-                artist: "Tool",
-                title: "Sober"
-            };
-            return data;
+            let fakeData = {};
+            return fakeData;
         });
         // When we try to retrieve
         const res = await request(app).get('/api/zikresources/' + id);
         // Then we have a 200 HTTP code
         expect(res.statusCode).toEqual(200);
-        expect(res.body._id === id).toBe(true);
+        expect(res.body).not.toBeNull();
     });
 
     it("should return a 404 HTTP code if the resource is unknown.", async () => {
@@ -61,6 +59,67 @@ describe('/GET ZikResource', () => {
         });
         // When we try to retrieve
         const res = await request(app).get('/api/zikresources/' + id);
+        // Then we have a 404 HTTP code
+        expect(res.statusCode).toEqual(404);
+    });
+
+});
+
+describe('/DELETE zikresource', () => {
+
+    it("should return a 204 HTTP code if the resource is known and deleted.", async () => {
+        // Given an id of a resource known
+        let id = "9875ed60-d11d-4126-b7e0-56c01d9c3ea3";
+        jest.spyOn(ZikResourceDao, 'retrieveZikResourceById').mockImplementation(() => {
+            let fakeData = {};
+            return fakeData;
+        });
+        jest.spyOn(ZikResourceDao, 'deleteZikResource').mockImplementationOnce();
+        // When we try to retrieve
+        const res = await request(app).delete('/api/zikresources/' + id);
+        // Then we have a 204 HTTP code
+        expect(res.statusCode).toEqual(204);
+    });
+
+    it("should return a 204 HTTP code if the resource is unknown.", async () => {
+        // Given an id of a resource unknown
+        let id = "pouet";
+        jest.spyOn(ZikResourceDao, 'retrieveZikResourceById').mockImplementation(() => {
+            return null; // If the resource is unknonw, the DAO returns null
+        });
+        jest.spyOn(ZikResourceDao, 'deleteZikResource').mockImplementation();
+        // When we try to retrieve
+        const res = await request(app).delete('/api/zikresources/' + id);
+        // Then we have a 204 HTTP code
+        expect(res.statusCode).toEqual(204);
+    });
+
+});
+
+describe('/PUT zikresource', () => {
+
+    it("should return a 200 HTTP code if the resource is known and the resource updated .", async () => {
+        // Given an id of a resource
+        let id = "9875ed60-d11d-4126-b7e0-56c01d9c3ea3";
+        jest.spyOn(ZikResourceDao, 'updateZikResource').mockImplementationOnce(() => {
+            let fakeData = {};
+            return fakeData;
+        });
+        // When we try to retrieve
+        const res = await request(app).put('/api/zikresources/' + id).send({});
+        // Then we have a 200 HTTP code
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).not.toBeNull();
+    });
+
+    it("should return a 404 HTTP code if the resource to update is unknown.", async () => {
+        // Given an id of a resource
+        let id = "pouet";
+        jest.spyOn(ZikResourceDao, 'updateZikResource').mockImplementation(() => {
+            return null; // If the resource is unknonw, the DAO returns null
+        });
+        // When we try to retrieve
+        const res = await request(app).put('/api/zikresources/' + id).send({});
         // Then we have a 404 HTTP code
         expect(res.statusCode).toEqual(404);
     });
