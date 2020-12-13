@@ -1,4 +1,4 @@
-const ZikStockError = require('../main/helpers/zik-stock-error');
+const ZikStockError = require('../../../main/zikresource/zikstock-error');
 
 describe('zikstock-errors', () => {
 
@@ -6,6 +6,7 @@ describe('zikstock-errors', () => {
         let error = new ZikStockError("400-1");
         expect(error.message === "The URL and the title are the mandatory fields to create a zikresource.");
         expect(error.code === "400-1").toBe(true);
+        expect(error.status === 400).toBe(true);
     });
 
     it('should provide an empty message if the code doesn\'t exist', () => {

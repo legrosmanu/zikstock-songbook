@@ -1,5 +1,5 @@
-const ZikResource = require('../dto/zik-resource');
-const ZikStockError = require('../../helpers/zik-stock-error');
+const ZikResource = require('./zikresource');
+const ZikStockError = require('./zikstock-error');
 
 // Save the zikResource in the database, with the constrains defined in the Mongoose Schema
 let saveZikResource = async (data) => {
@@ -28,8 +28,8 @@ let retrieveZikResourceById = async (id) => {
 
 // TODO: retrieve the ZikResources of a user will be done after the basic auth implementation
 
-let updateZikResource = async (zikResource) => {
-    return await zikResource.save();
+let updateZikResource = async (id, data) => {
+    return await ZikResource.findOneAndUpdate({_id: id}, data, { new: true });
 };
 
 module.exports.saveZikResource = saveZikResource;

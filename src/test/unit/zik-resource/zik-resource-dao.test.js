@@ -1,8 +1,8 @@
-const ZikResourceDao = require('../main/dll/dao/zik-resource-dao');
-const ZikStockError = require('../main/helpers/zik-stock-error');
-const ZikResource = require('../main/dll/dto/zik-resource');
+const ZikResourceDao = require('../../../main/zikresource/zikresource-dao');
+const ZikStockError = require('../../../main/zikresource/zikstock-error');
+const ZikResource = require('../../../main/zikresource/zikresource');
 
-const dbHandler = require('./memory-db-handler');
+const dbHandler = require('../../memory-db-handler');
 
 describe('zik-resource-dao', () => {
 
@@ -194,7 +194,7 @@ describe('zik-resource-dao', () => {
         expect(await ZikResource.estimatedDocumentCount() === 1).toBe(true);
         // When we try to update it
         zikResourceTest.title = "Not so sober";
-        let zikResourceUpdated = await ZikResourceDao.updateZikResource(zikResourceTest);
+        let zikResourceUpdated = await ZikResourceDao.updateZikResource(zikResourceTest._id, zikResourceTest);
         // Then the ZikResource is updated
         expect(zikResourceTest._id.equals(zikResourceUpdated._id) && zikResourceUpdated.title === "Not so sober").toBe(true);
     });

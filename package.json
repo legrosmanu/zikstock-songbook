@@ -1,9 +1,9 @@
 {
-  "name": "spot4zik-core",
+  "name": "zikstock-core",
   "version": "1.0.0",
   "main": "./src/index.js",
-  "desciption": "spot4zik-core is proposing the web API for the main functionnalities of spot4zik.",
-  "repository": "https://github.com/legrosmanu/spot4zik-core.git",
+  "desciption": "zikstock-core is proposing the web API for the main functionnalities of zikstock.",
+  "repository": "https://github.com/legrosmanu/zikstock-core.git",
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -15,7 +15,8 @@
   "devDependencies": {
     "eslint": "^7.13.0",
     "jest": "^26.6.3",
-    "mongodb-memory-server": "^6.9.2"
+    "mongodb-memory-server": "^6.9.2",
+    "supertest": "^6.0.1"
   },
   "dependencies": {
     "express": "^4.17.1",
