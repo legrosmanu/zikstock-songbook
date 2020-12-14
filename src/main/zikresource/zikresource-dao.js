@@ -23,10 +23,16 @@ let deleteZikResource = async (zikResource) => {
 };
 
 let retrieveZikResourceById = async (id) => {
-    return await ZikResource.findById(id);
+    let zikResource = await ZikResource.findById(id);
+    return zikResource;
 };
 
 // TODO: retrieve the ZikResources of a user will be done after the basic auth implementation
+// For now, we accept to retrieve all the resources without limit.
+let retrieveZikResources = async () => {
+    let zikResources = await ZikResource.find({});
+    return zikResources;
+};
 
 let updateZikResource = async (id, data) => {
     return await ZikResource.findOneAndUpdate({_id: id}, data, { new: true });
@@ -35,4 +41,5 @@ let updateZikResource = async (id, data) => {
 module.exports.saveZikResource = saveZikResource;
 module.exports.deleteZikResource = deleteZikResource;
 module.exports.retrieveZikResourceById = retrieveZikResourceById;
+module.exports.retrieveZikResources = retrieveZikResources;
 module.exports.updateZikResource = updateZikResource;

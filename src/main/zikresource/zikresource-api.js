@@ -17,10 +17,25 @@ zikResourceRouter.post('/', async (req, res, next) => {
 
 });
 
+zikResourceRouter.get('/', async (req, res, next) => {
+
+    try {
+        let zikResources = await ZikResourceDao.retrieveZikResources();
+        if (zikResources != null) {
+            res.status(200).json(zikResources);
+        } else {
+            res.sendStatus(200).json([]);
+        }
+    } catch (err) {
+        next(err);
+    }
+
+});
+
 zikResourceRouter.get('/:id', async (req, res, next) => {
 
     try {
-        let zikResource = await ZikResourceDao.retrieveZikResourceById(req.param.id);
+        let zikResource = await ZikResourceDao.retrieveZikResourceById(req.params.id);
         if (zikResource != null) {
             res.status(200).json(zikResource);
         } else {
@@ -49,7 +64,7 @@ zikResourceRouter.delete('/:id', async (req, res, next) => {
 zikResourceRouter.put('/:id', async (req, res, next) => {
 
     try {
-        let zikResource = await ZikResourceDao.updateZikResource(req.param.id, req.body);
+        let zikResource = await ZikResourceDao.updateZikResource(req.params.id, req.body);
         if (zikResource != null) {
             res.status(200).json(zikResource);
         } else {
