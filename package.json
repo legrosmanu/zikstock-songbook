@@ -7,11 +7,11 @@
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf ./dist && tsc",
     "lint": "eslint . ./dist/**/*.js",
     "prepush": "npm run build && npm run lint && npm test",
     "test": "jest --coverage",
-    "start": "node ./src/index.js"
+    "start": "node ./dist/index.js"
   },
   "devDependencies": {
     "eslint": "^7.13.0",

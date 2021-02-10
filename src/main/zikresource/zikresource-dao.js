@@ -1,5 +1,5 @@
 const ZikResource = require('./zikresource');
-const ZikStockError = require('./zikstock-error');
+const ZikStockError = require('../zikstock-error/zikstock-error');
 
 // Save the zikResource in the database, with the constrains defined in the Mongoose Schema
 let saveZikResource = async (data) => {

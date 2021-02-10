@@ -1,8 +1,8 @@
-const ZikResourceDao = require('../../../main/zikresource/zikresource-dao');
-const ZikStockError = require('../../../main/zikresource/zikstock-error');
-const ZikResource = require('../../../main/zikresource/zikresource');
+const ZikResourceDao = require('./zikresource-dao');
+const ZikStockError = require('../zikstock-error/zikstock-error');
+const ZikResource = require('./zikresource');
 
-const dbHandler = require('../../memory-db-handler');
+const dbHandler = require('../../test/memory-db-handler');
 
 describe('zik-resource-dao', () => {
 

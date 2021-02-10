@@ -1,7 +1,7 @@
 const request = require('supertest');
-const app = require('../../../main/app');
-const ZikResourceDao = require('../../../main/zikresource/zikresource-dao');
-const ZikStockError = require('../../../main/zikresource/zikstock-error');
+const app = require('../app');
+const ZikResourceDao = require('./zikresource-dao');
+const ZikStockError = require('../zikstock-error/zikstock-error');
 
 describe('/POST zikresource', () => {
 
