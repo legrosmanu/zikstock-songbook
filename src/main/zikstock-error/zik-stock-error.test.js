@@ -1,4 +1,4 @@
-const ZikStockError = require('../../../main/zikresource/zikstock-error');
+const ZikStockError = require('./zikstock-error');
 
 describe('zikstock-errors', () => {
 

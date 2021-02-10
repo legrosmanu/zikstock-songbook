@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "ea3f2c13-48e3-4320-b426-caffcbfc7d5b",
-		"name": "zikstock",
+		"name": "int-test-zikresource",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
