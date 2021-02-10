@@ -1,5 +1,7 @@
 # zikstock-core
 
+> Not ready yet for production. Dev in progress
+
 zikstock is a platform to help the musicians to play music.  
 And because zikstock is very new, we propose only one functionality for now: **save in zikstock the musical resources you need to play music**.  
 
