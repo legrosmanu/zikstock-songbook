@@ -1,5 +1,5 @@
 const ZikResource = require('./zikresource');
-const ZikStockError = require('../zikstock-error/zikstock-error');
+const { ZikStockErrorDAO } = require('../zikstock-error/zikstock-error-dao');
 
 // Save the zikResource in the database, with the constrains defined in the Mongoose Schema
 let saveZikResource = async (data) => {
@@ -10,7 +10,7 @@ let saveZikResource = async (data) => {
         return savedZikResource;
     } catch (err) {
         if (err.name === "ValidationError") {
-            throw new ZikStockError("400-1");
+            throw new ZikStockErrorDAO().findByCode("400-1");
         } else {
             throw err;
         }
