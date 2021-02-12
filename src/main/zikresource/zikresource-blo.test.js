@@ -1,16 +1,14 @@
-const { TestDbHandler } = require('../../test/testdb-handler');
 const { ZikStockError } = require('../zikstock-error/zikstock-error');
 const { ZikresourceBLO } = require('./zikresource-blo');
 const { ZikresourceDAO } = require('./zikresource-dao');
+jest.mock('./zikresource-dao');
 
-describe('The Zikresource creation: ', () => {
+describe('The Zikresource business logic: ', () => {
 
     let bloToTest = null;
 
     beforeAll(async () => {
-        let dbHandler = new TestDbHandler();
-        await dbHandler.connect();
-        bloToTest = new ZikresourceBLO(jest.mocked(ZikresourceDAO, true));
+        bloToTest = new ZikresourceBLO(new ZikresourceDAO());
     });
 
     afterAll(() => {
@@ -86,5 +84,20 @@ describe('The Zikresource creation: ', () => {
         expect(error.code).toEqual("400-2");
 
     });
+
+    // Simple tests because no real logic
+    it("should have not exception on the other methods", async () => {
+        let error = null;
+        try {
+            await bloToTest.getZikresources();
+            await bloToTest.getOneZikresourceById("1111");
+            await bloToTest.deleteOneZikresource({ _id: "11111" });
+        } catch (err) {
+            error = err;
+        }
+        expect(error).toBeNull();
+    });
+
+    // TODO : check the same things than the creation when we update.
 
 });

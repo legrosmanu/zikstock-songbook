@@ -21,11 +21,7 @@ export class ZikresourceBLO {
             throw new ZikStockError("400-2");
         }
         // Save the zikresource on database
-        let zikresource = new Zikresource(data.url, data.title);
-        zikresource.type = data.type;
-        zikresource.artist = data.artist;
-        zikresource.tags = data.tags;
-        await this.zikResourceDAO.save(zikresource);
+        await this.zikResourceDAO.save(this.buildZikresourceInstance(data));
     }
 
     async getZikresources(): Promise<Zikresource[]> {
@@ -36,12 +32,20 @@ export class ZikresourceBLO {
         return await this.zikResourceDAO.retrieveOneById(id);
     }
 
-    async deleteOneZikresource(zikresource: Zikresource): Promise<void> {
-        await this.zikResourceDAO.delete(zikresource);
+    async deleteOneZikresource(data: any): Promise<void> {
+        await this.zikResourceDAO.delete(this.buildZikresourceInstance(data));
     }
 
     async updateOneZikresource(id: string, data:any) {
-        await this.zikResourceDAO.updateOne(id, data);
+        await this.zikResourceDAO.updateOne(id, this.buildZikresourceInstance(data));
+    }
+
+    private buildZikresourceInstance(data: any): Zikresource {
+        let zikresource = new Zikresource(data.url, data.title);
+        zikresource.type = data.type;
+        zikresource.artist = data.artist;
+        zikresource.tags = data.tags;
+        return zikresource;
     }
 
 }
