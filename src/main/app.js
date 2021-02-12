@@ -1,11 +1,11 @@
 const express = require('express');
 
-const zikResourceRouter = require('./zikresource/zikresource-api');
+const { ZikresourceAPI } = require('./zikresource/zikresource-api');
 
 const app = express();
 
-
-app.use('/api/zikresources', zikResourceRouter);
+const zikresourceAPI = new ZikresourceAPI();
+app.use('/api/zikresources', zikresourceAPI.router);
 
 /* eslint-disable */
 // Error handling. Express expects to have the 4 parameters, so, need to disable eslint.
