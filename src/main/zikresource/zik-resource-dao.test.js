@@ -1,7 +1,7 @@
 const { ZikresourceDAO } = require('./zikresource-dao');
 const { Zikresource } = require('./zikresource');
 
-const { TestDbHandler } = require('../../test/testdb-handler'); 
+const { DbHandlerFactory } = require('../db-handler-factory');
 
 describe('zikresource-dao', () => {
 
@@ -28,11 +28,11 @@ describe('zikresource-dao', () => {
         ]
     };
 
-    let dbHandler = new TestDbHandler();
+    let dbHandler = null;
 
     beforeAll(async () => {
-        await dbHandler.connect();
-        daoToTest = new ZikresourceDAO(dbHandler.db);
+        dbHandler = await DbHandlerFactory.build();
+        daoToTest = new ZikresourceDAO();
     });
     afterEach(async () => await dbHandler.clear());
     afterAll(async () => await dbHandler.close());

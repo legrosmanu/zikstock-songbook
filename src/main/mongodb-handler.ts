@@ -1,7 +1,7 @@
 import { Db, MongoClient } from 'mongodb';
 import { IDbHandler } from '../idb-handler';
 
-export class MongoDbHandler implements IDbHandler{
+export class MongoDbHandler implements IDbHandler {
 
     client: MongoClient;
     uri: string;
@@ -13,17 +13,10 @@ export class MongoDbHandler implements IDbHandler{
     }
 
     async connect() {
-        try {
-            // Connect the client to the server
-            await this.client.connect();
-            // Establish and verify connection
-            await this.client.db("zikstock").command({ ping: 1 });
-            this.db = this.client.db("zikstock");
-            console.log("Connected successfully to server");
-        } finally {
-            // Ensures that the client will close when you finish/error
-            await this.close();
-        }
+        // Connect the client to the server
+        await this.client.connect();
+        this.db = this.client.db("zikstock");
+        console.log("Connected successfully to server");
     }
 
     async close() {

@@ -6,8 +6,8 @@ export class ZikresourceBLO {
 
     zikResourceDAO: ZikresourceDAO;
 
-    constructor(zikresourceDAO: ZikresourceDAO) {
-        this.zikResourceDAO = zikresourceDAO;
+    constructor() {
+        this.zikResourceDAO = new ZikresourceDAO();
     }
 
     async createZikresource(data: any) {
@@ -21,15 +21,24 @@ export class ZikresourceBLO {
             throw new ZikStockError("400-2");
         }
         // Save the zikresource on database
-        await this.zikResourceDAO.save(this.buildZikresourceInstance(data));
+        let zikResource = await this.zikResourceDAO.save(this.buildZikresourceInstance(data));
+        return zikResource;
     }
 
     async getZikresources(): Promise<Zikresource[]> {
-        return await this.zikResourceDAO.retrieveAll();
+        let result = await this.zikResourceDAO.retrieveAll();
+        if (!result) {
+            result = [];
+        }
+        return result;
     }
 
     async getOneZikresourceById(id: string): Promise<Zikresource|null> {
-        return await this.zikResourceDAO.retrieveOneById(id);
+        let result = await this.zikResourceDAO.retrieveOneById(id);
+        if (!result) {
+            result = null;
+        }
+        return result;
     }
 
     async deleteOneZikresource(data: any): Promise<void> {

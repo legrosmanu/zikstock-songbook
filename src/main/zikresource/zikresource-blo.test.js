@@ -1,6 +1,5 @@
 const { ZikStockError } = require('../zikstock-error/zikstock-error');
 const { ZikresourceBLO } = require('./zikresource-blo');
-const { ZikresourceDAO } = require('./zikresource-dao');
 jest.mock('./zikresource-dao');
 
 describe('The Zikresource business logic: ', () => {
@@ -8,7 +7,7 @@ describe('The Zikresource business logic: ', () => {
     let bloToTest = null;
 
     beforeAll(async () => {
-        bloToTest = new ZikresourceBLO(new ZikresourceDAO());
+        bloToTest = new ZikresourceBLO();
     });
 
     afterAll(() => {
@@ -85,7 +84,7 @@ describe('The Zikresource business logic: ', () => {
 
     });
 
-    // Simple tests because no real logic
+    // Simple tests because no real logic = everything is covered in the DAO tests
     it("should have not exception on the other methods", async () => {
         let error = null;
         try {

@@ -1,6 +1,6 @@
 const express = require('express');
-
 const { ZikresourceAPI } = require('./zikresource/zikresource-api');
+const { ZikStockError } = require('./zikstock-error/zikstock-error');
 
 const app = express();
 
@@ -12,11 +12,14 @@ app.use('/api/zikresources', zikresourceAPI.router);
 // This error handling is because by default Express manage the HTML responses, not the JSON errors.
 app.use((err, req, res, next) => {
     let status = 500;
-    let error = {};
+    let error = null;
     if (err) {
-        error = err;
-        if (error.status) {
-            status = error.status;
+        if (err instanceof ZikStockError) {
+            status = err.status;
+            error = err;
+        } else {
+            console.log(err);
+            error = new ZikStockError("500-1");
         }
     }
     res.status(status).json(error);

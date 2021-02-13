@@ -1,12 +1,11 @@
 const http = require('http');
-const app = require('./main/app');
+let app = null;
+const { DbHandlerFactory } = require('./main/db-handler-factory');
 
-const { MongoDbHandler } = require('./main/mongodb-handler');
-
-const mongodbHandler = new MongoDbHandler();
-mongodbHandler.connect();
-
-const server = http.createServer(app);
-server.listen(process.env.NODE_PORT || 3000);
+DbHandlerFactory.build().then(() => {
+    app = require('./main/app');
+    const server = http.createServer(app);
+    server.listen(process.env.NODE_PORT || 3000);
+});
 
 module.exports = app;
