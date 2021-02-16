@@ -1,6 +1,3 @@
-import { map } from '../app';
-import { ZikStockError } from './zikstock-error';
-
 export class ZikStockErrorDAO {
 
     messages: Map<string, string>;

@@ -1,6 +1,6 @@
-const express = require('express');
-const { ZikresourceAPI } = require('./zikresource/zikresource-api');
-const { ZikStockError } = require('./zikstock-error/zikstock-error');
+import express, { Router, Request, Response, NextFunction } from 'express';
+import { ZikStockError } from "./zikstock-error/zikstock-error";
+import { ZikresourceAPI } from './zikresource/zikresource-api';
 
 const app = express();
 
@@ -10,7 +10,7 @@ app.use('/api/zikresources', zikresourceAPI.router);
 /* eslint-disable */
 // Error handling. Express expects to have the 4 parameters, so, need to disable eslint.
 // This error handling is because by default Express manage the HTML responses, not the JSON errors.
-app.use((err, req, res, next) => {
+app.use((err: ZikStockError, req: Request, res: Response, next: NextFunction) => {
     let status = 500;
     let error = null;
     if (err) {
