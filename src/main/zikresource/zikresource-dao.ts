@@ -26,8 +26,8 @@ export class ZikresourceDAO {
         return result?.deletedCount === 1;
     }
 
-    async retrieveOneById(id: any): Promise<Zikresource|null|undefined> {
-        return await this.collection?.findOne({_id: id});
+    async retrieveOneById(id: string): Promise<Zikresource|null|undefined> {
+        return await this.collection?.findOne({_id: new ObjectId(id)});
     }
 
     async retrieveAll(): Promise<Zikresource[]|undefined> {
@@ -35,7 +35,7 @@ export class ZikresourceDAO {
     }
 
     async updateOne(id: string, zikresource: Zikresource): Promise<Zikresource|undefined> {
-        let result = await this.collection?.replaceOne({_id: zikresource._id}, zikresource, { upsert: false });
+        let result = await this.collection?.replaceOne({_id: new ObjectId(zikresource._id)}, zikresource, { upsert: false });
         return result?.ops[0];
     }
 

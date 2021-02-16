@@ -97,8 +97,8 @@ describe('zikresource-dao', () => {
         zikresourceTest = await daoToTest.save(zikresourceInput);
         let allZikresources = await daoToTest.retrieveAll();
         expect(allZikresources.length).toEqual(1);
-        // When we try to retrieve it by its id
-        let zikResourceRetrieved = await daoToTest.retrieveOneById(zikresourceTest._id);
+        // When we try to retrieve it by its id (retrieveOnById wait for a String so we convert it)
+        let zikResourceRetrieved = await daoToTest.retrieveOneById(String(zikresourceTest._id));
         // Then we get the ZikResource expected
         expect(zikResourceRetrieved).not.toBeNull();
         expect(zikResourceRetrieved._id.equals(zikresourceTest._id)).toBe(true);
@@ -123,7 +123,7 @@ describe('zikresource-dao', () => {
         expect(allZikresources.length).toEqual(1);
         // When we try to update it
         zikresourceTest.title = "Not so sober";
-        let zikresourceUpdated = await daoToTest.updateOne(zikresourceTest._id, zikresourceTest);
+        let zikresourceUpdated = await daoToTest.updateOne(String(zikresourceTest._id), zikresourceTest);
         // Then the ZikResource is updated
         expect(zikresourceTest._id.equals(zikresourceUpdated._id) && zikresourceUpdated.title === "Not so sober").toBe(true);
     });
