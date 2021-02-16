@@ -8,7 +8,7 @@ export class ZikresourceDAO {
     collection?: Collection<Zikresource>;
 
     constructor() {
-        let db = DbHandlerFactory.getDb();
+        let db: Db|undefined = DbHandlerFactory.getDb();
         this.collection = db?.collection('zikresources');
     }
 

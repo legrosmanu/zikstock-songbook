@@ -45,8 +45,9 @@ export class ZikresourceBLO {
         await this.zikResourceDAO.delete(this.buildZikresourceInstance(data));
     }
 
-    async updateOneZikresource(id: string, data:any) {
-        await this.zikResourceDAO.updateOne(id, this.buildZikresourceInstance(data));
+    async updateOneZikresource(id: string, data:any): Promise<Zikresource|undefined> {
+        let zikResourceUpdated = await this.zikResourceDAO.updateOne(id, this.buildZikresourceInstance(data));
+        return zikResourceUpdated;
     }
 
     private buildZikresourceInstance(data: any): Zikresource {
