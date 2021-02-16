@@ -10,7 +10,7 @@ export class ZikresourceBLO {
         this.zikResourceDAO = new ZikresourceDAO();
     }
 
-    async createZikresource(data: any) {
+    async createZikresource(data: any): Promise<Zikresource> {
         // Prerequisites:
         // 1. must have at least an url and a title
         if (data == null || data.url == null || data.title == null) {
@@ -41,8 +41,15 @@ export class ZikresourceBLO {
         return result;
     }
 
-    async deleteOneZikresource(data: any): Promise<void> {
-        await this.zikResourceDAO.delete(this.buildZikresourceInstance(data));
+    async deleteOneZikresource(id: string): Promise<void> {
+        let zikresource = await this.getOneZikresourceById(id);
+        if (zikresource == null) {
+            throw new ZikStockError("404-1");
+        }
+        let deleted = await this.zikResourceDAO.delete(zikresource);
+        if (!deleted) {
+            throw new ZikStockError("500-4");
+        }
     }
 
     async updateOneZikresource(id: string, data:any): Promise<Zikresource|undefined> {

@@ -11,6 +11,8 @@ export class ZikStockErrorDAO {
         this.messages.set("400-2", "ZikResource validation failed: can't have more than 10 tags.");
         this.messages.set("404-1", "The ZikResource doesn't exist.");
         this.messages.set("500-2", "Error during the insertion into the database.");
+        this.messages.set("500-3", "Error during the update of the zikresource.");
+        this.messages.set("500-4", "The zikresource has not been deleted.");
     }
 
     getMessage(code:string): string {

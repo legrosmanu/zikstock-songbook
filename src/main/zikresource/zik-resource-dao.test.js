@@ -66,25 +66,28 @@ describe('zikresource-dao', () => {
     it('should delete a zikresource if the resource exists.', async () => {
         // Given one Zikresource in the database (because afterEach, we clear the DB)
         let zikresourceInput = new Zikresource(correctData);
-        zikresourceTest = await daoToTest.save(zikresourceInput);
-        let allZikresources = await daoToTest.retrieveAll();
+        let result = await daoToTest.collection.insertOne(zikresourceInput);
+        zikresourceTest = result.ops[0];
+        let allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(1);
         // When we delete it
-        await daoToTest.delete(zikresourceTest);
+        let deleted = await daoToTest.delete(zikresourceTest);
         // Then we have no more Zikresource in the database
-        allZikresources = await daoToTest.retrieveAll();
+        expect(deleted).toBe(true);
+        allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(0);
     });
 
     it("should have no impact if we try to delete a resource which doesn't exist.", async () => {
         // Given the empty database (because afterEach, we clear the DB)
-        let allZikresources = await daoToTest.retrieveAll();
+        let allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(0);
         // When we try to delete a Zikresource which doesn't exist
         let zikResource = new Zikresource();
-        await daoToTest.delete(zikResource);
+        let deleted = await daoToTest.delete(zikResource);
         // Then we have no exception and the database continues to be empty
-        allZikresources = await daoToTest.retrieveAll();
+        expect(deleted).toBe(false);
+        allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(0);
     });
 
@@ -94,8 +97,9 @@ describe('zikresource-dao', () => {
     it('should return the zikresource expected.', async () => {
         // Given one ZikResource in the database (because afterEach, we clear the DB)
         let zikresourceInput = new Zikresource(correctData);
-        zikresourceTest = await daoToTest.save(zikresourceInput);
-        let allZikresources = await daoToTest.retrieveAll();
+        let result = await daoToTest.collection.insertOne(zikresourceInput);
+        zikresourceTest = result.ops[0];
+        let allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(1);
         // When we try to retrieve it by its id (retrieveOnById wait for a String so we convert it)
         let zikResourceRetrieved = await daoToTest.retrieveOneById(String(zikresourceTest._id));
@@ -118,8 +122,9 @@ describe('zikresource-dao', () => {
     it("should update the ZikResource if the Zikresource exists.", async () => {
         // Given one ZikResource in the database (because afterEach, we clear the DB)
         let zikresourceInput = new Zikresource(correctData);
-        zikresourceTest = await daoToTest.save(zikresourceInput);
-        let allZikresources = await daoToTest.retrieveAll();
+        let result = await daoToTest.collection.insertOne(zikresourceInput);
+        zikresourceTest = result.ops[0];
+        let allZikresources = await daoToTest.collection.find({}).toArray();
         expect(allZikresources.length).toEqual(1);
         // When we try to update it
         zikresourceTest.title = "Not so sober";

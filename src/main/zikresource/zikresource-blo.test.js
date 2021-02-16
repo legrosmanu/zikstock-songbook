@@ -85,16 +85,22 @@ describe('The Zikresource business logic: ', () => {
     });
 
     // Simple tests because no real logic = everything is covered in the DAO tests
-    it("should have not exception on the other methods", async () => {
+    it("should have no unknown exception on the other methods", async () => {
         let error = null;
         try {
             await bloToTest.getZikresources();
             await bloToTest.getOneZikresourceById("1111");
-            await bloToTest.deleteOneZikresource({ _id: "11111" });
         } catch (err) {
             error = err;
         }
         expect(error).toBeNull();
+        try {
+            await bloToTest.deleteOneZikresource({ _id: "11111" });
+        } catch (err) {
+            error = err;
+        }
+        expect(error instanceof ZikStockError).toBe(true);
+        expect(error.code).toEqual("404-1");
     });
 
     // TODO : check the same things than the creation when we update.

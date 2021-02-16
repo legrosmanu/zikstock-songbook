@@ -51,8 +51,7 @@ export class ZikresourceAPI {
 
     async deleteZikresource(req: Request, res: Response, next: NextFunction) {
         try {
-            let zikresource = this.blo.getOneZikresourceById(req.params.id);
-            await this.blo.deleteOneZikresource(zikresource);
+            await this.blo.deleteOneZikresource(req.params.id);
             res.sendStatus(204);
         } catch (err) {
             next(err);

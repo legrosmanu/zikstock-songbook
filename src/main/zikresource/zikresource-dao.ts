@@ -14,11 +14,10 @@ export class ZikresourceDAO {
 
     async save(zikresource: Zikresource): Promise<Zikresource> {
         let result = await this.collection?.insertOne(zikresource);
-        if (!result || result.insertedCount === 0) {
+        if (!result || result.insertedCount !== 1) {
             throw new ZikStockError("500-2");
-        } // TODO : add logs if result.insertedCount > 1
+        }
         return result.ops[0];
-        
     }
 
     async delete(zikresource: Zikresource): Promise<boolean> {
@@ -36,6 +35,9 @@ export class ZikresourceDAO {
 
     async updateOne(id: string, zikresource: Zikresource): Promise<Zikresource|undefined> {
         let result = await this.collection?.replaceOne({_id: new ObjectId(zikresource._id)}, zikresource, { upsert: false });
+        if (!result || result.modifiedCount !== 1) {
+            throw new ZikStockError("500-3");
+        }
         return result?.ops[0];
     }
 
