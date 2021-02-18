@@ -14,7 +14,7 @@ export class TestDbHandler implements IDbHandler {
         this.uri = "";
         this.server = new MongoMemoryServer();
         this.client = null;
-        this.collections = ['zikresources'];
+        this.collections = ['zikresources', 'users'];
     }
 
     async connect() {
