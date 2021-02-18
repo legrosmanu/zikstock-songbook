@@ -5,15 +5,15 @@ import * as bcrypt from 'bcrypt';
 
 export class UserBLO {
 
-    userDao: UserDAO;
+    userDAO: UserDAO;
 
     constructor() {
-        this.userDao = new UserDAO();
+        this.userDAO = new UserDAO();
     }
 
     async createUser(data: any): Promise<User> {
         // check if the email is already used
-        const existingUser = await this.userDao.retrieveOneByEmail(data.email);
+        const existingUser = await this.userDAO.retrieveOneByEmail(data.email);
         if (existingUser != null) {
             throw new ZikStockError("409-1");
         }
@@ -22,7 +22,19 @@ export class UserBLO {
         }
         const encryptedPassword = await this.encryptPassword(data.password);
         const newUser = new User(data.email, data.displayName, encryptedPassword);
-        return await this.userDao.create(newUser);
+        return await this.userDAO.create(newUser);
+    }
+
+    async canLogIn(email: string, password: string): Promise<User|null> {
+        const existingUser = await this.userDAO.retrieveOneByEmail(email);
+        let userCanLogIn = null;
+        if (existingUser != null) {
+            const encryptedPassword = await this.encryptPassword(password);
+            if (encryptedPassword === existingUser.password) {
+                userCanLogIn = existingUser;
+            }
+        }
+        return userCanLogIn;
     }
 
     // check if the password is enough good

@@ -59,9 +59,9 @@ export class ZikresourceBLO {
 
     private buildZikresourceInstance(data: any): Zikresource {
         let zikresource = new Zikresource(data.url, data.title);
-        zikresource.type = data.type;
-        zikresource.artist = data.artist;
-        zikresource.tags = data.tags;
+        if (data.type) { zikresource.type = data.type; }
+        if (data.artist) { zikresource.artist = data.artist; }
+        if (data.tags) { zikresource.tags = data.tags; }
         return zikresource;
     }
 
