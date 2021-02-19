@@ -7,6 +7,7 @@ export class ZikStockErrorDAO {
         this.messages.set("400-1", "ZikResource validation failed: must have at least a title and a url.");
         this.messages.set("400-2", "ZikResource validation failed: can't have more than 10 tags.");
         this.messages.set("400-3", "The password doesn't respect the security rules.");
+        this.messages.set("400-4", "The email seems not valid.");
         this.messages.set("404-1", "The ZikResource doesn't exist.");
         this.messages.set("409-1", "The User can't be created because this email has been already used by a User.");
         this.messages.set("500-2", "Error during the insertion into the database.");
