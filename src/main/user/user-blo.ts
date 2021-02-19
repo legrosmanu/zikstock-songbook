@@ -31,12 +31,16 @@ export class UserBLO {
         const existingUser = await this.userDAO.retrieveOneByEmail(email);
         let userCanLogIn = null;
         if (existingUser != null) {
-            const encryptedPassword = await this.encryptPassword(password);
-            if (encryptedPassword === existingUser.password) {
+            if (await bcrypt.compare(password, existingUser.password)) {
                 userCanLogIn = existingUser;
             }
         }
         return userCanLogIn;
+    }
+
+    async encryptPassword(password: string): Promise<string> {
+        let encryptedPassword = await bcrypt.hash(password, 12);
+        return encryptedPassword;
     }
 
     private emailIsValide(email: string): boolean {
@@ -53,9 +57,5 @@ export class UserBLO {
         return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/.test(password);
     }
 
-    private async encryptPassword(password: string): Promise<string> {
-        let encryptedPassword = await bcrypt.hash(password, 12);
-        return encryptedPassword;
-    }
 
 }
