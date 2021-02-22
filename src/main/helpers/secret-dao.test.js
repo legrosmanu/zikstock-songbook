@@ -37,6 +37,7 @@ describe("Test the access to the secrets", () => {
             error = err;
         }
         // Then we have an exception
+        expect(error).not.toBeNull();
         expect(error instanceof ZikStockError).toBe(true);
         expect(error.code).toEqual("500-6");
     });
