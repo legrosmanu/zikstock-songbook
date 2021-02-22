@@ -2,13 +2,17 @@ import { ZikStockError } from "../zikstock-error/zikstock-error";
 import { User } from "./user";
 import { UserDAO } from "./user-dao";
 import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { SecretDAO } from "../helpers/secret-dao";
 
 export class UserBLO {
 
     userDAO: UserDAO;
+    secretsDao: SecretDAO;
 
     constructor() {
         this.userDAO = new UserDAO();
+        this.secretsDao = new SecretDAO();
     }
 
     async createUser(data: any): Promise<User> {
@@ -27,7 +31,7 @@ export class UserBLO {
         return await this.userDAO.create(newUser);
     }
 
-    async canLogIn(email: string, password: string): Promise<User|null> {
+    async canLogIn(email: string, password: string): Promise<User | null> {
         const existingUser = await this.userDAO.retrieveOneByEmail(email);
         let userCanLogIn = null;
         if (existingUser != null) {
@@ -39,8 +43,21 @@ export class UserBLO {
     }
 
     async encryptPassword(password: string): Promise<string> {
-        let encryptedPassword = await bcrypt.hash(password, 12);
+        let round = 12;
+        if (process.env.BCRYPT_ROUND) {
+            round = +process.env.BCRYPT_ROUND;
+        }
+        let encryptedPassword = await bcrypt.hash(password, round);
         return encryptedPassword;
+    }
+
+    async getToken(user: any): Promise<jwt.Secret | null> {
+        const secretKey = await this.secretsDao.getJwtSecret();
+        let jwtSecret = null;
+        if (secretKey) {
+            jwtSecret = jwt.sign(user, secretKey, { expiresIn: 3600 });
+        }
+        return jwtSecret;
     }
 
     private emailIsValide(email: string): boolean {
@@ -56,6 +73,5 @@ export class UserBLO {
     private passwordIsValid(password: string): boolean {
         return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/.test(password);
     }
-
 
 }

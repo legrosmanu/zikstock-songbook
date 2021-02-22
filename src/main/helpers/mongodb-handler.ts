@@ -1,5 +1,5 @@
 import { Db, MongoClient } from 'mongodb';
-import { IDbHandler } from '../idb-handler';
+import { IDbHandler } from './idb-handler';
 
 export class MongoDbHandler implements IDbHandler {
 

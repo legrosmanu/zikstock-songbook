@@ -23,6 +23,7 @@ jest.mock('./zikresource-blo', () => {
     };
 });
 
+jest.mock('../user/user-blo');
 const app = require('../app');
 const { ZikStockError } = require('../zikstock-error/zikstock-error');
 

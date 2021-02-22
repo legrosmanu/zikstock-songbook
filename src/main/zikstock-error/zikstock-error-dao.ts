@@ -14,6 +14,7 @@ export class ZikStockErrorDAO {
         this.messages.set("500-3", "Error during the update of the zikresource.");
         this.messages.set("500-4", "The zikresource has not been deleted.");
         this.messages.set("500-5", "Error during the user creation into the database.");
+        this.messages.set("500-6", "The secret key for the JWT is not set in the app.");
     }
 
     getMessage(code:string): string {

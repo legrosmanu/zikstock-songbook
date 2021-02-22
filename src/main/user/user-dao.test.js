@@ -1,4 +1,4 @@
-const { DbHandlerFactory } = require('../db-handler-factory');
+const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 const { User } = require('./user');
 const { UserDAO } = require('./user-dao');
 

@@ -1,29 +1,46 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
-import { ZikStockError } from "./zikstock-error/zikstock-error";
-import { ZikresourceAPI } from './zikresource/zikresource-api';
+import express, { Request, Response, NextFunction } from 'express';
+
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import { UserDAO } from './user/user-dao';
-import { UserBLO } from './user/user-blo';
 const LocalStrategy = passportLocal.Strategy;
+import bodyParser from 'body-parser';
+
+import { ZikStockError } from "./zikstock-error/zikstock-error";
+import { ZikresourceAPI } from './zikresource/zikresource-api';
+
+
+import { UserBLO } from './user/user-blo';
+import { UserAPI } from './user/user-api';
+import { User } from './user/user';
+import { UserDAO } from './user/user-dao';
 
 const app = express();
 
-const zikresourceAPI = new ZikresourceAPI();
-app.use('/api/zikresources', zikresourceAPI.router);
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(passport.initialize());
 
 passport.use(
     new LocalStrategy(
-        async (email: string, password: string, done) => {
-            const userBLO = new UserBLO();
-            const existingUser = await userBLO.canLogIn(email, password);
-            if (existingUser == null) {
-                return done(null, false);
+        async (username: string, password: string, done) => {
+            try {
+                const userBLO = new UserBLO();
+                const existingUser = await userBLO.canLogIn(username, password);
+                if (existingUser == null) {
+                    return done(null, false);
+                }
+                return done(null, existingUser);
+            } catch (err) {
+                return done(err);
             }
-            return done(null, existingUser);
         }
     )
 );
+
+const zikresourceAPI = new ZikresourceAPI();
+app.use('/api/zikresources', zikresourceAPI.router);
+const userAPI = new UserAPI();
+app.use('/api/users', userAPI.router);
 
 /* eslint-disable */
 // Error handling. Express expects to have the 4 parameters, so, need to disable eslint.
@@ -36,7 +53,6 @@ app.use((err: ZikStockError, req: Request, res: Response, next: NextFunction) =>
             status = err.status;
             error = err;
         } else {
-            console.log(err);
             error = new ZikStockError("500-1");
         }
     }

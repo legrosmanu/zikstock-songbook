@@ -1,4 +1,5 @@
 const mockRetrieveOneByEmail = jest.fn();
+jest.mock('../helpers/secret-dao');
 jest.mock('./user-dao', () => {
     return {
         UserDAO: jest.fn().mockImplementation(() => {
@@ -11,10 +12,12 @@ jest.mock('./user-dao', () => {
 const { ZikStockError } = require("../zikstock-error/zikstock-error");
 const { User } = require("./user");
 const { UserBLO } = require("./user-blo");
+const bcrypt = require('bcrypt');
 
 describe('user-blo', () => {
 
     let bloToTest = null;
+    process.env.BCRYPT_ROUND = 2;
 
     beforeAll(async () => {
         bloToTest = new UserBLO();
@@ -64,7 +67,7 @@ describe('user-blo', () => {
         expect(error.code).toEqual("400-3");
     });
 
-    it("should not create the user because the email si not valid", async () => {
+    it("should not create the user because the email is not valid", async () => {
         // Given a a password which doesn't respect the security rules
         let data = {
             email: "test.test.com",
@@ -86,7 +89,7 @@ describe('user-blo', () => {
         expect(error.code).toEqual("400-4");
     });
 
-    it("should return null when we check a user can log in if the user does'nt exist", async () => {
+    it("should return null when we check a user can log in, if the user does'nt exist", async () => {
         // Given an unknown user
         mockRetrieveOneByEmail.mockImplementation(() => {
             return null;
@@ -112,6 +115,15 @@ describe('user-blo', () => {
         // And we have the user expected
         expect(user.email).toEqual(userWhoCanLogIn.email);
         expect(user.displayName).toEqual(userWhoCanLogIn.displayName);
+    });
+
+    it("should encrypt a password as expected", async () => {
+        // Given a password
+        const password = "What@password2021";
+        // When we encrypt it
+        const passwordEncrypted = await bloToTest.encryptPassword(password);
+        // Then 
+        expect (await bcrypt.compare(password, passwordEncrypted)).toBe(true);
     });
 
 });

@@ -1,6 +1,6 @@
 import { Db } from "mongodb";
-import { IDbHandler } from "../idb-handler";
-import { TestDbHandler } from "../test/testdb-handler";
+import { IDbHandler } from "./idb-handler";
+import { TestDbHandler } from "./testdb-handler";
 import { MongoDbHandler } from "./mongodb-handler";
 
 export class DbHandlerFactory {

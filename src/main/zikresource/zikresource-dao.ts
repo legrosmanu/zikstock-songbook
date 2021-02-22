@@ -1,5 +1,5 @@
 import { Collection, Db, ObjectId } from "mongodb";
-import { DbHandlerFactory } from "../db-handler-factory";
+import { DbHandlerFactory } from "../helpers/db-handler-factory";
 import { ZikStockError } from "../zikstock-error/zikstock-error";
 import { Zikresource } from "./zikresource";
 
