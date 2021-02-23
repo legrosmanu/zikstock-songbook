@@ -22,7 +22,11 @@ export class ZikresourceAPI {
 
     async createZikresource(req: Request, res: Response, next: NextFunction) {
         try {
-            let zikresource: Zikresource = await this.blo.createZikresource(req.body);
+            let zikresource: Zikresource = await this.blo.createZikresource(
+                {
+                    ...req.user,
+                    ...req.body
+                });
             res.status(201).json(zikresource);
         } catch (err) {
             next(err);
@@ -53,7 +57,7 @@ export class ZikresourceAPI {
 
     async deleteZikresource(req: Request, res: Response, next: NextFunction) {
         try {
-            await this.blo.deleteOneZikresource(req.params.id);
+            await this.blo.deleteOneZikresource(req.params.id, req.user);
             res.sendStatus(204);
         } catch (err) {
             next(err);
@@ -62,7 +66,10 @@ export class ZikresourceAPI {
 
     async updateZikresource(req: Request, res: Response, next: NextFunction) {
         try {
-            let zikresource = await this.blo.updateOneZikresource(req.params.id, req.body);
+            let zikresource = await this.blo.updateOneZikresource(req.params.id, {
+                ...req.user,
+                ...req.body
+            });
             if (zikresource != null) {
                 res.status(200).json(zikresource);
             } else {

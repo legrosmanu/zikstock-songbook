@@ -27,7 +27,7 @@ describe('The Zikresource business logic: ', () => {
         bloToTest = new ZikresourceBLO();
     });
 
-    afterAll(() => {
+    afterEach(() => {
         jest.resetAllMocks();
     });
 
@@ -183,14 +183,17 @@ describe('The Zikresource business logic: ', () => {
             "title": "Sober",
             "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
             { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-            { "label": "tag5", "value": "tag5" }]
+            { "label": "tag5", "value": "tag5" }],
+            "addedBy": {
+                "email": "fake@test.com"
+            }
         };
+        mockRetrieveOneById.mockImplementation(() => {
+            return data;
+        });
         // When we want to save it on the database
         let error = null;
         try {
-            /*
-            await bloToTest.createZikresource(data);
-            await bloToTest.updateOneZikresource("fakeId", data);*/
             await Promise.all([bloToTest.createZikresource(data), bloToTest.updateOneZikresource("fakeId", data)]);
         } catch (err) {
             error = err;
@@ -232,7 +235,16 @@ describe('The Zikresource business logic: ', () => {
         // we mock the DAO to think we know the zikresource, but the DAO will not be able to delete,
         // it means the DAO has returned null after deletion
         mockRetrieveOneById.mockImplementation(() => {
-            return {};
+            return {
+                "url": "Tool",
+                "title": "Sober",
+                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+                { "label": "tag5", "value": "tag5" }],
+                "addedBy": {
+                    "email": "fake@test.com"
+                }
+            };
         });
         mockDelete.mockImplementation(() => {
             return null;
@@ -240,13 +252,53 @@ describe('The Zikresource business logic: ', () => {
         // When we try to delete it
         let error = null;
         try {
-            await bloToTest.deleteOneZikresource({});
+            await bloToTest.deleteOneZikresource({}, { addedBy: { email: "fake@test.com" } });
         } catch (err) {
             error = err;
         }
         // Then we have a known exception
         expect(error instanceof ZikStockError).toBe(true);
         expect(error.code).toEqual("500-4");
+    });
+
+    it("should throw an exception if we try to delete or update a zikresource created by somebody else.", async () => {
+        mockRetrieveOneById.mockImplementation(() => {
+            return {
+                "url": "Tool",
+                "title": "Sober",
+                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+                { "label": "tag5", "value": "tag5" }],
+                "addedBy": {
+                    "email": "fake@test.com"
+                }
+            };
+        });
+        let error = null;
+        try {
+            await bloToTest.deleteOneZikresource("111", { addedBy: { email: "anotherfolk@test.com" } });
+        } catch (err) {
+            error = err;
+        }
+        expect(error instanceof ZikStockError).toBe(true);
+        expect(error.code).toEqual("400-5");
+        error = null;
+        try {
+            await bloToTest.updateOneZikresource("111", {
+                "url": "Tool",
+                "title": "Sober",
+                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+                { "label": "tag5", "value": "tag5" }],
+                "addedBy": {
+                    "email": "anotherfolk@test.com"
+                }
+            });
+        } catch (err) {
+            error = err;
+        }
+        expect(error instanceof ZikStockError).toBe(true);
+        expect(error.code).toEqual("400-5");
     });
 
 });
