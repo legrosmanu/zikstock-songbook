@@ -1,5 +1,5 @@
 import { ZikStockError } from "../zikstock-error/zikstock-error";
-import { User } from "./user";
+import { User, UserWithoutPassword } from "./user";
 import { UserDAO } from "./user-dao";
 import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -55,7 +55,8 @@ export class UserBLO {
         const secretKey = await this.secretsDao.getJwtSecret();
         let jwtSecret = null;
         if (secretKey) {
-            jwtSecret = jwt.sign(user, secretKey, { expiresIn: 3600 });
+            const userWithoutPassword = new UserWithoutPassword(user);
+            jwtSecret = jwt.sign({userWithoutPassword}, secretKey, { expiresIn: 3600 });
         }
         return jwtSecret;
     }

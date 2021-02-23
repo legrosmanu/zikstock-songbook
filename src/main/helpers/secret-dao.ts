@@ -18,9 +18,6 @@ export class SecretDAO {
         if (secret != null) {
             secretKey = secret.values[0];
         }
-        if (secretKey == null) {
-            throw new ZikStockError("500-6");
-        }
         return secretKey;
     }
 

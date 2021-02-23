@@ -1,5 +1,5 @@
 const request = require('supertest');
-jest.mock('../zikresource/zikresource-blo');
+
 const mockCanLogIn = jest.fn();
 const mockGetToken = jest.fn();
 const mockCreateUser = jest.fn();
@@ -14,6 +14,18 @@ jest.mock('./user-blo', () => {
         })
     };
 });
+
+jest.mock('../zikresource/zikresource-dao');
+jest.mock('../helpers/secret-dao', () => {
+    return {
+        SecretDAO: jest.fn().mockImplementation(() => {
+            return {
+                getJwtSecret: async () => { return {}; }
+            };
+        })
+    };
+});
+
 const app = require('../app');
 const { User } = require('./user');
 

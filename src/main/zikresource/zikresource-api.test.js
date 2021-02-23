@@ -23,8 +23,19 @@ jest.mock('./zikresource-blo', () => {
     };
 });
 
-jest.mock('../user/user-blo');
+jest.mock('../user/user-dao');
+jest.mock('../helpers/secret-dao', () => {
+    return {
+        SecretDAO: jest.fn().mockImplementation(() => {
+            return {
+                getJwtSecret: async () => { return {}; }
+            };
+        })
+    };
+});
+
 const app = require('../app');
+
 const { ZikStockError } = require('../zikstock-error/zikstock-error');
 
 describe('/POST zikresource', () => {

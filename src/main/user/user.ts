@@ -18,7 +18,7 @@ export class User {
 }
 
 
-// User used by the API to not send the password to the caller
+// User used by the API to not send the password to the caller, and used in the JWT
 export class UserWithoutPassword {
 
     _id?: ObjectId;

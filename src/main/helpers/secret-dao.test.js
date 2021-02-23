@@ -2,7 +2,6 @@ const { SecretDAO } = require("./secret-dao");
 
 const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 const { Secret } = require("./secret");
-const { ZikStockError } = require("../zikstock-error/zikstock-error");
 
 describe("Test the access to the secrets", () => {
 
@@ -24,22 +23,6 @@ describe("Test the access to the secrets", () => {
         const secretKey = await daoToTest.getJwtSecret();
         // We get it
         expect(secretKey).toEqual("my_secret_key_is_awesome");
-    });
-
-    it("should return an exception if the secret key for the JWT is not set.", async () => {
-        // Given the fact we have forgotten to set the secret key in our DB
-        // -> the DB is empty for example
-        // When we ask it
-        let error = null;
-        try {
-            await daoToTest.getJwtSecret();
-        } catch (err) {
-            error = err;
-        }
-        // Then we have an exception
-        expect(error).not.toBeNull();
-        expect(error instanceof ZikStockError).toBe(true);
-        expect(error.code).toEqual("500-6");
     });
 
 });
