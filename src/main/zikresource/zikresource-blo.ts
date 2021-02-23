@@ -12,14 +12,7 @@ export class ZikresourceBLO {
 
     async createZikresource(data: any): Promise<Zikresource> {
         // Prerequisites:
-        // 1. must have at least an url and a title
-        if (data == null || data.url == null || data.title == null) {
-            throw new ZikStockError("400-1");
-        }
-        // 2. not more than 10 tags
-        if (data.tags && data.tags.length > 10) {
-            throw new ZikStockError("400-2");
-        }
+        this.checkIfDataAreValid(data);
         // Save the zikresource on database
         let zikResource = await this.zikResourceDAO.save(this.buildZikresourceInstance(data));
         return zikResource;
@@ -33,7 +26,7 @@ export class ZikresourceBLO {
         return result;
     }
 
-    async getOneZikresourceById(id: string): Promise<Zikresource|null> {
+    async getOneZikresourceById(id: string): Promise<Zikresource | null> {
         let result = await this.zikResourceDAO.retrieveOneById(id);
         if (!result) {
             result = null;
@@ -52,16 +45,30 @@ export class ZikresourceBLO {
         }
     }
 
-    async updateOneZikresource(id: string, data:any): Promise<Zikresource|undefined> {
+    async updateOneZikresource(id: string, data: any): Promise<Zikresource | undefined> {
+        // Prerequisites:
+        this.checkIfDataAreValid(data);
+        // if prerequisites are ok, we don't have exception, so we do it:
         let zikResourceUpdated = await this.zikResourceDAO.updateOne(id, this.buildZikresourceInstance(data));
         return zikResourceUpdated;
     }
 
+    private checkIfDataAreValid(data: any): void {
+        // 1. must have at least an url and a title
+        if (data == null || data.url == null || data.title == null) {
+            throw new ZikStockError("400-1");
+        }
+        // 2. not more than 10 tags
+        if (data.tags && data.tags.length > 10) {
+            throw new ZikStockError("400-2");
+        }
+    }
+
     private buildZikresourceInstance(data: any): Zikresource {
         let zikresource = new Zikresource(data.url, data.title);
-        zikresource.type = data.type;
-        zikresource.artist = data.artist;
-        zikresource.tags = data.tags;
+        if (data.type) { zikresource.type = data.type; }
+        if (data.artist) { zikresource.artist = data.artist; }
+        if (data.tags) { zikresource.tags = data.tags; }
         return zikresource;
     }
 

@@ -1,7 +1,7 @@
 const { ZikresourceDAO } = require('./zikresource-dao');
 const { Zikresource } = require('./zikresource');
 
-const { DbHandlerFactory } = require('../db-handler-factory');
+const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 
 describe('zikresource-dao', () => {
 

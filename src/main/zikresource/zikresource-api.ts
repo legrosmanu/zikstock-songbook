@@ -2,6 +2,8 @@ import express, { Router, Request, Response, NextFunction } from 'express';
 import { Zikresource } from './zikresource';
 import { ZikresourceBLO } from './zikresource-blo';
 
+import * as AuthenticationFactory from '../user/authentication-factory';
+
 export class ZikresourceAPI {
 
     router: Router;
@@ -10,11 +12,11 @@ export class ZikresourceAPI {
     constructor() {
         this.router = express.Router();
         this.router.use(express.json());
-        this.router.post('/', (req: Request, res: Response, next: NextFunction) => this.createZikresource(req, res, next));
-        this.router.get('/', (req: Request, res: Response, next: NextFunction) => this.getZikresources(req, res, next));
-        this.router.get('/:id', (req: Request, res: Response, next: NextFunction) => this.getZikresource(req, res, next));
-        this.router.delete('/:id', (req: Request, res: Response, next: NextFunction) => this.deleteZikresource(req, res, next));
-        this.router.put('/:id', (req: Request, res: Response, next: NextFunction) => this.updateZikresource(req, res, next));
+        this.router.post('/', AuthenticationFactory.jwtAuthentication, (req: Request, res: Response, next: NextFunction) => this.createZikresource(req, res, next));
+        this.router.get('/', AuthenticationFactory.jwtAuthentication, (req: Request, res: Response, next: NextFunction) => this.getZikresources(req, res, next));
+        this.router.get('/:id', AuthenticationFactory.jwtAuthentication, (req: Request, res: Response, next: NextFunction) => this.getZikresource(req, res, next));
+        this.router.delete('/:id', AuthenticationFactory.jwtAuthentication, (req: Request, res: Response, next: NextFunction) => this.deleteZikresource(req, res, next));
+        this.router.put('/:id', AuthenticationFactory.jwtAuthentication, (req: Request, res: Response, next: NextFunction) => this.updateZikresource(req, res, next));
         this.blo = new ZikresourceBLO();
     }
 
