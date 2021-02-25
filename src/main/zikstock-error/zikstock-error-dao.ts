@@ -8,7 +8,7 @@ export class ZikStockErrorDAO {
         this.messages.set("400-2", "ZikResource validation failed: can't have more than 10 tags.");
         this.messages.set("400-3", "The password doesn't respect the security rules.");
         this.messages.set("400-4", "The email seems not valid.");
-        this.messages.set("400-5", "The resource you want to update doesn't exist or has been created by somebody else.");
+        this.messages.set("400-5", "You are not the owner of the resource you want to update or delete.");
         
         this.messages.set("401-1", "The user has not been retrieved with the information from the JWT.");
 

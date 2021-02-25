@@ -19,6 +19,24 @@ jest.mock('./zikresource-dao', () => {
 const { ZikStockError } = require('../zikstock-error/zikstock-error');
 const { ZikresourceBLO } = require('./zikresource-blo');
 
+const givenZikresourceWhichExists = () => {
+    let data = {
+        "_id": "fakeId",
+        "url": "Tool",
+        "title": "Sober",
+        "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+        { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+        { "label": "tag5", "value": "tag5" }],
+        "addedBy": {
+            "email": "fake@test.com"
+        }
+    };
+    mockRetrieveOneById.mockImplementation(() => {
+        return data;
+    });
+    return data;
+};
+
 describe('The Zikresource business logic: ', () => {
 
     let bloToTest = null;
@@ -33,10 +51,9 @@ describe('The Zikresource business logic: ', () => {
 
     it("should throw an exception when we try to create Zikresource which doesn't have a url.", async () => {
         // Given a simple ZikResource only with a title, and so without the url field
-        let data = {
+        const data = {
             "title": "Sober"
         };
-
         // When we want to create it on the system
         let error = null;
         try {
@@ -44,7 +61,6 @@ describe('The Zikresource business logic: ', () => {
         } catch (err) {
             error = err;
         }
-
         // Then an exception is thrown
         expect(error instanceof ZikStockError).toBe(true);
         // And the exception has the code 400-1
@@ -53,11 +69,12 @@ describe('The Zikresource business logic: ', () => {
 
 
     it("should throw an exception when we try to update Zikresource which doesn't have a url.", async () => {
-        // Given a simple ZikResource only with a title, and so without the url field
-        let data = {
+        // Given a zikresource which exist
+        givenZikresourceWhichExists();
+        // And we want to update it only with a title, and so without the url field
+        const data = {
             "title": "Sober"
         };
-
         // When we want to create it on the system
         let error = null;
         try {
@@ -75,10 +92,9 @@ describe('The Zikresource business logic: ', () => {
     it("should throw an exception when we try to create a ZikResource which doesn't have a url.", async () => {
 
         // Given a simple ZikResource only with an url, and so without the title field
-        let data = {
+        const data = {
             "url": "Tool"
         };
-
         // When we want to save it on the database
         let error = null;
         try {
@@ -86,7 +102,6 @@ describe('The Zikresource business logic: ', () => {
         } catch (err) {
             error = err;
         }
-
         // Then an exception is thrown
         expect(error instanceof ZikStockError).toBe(true);
         // And the exception has the code 400-1
@@ -98,19 +113,22 @@ describe('The Zikresource business logic: ', () => {
 
     it("should throw an exception when we try to update a ZikResource which doesn't have a url.", async () => {
 
-        // Given a simple ZikResource only with an url, and so without the title field
-        let data = {
-            "url": "Tool"
+        // Given a zikresource which exist
+        givenZikresourceWhichExists();
+        // When we want to update but without the mandatory fields
+        const dataUpdated = {
+            "_id": "fakeId",
+            "url": "Tool",
+            "addedBy": {
+                "email": "fake@test.com"
+            }
         };
-
-        // When we want to save it on the database
         let error = null;
         try {
-            await bloToTest.updateOneZikresource("fakeId", data);
+            await bloToTest.updateOneZikresource("fakeId", dataUpdated);
         } catch (err) {
             error = err;
         }
-
         // Then an exception is thrown
         expect(error instanceof ZikStockError).toBe(true);
         // And the exception has the code 400-1
@@ -119,9 +137,8 @@ describe('The Zikresource business logic: ', () => {
     });
 
     it("should throw an exception if we try to create a ZikResource which has more than 10 tags.", async () => {
-
         // Given a simple ZikResource, with an url, a title and 11 tags
-        let data = {
+        const data = {
             "url": "Tool",
             "title": "Sober",
             "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
@@ -131,7 +148,6 @@ describe('The Zikresource business logic: ', () => {
             { "label": "tag9", "value": "tag9" }, { "label": "tag10", "value": "tag10" },
             { "label": "tag11", "value": "tag11" }]
         };
-
         // When we want to save it on the database
         let error = null;
         try {
@@ -149,9 +165,10 @@ describe('The Zikresource business logic: ', () => {
 
 
     it("should throw an exception if we try to update a ZikResource which has more than 10 tags.", async () => {
-
-        // Given a simple ZikResource, with an url, a title and 11 tags
-        let data = {
+        // Given a zikresource which exist
+        givenZikresourceWhichExists();
+        // And we want to update it with too much tags
+        const data = {
             "url": "Tool",
             "title": "Sober",
             "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
@@ -159,9 +176,11 @@ describe('The Zikresource business logic: ', () => {
             { "label": "tag5", "value": "tag5" }, { "label": "tag6", "value": "tag6" },
             { "label": "tag7", "value": "tag7" }, { "label": "tag8", "value": "tag8" },
             { "label": "tag9", "value": "tag9" }, { "label": "tag10", "value": "tag10" },
-            { "label": "tag11", "value": "tag11" }]
+            { "label": "tag11", "value": "tag11" }],
+            "addedBy": {
+                "email": "fake@test.com"
+            }
         };
-
         // When we want to save it on the database
         let error = null;
         try {
@@ -178,7 +197,7 @@ describe('The Zikresource business logic: ', () => {
 
     it("should be ok to create or update a zikresource which is valid", async () => {
         // Given a correct Zikresource
-        let data = {
+        const data = {
             "url": "Tool",
             "title": "Sober",
             "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },

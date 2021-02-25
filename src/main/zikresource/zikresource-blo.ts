@@ -53,7 +53,10 @@ export class ZikresourceBLO {
     }
 
     async updateOneZikresource(id: string, data: any): Promise<Zikresource | undefined> {
-        // Prerequisites:
+        let zikresource = await this.getOneZikresourceById(id);
+        if (zikresource == null) {
+            throw new ZikStockError("404-1");
+        }
         this.checkIfDataAreValid(data);
         let isCreatedBySameUser = data.addedBy != null 
             && data.addedBy.email != null && await this.hasSameOwner(id, data.addedBy?.email);
