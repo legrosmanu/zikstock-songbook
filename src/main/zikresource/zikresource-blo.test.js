@@ -185,8 +185,6 @@ describe('The Zikresource business logic: ', () => {
 
     });
 
-
-
     it("should throw an exception if we try to update a ZikResource which has more than 10 tags.", async () => {
         // Given a zikresource which exist
         givenZikresourceWhichExists();
