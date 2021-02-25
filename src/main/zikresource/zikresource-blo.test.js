@@ -37,6 +37,43 @@ const givenZikresourceWhichExists = () => {
     return data;
 };
 
+const getGoodZikresource = () => {
+    return {
+        "url": "Tool",
+        "title": "Sober",
+        "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+        { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+        { "label": "tag5", "value": "tag5" }],
+        "addedBy": {
+            "email": "fake@test.com"
+        }
+    };
+};
+
+const getBadZikresource = (type) => {
+    switch (type) {
+        case 'withoutUrl':
+            return {
+                "title": "Sober"
+            };
+        case 'withoutTitle':
+            return {
+                "url": "Tool"
+            };
+        case 'tooMuchTags':
+            return {
+                "url": "Tool",
+                "title": "Sober",
+                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
+                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
+                { "label": "tag5", "value": "tag5" }, { "label": "tag6", "value": "tag6" },
+                { "label": "tag7", "value": "tag7" }, { "label": "tag8", "value": "tag8" },
+                { "label": "tag9", "value": "tag9" }, { "label": "tag10", "value": "tag10" },
+                { "label": "tag11", "value": "tag11" }]
+            };
+    }
+};
+
 describe('The Zikresource business logic: ', () => {
 
     let bloToTest = null;
@@ -51,9 +88,7 @@ describe('The Zikresource business logic: ', () => {
 
     it("should throw an exception when we try to create Zikresource which doesn't have a url.", async () => {
         // Given a simple ZikResource only with a title, and so without the url field
-        const data = {
-            "title": "Sober"
-        };
+        const data = getBadZikresource('withoutUrl');
         // When we want to create it on the system
         let error = null;
         try {
@@ -72,9 +107,7 @@ describe('The Zikresource business logic: ', () => {
         // Given a zikresource which exist
         givenZikresourceWhichExists();
         // And we want to update it only with a title, and so without the url field
-        const data = {
-            "title": "Sober"
-        };
+        const data = getBadZikresource('withoutUrl');
         // When we want to create it on the system
         let error = null;
         try {
@@ -92,9 +125,7 @@ describe('The Zikresource business logic: ', () => {
     it("should throw an exception when we try to create a ZikResource which doesn't have a url.", async () => {
 
         // Given a simple ZikResource only with an url, and so without the title field
-        const data = {
-            "url": "Tool"
-        };
+        const data = getBadZikresource('withoutTitle');
         // When we want to save it on the database
         let error = null;
         try {
@@ -115,7 +146,7 @@ describe('The Zikresource business logic: ', () => {
 
         // Given a zikresource which exist
         givenZikresourceWhichExists();
-        // When we want to update but without the mandatory fields
+        // And the update doesn't respect the mandatory fields
         const dataUpdated = {
             "_id": "fakeId",
             "url": "Tool",
@@ -123,6 +154,7 @@ describe('The Zikresource business logic: ', () => {
                 "email": "fake@test.com"
             }
         };
+        // When we want to update it
         let error = null;
         try {
             await bloToTest.updateOneZikresource("fakeId", dataUpdated);
@@ -138,16 +170,7 @@ describe('The Zikresource business logic: ', () => {
 
     it("should throw an exception if we try to create a ZikResource which has more than 10 tags.", async () => {
         // Given a simple ZikResource, with an url, a title and 11 tags
-        const data = {
-            "url": "Tool",
-            "title": "Sober",
-            "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-            { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-            { "label": "tag5", "value": "tag5" }, { "label": "tag6", "value": "tag6" },
-            { "label": "tag7", "value": "tag7" }, { "label": "tag8", "value": "tag8" },
-            { "label": "tag9", "value": "tag9" }, { "label": "tag10", "value": "tag10" },
-            { "label": "tag11", "value": "tag11" }]
-        };
+        const data = getBadZikresource('tooMuchTags');
         // When we want to save it on the database
         let error = null;
         try {
@@ -168,19 +191,7 @@ describe('The Zikresource business logic: ', () => {
         // Given a zikresource which exist
         givenZikresourceWhichExists();
         // And we want to update it with too much tags
-        const data = {
-            "url": "Tool",
-            "title": "Sober",
-            "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-            { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-            { "label": "tag5", "value": "tag5" }, { "label": "tag6", "value": "tag6" },
-            { "label": "tag7", "value": "tag7" }, { "label": "tag8", "value": "tag8" },
-            { "label": "tag9", "value": "tag9" }, { "label": "tag10", "value": "tag10" },
-            { "label": "tag11", "value": "tag11" }],
-            "addedBy": {
-                "email": "fake@test.com"
-            }
-        };
+        const data = getBadZikresource('tooMuchTags');
         // When we want to save it on the database
         let error = null;
         try {
@@ -197,16 +208,7 @@ describe('The Zikresource business logic: ', () => {
 
     it("should be ok to create or update a zikresource which is valid", async () => {
         // Given a correct Zikresource
-        const data = {
-            "url": "Tool",
-            "title": "Sober",
-            "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-            { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-            { "label": "tag5", "value": "tag5" }],
-            "addedBy": {
-                "email": "fake@test.com"
-            }
-        };
+        const data = getGoodZikresource();
         mockRetrieveOneById.mockImplementation(() => {
             return data;
         });
@@ -254,16 +256,7 @@ describe('The Zikresource business logic: ', () => {
         // we mock the DAO to think we know the zikresource, but the DAO will not be able to delete,
         // it means the DAO has returned null after deletion
         mockRetrieveOneById.mockImplementation(() => {
-            return {
-                "url": "Tool",
-                "title": "Sober",
-                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-                { "label": "tag5", "value": "tag5" }],
-                "addedBy": {
-                    "email": "fake@test.com"
-                }
-            };
+            return getGoodZikresource();
         });
         mockDelete.mockImplementation(() => {
             return null;
@@ -282,16 +275,7 @@ describe('The Zikresource business logic: ', () => {
 
     it("should throw an exception if we try to delete or update a zikresource created by somebody else.", async () => {
         mockRetrieveOneById.mockImplementation(() => {
-            return {
-                "url": "Tool",
-                "title": "Sober",
-                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-                { "label": "tag5", "value": "tag5" }],
-                "addedBy": {
-                    "email": "fake@test.com"
-                }
-            };
+            return getGoodZikresource();
         });
         let error = null;
         try {
@@ -303,16 +287,11 @@ describe('The Zikresource business logic: ', () => {
         expect(error.code).toEqual("400-5");
         error = null;
         try {
-            await bloToTest.updateOneZikresource("111", {
-                "url": "Tool",
-                "title": "Sober",
-                "tags": [{ "label": "tag1", "value": "tag1" }, { "label": "tag2", "value": "tag2" },
-                { "label": "tag3", "value": "tag3" }, { "label": "tag4", "value": "tag4" },
-                { "label": "tag5", "value": "tag5" }],
-                "addedBy": {
-                    "email": "anotherfolk@test.com"
-                }
-            });
+            let data = getGoodZikresource();
+            data.addedBy = {
+                email: "anotherflok@test.com"
+            };
+            await bloToTest.updateOneZikresource("111", data);
         } catch (err) {
             error = err;
         }
