@@ -30,7 +30,7 @@ export class ZikresourceDAO {
     }
 
     async retrieveByEmail(email: string): Promise<Zikresource[]|undefined> {
-        return await this.collection?.find({email: email}).toArray();
+        return await this.collection?.find({ "addedBy.email": email }).toArray();
     }
 
     async retrieveAll(): Promise<Zikresource[]|undefined> {
