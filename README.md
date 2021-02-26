@@ -93,7 +93,7 @@ The tags are here to let you free to add information you need. But you can't add
 
 After creating some zikresources, you'll want to get them.  
 To get your zikresources, you just have to do a `GET /zikresources?addedBy={your-username}`.
-Of course, you have to replace `you-username` by your spot4zik username, but you can also get the zikresources of another user for example to see what to learn if you want to play with her/him.
+Of course, you have to replace `you-username` by your Zikstock username (which is your email), but you can also get the zikresources of another user for example to see what to learn if you want to play with her/him.
 
 ##### Responses
 
