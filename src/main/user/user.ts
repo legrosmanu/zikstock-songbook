@@ -1,5 +1,16 @@
 import { ObjectId } from "mongodb";
 
+export class AddedByUser {
+    link: string;
+    email: string;
+    displayName: string;
+    constructor(id: ObjectId, email: string, displayName: string) {
+        this.link = '/users/'+id;
+        this.email = email;
+        this.displayName = displayName;
+    }
+}
+
 export class User {
 
     _id?: ObjectId;

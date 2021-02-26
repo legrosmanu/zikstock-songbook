@@ -35,7 +35,7 @@ export class ZikresourceDAO {
 
     async updateOne(id: string, zikresource: Zikresource): Promise<Zikresource|undefined> {
         let result = await this.collection?.replaceOne({_id: new ObjectId(zikresource._id)}, zikresource, { upsert: false });
-        if (!result || result.modifiedCount !== 1) {
+        if (!result || result.result.ok !== 1) {
             throw new ZikStockError("500-3");
         }
         return result?.ops[0];

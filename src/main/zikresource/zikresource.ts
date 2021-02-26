@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { AddedByUser } from "../user/user";
 
 export class Tag {
     label: string;
@@ -17,7 +18,7 @@ export class Zikresource {
     type?: string;
     artist?: string;
     tags?: Tag[];
-    addedBy?: string;
+    addedBy?: AddedByUser;
 
     constructor(url: string, title: string) {
         this.url = url || "";
