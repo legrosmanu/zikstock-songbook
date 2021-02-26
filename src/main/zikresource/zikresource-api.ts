@@ -48,7 +48,13 @@ export class ZikresourceAPI {
 
     async getZikresources(req: Request, res: Response, next: NextFunction) {
         try {
-            let zikresources: Zikresource[] = await this.blo.getZikresources();
+            let zikresources = null;
+            if (!req.query.addedBy) {
+                zikresources = await this.blo.getZikresources();
+            } else {
+                const email: string = req.query.addedBy as string;
+                zikresources = await this.blo.getZikresourcesOfUser(email);
+            }
             res.status(200).json(zikresources);
         } catch (err) {
             next(err);

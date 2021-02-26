@@ -29,6 +29,10 @@ export class ZikresourceDAO {
         return await this.collection?.findOne({_id: new ObjectId(id)});
     }
 
+    async retrieveByEmail(email: string): Promise<Zikresource[]|undefined> {
+        return await this.collection?.find({email: email}).toArray();
+    }
+
     async retrieveAll(): Promise<Zikresource[]|undefined> {
         return await this.collection?.find({}).toArray();
     }

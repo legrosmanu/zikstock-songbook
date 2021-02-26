@@ -27,6 +27,14 @@ export class ZikresourceBLO {
         return result;
     }
 
+    async getZikresourcesOfUser(email: string): Promise<Zikresource[]> {
+        let result = await this.zikResourceDAO.retrieveByEmail(email);
+        if (!result) {
+            result = [];
+        }
+        return result;
+    }
+
     async getOneZikresourceById(id: string): Promise<Zikresource | null> {
         let result = await this.zikResourceDAO.retrieveOneById(id);
         if (!result) {
