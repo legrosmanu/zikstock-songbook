@@ -2,6 +2,9 @@ const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 const { User } = require('./user');
 const { UserDAO } = require('./user-dao');
 
+// May require additional time for downloading MongoDB binaries
+jest.setTimeout(600000);
+
 describe('user-dao', () => {
 
     let dbHandler = null;

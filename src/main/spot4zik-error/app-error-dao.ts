@@ -1,4 +1,4 @@
-export class ZikStockErrorDAO {
+export class AppErrorDAO {
 
     messages: Map<string, string>;
 

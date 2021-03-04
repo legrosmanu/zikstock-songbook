@@ -1,5 +1,4 @@
 import { Collection, Db } from "mongodb";
-import { ZikStockError } from "../zikstock-error/zikstock-error";
 import { DbHandlerFactory } from "./db-handler-factory";
 import { Secret } from "./secret";
 

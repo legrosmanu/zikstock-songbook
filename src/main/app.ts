@@ -6,7 +6,7 @@ import * as AuthenticationFactory from './user/authentication-factory';
 
 import bodyParser from 'body-parser';
 
-import { ZikStockError } from "./zikstock-error/zikstock-error";
+import { AppError } from "./spot4zik-error/app-error";
 import { ZikresourceAPI } from './zikresource/zikresource-api';
 import { SecretDAO } from './helpers/secret-dao';
 import { UserAPI } from './user/user-api';
@@ -24,7 +24,7 @@ passport.use(AuthenticationFactory.getLocalStrategy());
 const secretDao = new SecretDAO();
 secretDao.getJwtSecret().then(async (secretKey: string | null) => {
     if (secretKey == null) {
-        throw new ZikStockError("500-6");
+        throw new AppError("500-6");
     }
     passport.use(AuthenticationFactory.getJwtStrategy(secretKey));
 });
@@ -37,16 +37,16 @@ app.use('/api/zikresources', zikresourceAPI.router);
 /* eslint-disable */
 // Error handling. Express expects to have the 4 parameters, so, need to disable eslint.
 // This error handling is because by default Express manage the HTML responses, not the JSON errors.
-app.use((err: ZikStockError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
     let status = 500;
     let error = null;
     if (err) {
-        if (err instanceof ZikStockError) {
+        if (err instanceof AppError) {
             status = err.status;
             error = err;
         } else {
             console.log(err);
-            error = new ZikStockError("500-1");
+            error = new AppError("500-1");
         }
     }
     res.status(status).json(error);

@@ -3,6 +3,9 @@ const { Zikresource } = require('./zikresource');
 
 const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 
+// May require additional time for downloading MongoDB binaries
+jest.setTimeout(600000);
+
 describe('zikresource-dao', () => {
 
     let zikresourceTest = null;

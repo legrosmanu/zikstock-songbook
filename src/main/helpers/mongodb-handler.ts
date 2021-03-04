@@ -15,7 +15,7 @@ export class MongoDbHandler implements IDbHandler {
     async connect() {
         // Connect the client to the server
         await this.client.connect();
-        this.db = this.client.db("zikstock");
+        this.db = this.client.db("spot4zik");
         console.log("Connected successfully to server");
     }
 

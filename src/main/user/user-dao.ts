@@ -1,6 +1,6 @@
 import { Collection, Db, ObjectId } from "mongodb";
 import { DbHandlerFactory } from "../helpers/db-handler-factory";
-import { ZikStockError } from "../zikstock-error/zikstock-error";
+import { AppError } from "../spot4zik-error/app-error";
 import { User } from "./user";
 
 export class UserDAO {
@@ -15,7 +15,7 @@ export class UserDAO {
     async create(user: User): Promise<User> {
         let result = await this.collection?.insertOne(user);
         if (!result || result.insertedCount !== 1) {
-            throw new ZikStockError("500-5");
+            throw new AppError("500-5");
         }
         return result.ops[0];
     }

@@ -7,7 +7,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 import { UserBLO } from "./user-blo";
 import { UserDAO } from "./user-dao";
 import { NextFunction } from "express";
-import { ZikStockError } from "../zikstock-error/zikstock-error";
+import { AppError } from "../spot4zik-error/app-error";
 
 export const getLocalStrategy = () => {
     return new LocalStrategy(
@@ -38,7 +38,7 @@ export const getJwtStrategy = (secretKey: string) => {
                 const user = await userDao.retrieveOneById(jwtPayload.userWithoutPassword._id);
                 return done(null, user);
             } catch (err) {
-                return done(new ZikStockError('401-1'));
+                return done(new AppError('401-1'));
             }
         }
     );

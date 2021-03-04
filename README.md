@@ -1,13 +1,13 @@
-# zikstock-core
+# spot4zik-core
 
 > Not ready yet for production. Dev in progress
 
-zikstock is a platform to help the musicians to play music.  
-And because zikstock is very new, we propose only one functionality for now: **save in zikstock the musical resources you need to play music**.  
+spot4zik is a platform to help the musicians to play music.  
+And because spot4zik is very new, we propose only one functionality for now: **save in spot4zik the musical resources you need to play music**.  
 
 A musical resource is a Web link to a tablature, tutorial, movies, all you need to play music alone or together.  
 So you'll find in one place all the Web links you saved to play music. But, you certainly already have them saved in your browser. Isn't it?  
-So what is the value to use zikstock? It's because, you'll be able to share easily all your musical resources with your friends, and it's only a beginning.  
+So what is the value to use spot4zik? It's because, you'll be able to share easily all your musical resources with your friends, and it's only a beginning.  
 
 To be continued...
 
@@ -16,7 +16,7 @@ To be continued...
 [//]: < ## How to run it>
 
 [//]: < When you are in the root folder of the Dockerfile, first, you have to create the docker image:  >
-[//]: < `docker build -t=zikstock-core .`  >
+[//]: < `docker build -t=spot4zik-core .`  >
 [//]: < After that, you just have to run it:  >
 [//]: < `docker-compose up -V`  >
 [//]: < If you did no changes, you'll be able to use it on http://localhost:3000/api/zikresources.>
@@ -38,7 +38,7 @@ All the endpoints need to be logged in. So, if you are not, you'll have a `401 U
 
 ### zikresources
 
-A zikresource is a Web resource (based on a Web link) saved and used in zikstock.  
+A zikresource is a Web resource (based on a Web link) saved and used in spot4zik.  
 It looks like:
 
 ```json
@@ -68,7 +68,7 @@ It looks like:
 
 ##### Request
 
-Your first usage will be to save in zikstock a resource. The operation to use is `POST /zikresources`  
+Your first usage will be to save in spot4zik a resource. The operation to use is `POST /zikresources`  
 The resource has at least an url, and a title to use it easily. These two fields are the mandatory fields to create a zikresource.
 So, an example of the minimal body of a request could be:
 
@@ -93,7 +93,7 @@ The tags are here to let you free to add information you need. But you can't add
 
 After creating some zikresources, you'll want to get them.  
 To get your zikresources, you just have to do a `GET /zikresources?addedBy={your-username}`.
-Of course, you have to replace `you-username` by your Zikstock username (which is your email), but you can also get the zikresources of another user for example to see what to learn if you want to play with her/him.
+Of course, you have to replace `you-username` by your spot4zik username (which is your email), but you can also get the zikresources of another user for example to see what to learn if you want to play with her/him.
 
 ##### Responses
 

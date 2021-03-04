@@ -16,7 +16,7 @@ jest.mock('./zikresource-dao', () => {
         }),
     };
 });
-const { ZikStockError } = require('../zikstock-error/zikstock-error');
+const { AppError } = require('../spot4zik-error/app-error');
 const { ZikresourceBLO } = require('./zikresource-blo');
 
 const givenZikresourceWhichExists = () => {
@@ -97,7 +97,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-1");
     });
@@ -117,7 +117,7 @@ describe('The Zikresource business logic: ', () => {
         }
 
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-1");
     });
@@ -134,7 +134,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-1");
 
@@ -162,7 +162,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-1");
 
@@ -179,7 +179,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-2");
 
@@ -198,7 +198,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then an exception is thrown
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         // And the exception has the code 400-1
         expect(error.code).toEqual("400-2");
 
@@ -245,7 +245,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then we have a known exception
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("404-1");
     });
 
@@ -267,7 +267,7 @@ describe('The Zikresource business logic: ', () => {
             error = err;
         }
         // Then we have a known exception
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("500-4");
     });
 
@@ -281,7 +281,7 @@ describe('The Zikresource business logic: ', () => {
         } catch (err) {
             error = err;
         }
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("400-5");
         error = null;
         try {
@@ -293,7 +293,7 @@ describe('The Zikresource business logic: ', () => {
         } catch (err) {
             error = err;
         }
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("400-5");
     });
 

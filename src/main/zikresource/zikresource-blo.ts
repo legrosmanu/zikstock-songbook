@@ -1,5 +1,5 @@
 import { AddedByUser } from '../user/user';
-import { ZikStockError } from '../zikstock-error/zikstock-error';
+import { AppError } from '../spot4zik-error/app-error';
 import { Zikresource } from './zikresource';
 import { ZikresourceDAO } from './zikresource-dao';
 
@@ -46,30 +46,30 @@ export class ZikresourceBLO {
     async deleteOneZikresource(id: string, userWhoWantsTheDeletion: any): Promise<void> {
         let zikresource = await this.getOneZikresourceById(id);
         if (zikresource == null) {
-            throw new ZikStockError("404-1");
+            throw new AppError("404-1");
         }
         let isCreatedBySameUser = userWhoWantsTheDeletion.addedBy != null 
             && userWhoWantsTheDeletion.addedBy.email != null
             && await this.hasSameOwner(id, userWhoWantsTheDeletion.addedBy?.email);
         if (!isCreatedBySameUser) {
-            throw new ZikStockError("400-5");
+            throw new AppError("400-5");
         }
         let deleted = await this.zikResourceDAO.delete(zikresource);
         if (!deleted) {
-            throw new ZikStockError("500-4");
+            throw new AppError("500-4");
         }
     }
 
     async updateOneZikresource(id: string, data: any): Promise<Zikresource | undefined> {
         let zikresource = await this.getOneZikresourceById(id);
         if (zikresource == null) {
-            throw new ZikStockError("404-1");
+            throw new AppError("404-1");
         }
         this.checkIfDataAreValid(data);
         let isCreatedBySameUser = data.addedBy != null 
             && data.addedBy.email != null && await this.hasSameOwner(id, data.addedBy?.email);
         if (!isCreatedBySameUser) {
-            throw new ZikStockError("400-5");
+            throw new AppError("400-5");
         }
         // if prerequisites are ok, we don't have exception, so we do it:
         let zikResourceUpdated = await this.zikResourceDAO.updateOne(id, this.buildZikresourceInstance(data));
@@ -79,11 +79,11 @@ export class ZikresourceBLO {
     private checkIfDataAreValid(data: any): void {
         // 1. must have at least an url and a title
         if (data == null || data.url == null || data.title == null) {
-            throw new ZikStockError("400-1");
+            throw new AppError("400-1");
         }
         // 2. not more than 10 tags
         if (data.tags && data.tags.length > 10) {
-            throw new ZikStockError("400-2");
+            throw new AppError("400-2");
         }
     }
 

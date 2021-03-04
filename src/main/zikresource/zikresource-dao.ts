@@ -1,6 +1,6 @@
 import { Collection, Db, ObjectId } from "mongodb";
 import { DbHandlerFactory } from "../helpers/db-handler-factory";
-import { ZikStockError } from "../zikstock-error/zikstock-error";
+import { AppError } from "../spot4zik-error/app-error";
 import { Zikresource } from "./zikresource";
 
 export class ZikresourceDAO {
@@ -15,7 +15,7 @@ export class ZikresourceDAO {
     async save(zikresource: Zikresource): Promise<Zikresource> {
         let result = await this.collection?.insertOne(zikresource);
         if (!result || result.insertedCount !== 1) {
-            throw new ZikStockError("500-2");
+            throw new AppError("500-2");
         }
         return result.ops[0];
     }
@@ -40,7 +40,7 @@ export class ZikresourceDAO {
     async updateOne(id: string, zikresource: Zikresource): Promise<Zikresource|undefined> {
         let result = await this.collection?.replaceOne({_id: new ObjectId(zikresource._id)}, zikresource, { upsert: false });
         if (!result || result.result.ok !== 1) {
-            throw new ZikStockError("500-3");
+            throw new AppError("500-3");
         }
         return result?.ops[0];
     }

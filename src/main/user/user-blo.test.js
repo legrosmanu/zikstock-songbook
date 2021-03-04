@@ -9,7 +9,7 @@ jest.mock('./user-dao', () => {
         }),
     };
 });
-const { ZikStockError } = require("../zikstock-error/zikstock-error");
+const { AppError } = require("../spot4zik-error/app-error");
 const { User } = require("./user");
 const { UserBLO } = require("./user-blo");
 const bcrypt = require('bcrypt');
@@ -41,7 +41,7 @@ describe('user-blo', () => {
             error = err;
         }
         // Then we have a functionnal exception
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("409-1");
     });
 
@@ -63,7 +63,7 @@ describe('user-blo', () => {
             error = err;
         }
         // Then we have a functionnal exception
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("400-3");
     });
 
@@ -85,7 +85,7 @@ describe('user-blo', () => {
             error = err;
         }
         // Then we have a functionnal exception
-        expect(error instanceof ZikStockError).toBe(true);
+        expect(error instanceof AppError).toBe(true);
         expect(error.code).toEqual("400-4");
     });
 

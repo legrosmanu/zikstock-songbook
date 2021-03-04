@@ -1,16 +1,16 @@
 {
-  "name": "zikstock-core",
+  "name": "spot4zik-core",
   "version": "1.0.0",
   "main": "./src/index.js",
-  "desciption": "zikstock-core is proposing the web API for the main functionnalities of zikstock.",
-  "repository": "https://github.com/legrosmanu/zikstock-core.git",
+  "desciption": "spot4zik-core is proposing the web API for the main functionnalities of spot4zik.",
+  "repository": "https://github.com/legrosmanu/spot4zik-core.git",
   "author": "Emmanuel Legros <emmanuel.legros@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "lint": "eslint . ./dist/**/*.js",
     "prepush": "npm run build && npm run lint && npm test",
-    "test": "jest --coverage",
+    "test": "NODE_ENV=test jest --coverage",
     "start": "node ./dist/index.js"
   },
   "devDependencies": {

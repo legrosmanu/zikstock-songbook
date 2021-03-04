@@ -1,7 +1,6 @@
-import { ZikresourceDAO } from "../zikresource/zikresource-dao";
-import { ZikStockErrorDAO } from "./zikstock-error-dao";
+import { AppErrorDAO } from "./app-error-dao";
 
-export class ZikStockError extends Error {
+export class AppError extends Error {
 
     code: string;
     status: number;
@@ -15,7 +14,7 @@ export class ZikStockError extends Error {
         } else {
             this.status = 500;
         }
-        this.message = new ZikStockErrorDAO().getMessage(this.code);
+        this.message = new AppErrorDAO().getMessage(this.code);
     }
 
 }

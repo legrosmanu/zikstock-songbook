@@ -36,7 +36,7 @@ jest.mock('../helpers/secret-dao', () => {
 
 const app = require('../app');
 
-const { ZikStockError } = require('../zikstock-error/zikstock-error');
+const { AppError } = require('../spot4zik-error/app-error');
 
 describe('/POST zikresource', () => {
 
@@ -54,7 +54,7 @@ describe('/POST zikresource', () => {
     it("should return a 400 HTTP code if the data are not as expected to create a ZikResource.", async () => {
         // Given a known functionnal exception
         mockCreateZikresource.mockImplementation(() => {
-            throw new ZikStockError('400-1');
+            throw new AppError('400-1');
         });
         // When we do a POST with this ZikResource
         const res = await request(app).post('/api/zikresources').send({});

@@ -3,6 +3,9 @@ const { SecretDAO } = require("./secret-dao");
 const { DbHandlerFactory } = require('../helpers/db-handler-factory');
 const { Secret } = require("./secret");
 
+// May require additional time for downloading MongoDB binaries
+jest.setTimeout(600000);
+
 describe("Test the access to the secrets", () => {
 
     let daoToTest = null;

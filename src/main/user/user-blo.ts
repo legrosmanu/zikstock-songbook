@@ -1,4 +1,4 @@
-import { ZikStockError } from "../zikstock-error/zikstock-error";
+import { AppError } from "../spot4zik-error/app-error";
 import { User, UserWithoutPassword } from "./user";
 import { UserDAO } from "./user-dao";
 import * as bcrypt from 'bcrypt';
@@ -17,14 +17,14 @@ export class UserBLO {
 
     async createUser(data: any): Promise<User> {
         if (!this.emailIsValide(data.email)) {
-            throw new ZikStockError("400-4");
+            throw new AppError("400-4");
         }
         if (!this.passwordIsValid(data.password)) {
-            throw new ZikStockError("400-3");
+            throw new AppError("400-3");
         }
         const existingUser = await this.userDAO.retrieveOneByEmail(data.email);
         if (existingUser != null) {
-            throw new ZikStockError("409-1");
+            throw new AppError("409-1");
         }
         const encryptedPassword = await this.encryptPassword(data.password);
         const newUser = new User(data.email, data.displayName, encryptedPassword);
