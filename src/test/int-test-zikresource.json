@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ea3f2c13-48e3-4320-b426-caffcbfc7d5b",
+		"_postman_id": "e9eb84ec-e0e0-4c99-97e9-dfa2f34e2046",
 		"name": "int-test-zikresource",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,6 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0741eb44-ea81-43a1-8f0f-919d6a12f988",
 						"exec": [
 							"tests[\"Status code is 200\"] = responseCode.code = 200;",
 							"",
@@ -54,10 +53,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"url\": \"https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2\",\n  \"title\": \"Sober\"\n}",
-					"options": {
-						"raw": {}
-					}
+					"raw": "{\n  \"url\": \"https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2\",\n  \"title\": \"Sober\"\n}"
 				},
 				"url": {
 					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources",
@@ -88,10 +84,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"ok\",\n\t\"artist\": \"deftones\"\n}",
-					"options": {
-						"raw": {}
-					}
+					"raw": "{\n\t\"title\": \"ok\",\n\t\"artist\": \"deftones\"\n}"
 				},
 				"url": {
 					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources",
@@ -122,10 +115,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"url\": \"http://test.ok\",\n\t\"artist\": \"deftones\"\n}",
-					"options": {
-						"raw": {}
-					}
+					"raw": "{\n\t\"url\": \"http://test.ok\",\n\t\"artist\": \"deftones\"\n}"
 				},
 				"url": {
 					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources",
@@ -156,10 +146,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"url\": \"https://github.com/legrosmanu/spot4zik-core\",\n\t\"title\": \"ok\",\n\t\"tags\": [ {\"label\": \"tag1\", \"value\": \"tag1\" }, { \"label\": \"tag2\", \"value\": \"tag2\" },\n\t\t{ \"label\": \"tag3\", \"value\": \"tag3\" }, { \"label\": \"tag4\", \"value\": \"tag4\" },\n\t\t{ \"label\": \"tag5\", \"value\": \"tag5\" }, { \"label\": \"tag6\", \"value\": \"tag6\" },\n\t\t{ \"label\": \"tag7\", \"value\": \"tag7\" }, { \"label\": \"tag8\", \"value\": \"tag8\" },\n\t\t{ \"label\": \"tag9\", \"value\": \"tag9\" }, { \"label\": \"tag10\", \"value\": \"tag10\" },\n\t\t{ \"label\": \"tag11\", \"value\": \"tag11\" }]\n\t\n}",
-					"options": {
-						"raw": {}
-					}
+					"raw": "{\n\t\"url\": \"https://github.com/legrosmanu/spot4zik-core\",\n\t\"title\": \"ok\",\n\t\"tags\": [ {\"label\": \"tag1\", \"value\": \"tag1\" }, { \"label\": \"tag2\", \"value\": \"tag2\" },\n\t\t{ \"label\": \"tag3\", \"value\": \"tag3\" }, { \"label\": \"tag4\", \"value\": \"tag4\" },\n\t\t{ \"label\": \"tag5\", \"value\": \"tag5\" }, { \"label\": \"tag6\", \"value\": \"tag6\" },\n\t\t{ \"label\": \"tag7\", \"value\": \"tag7\" }, { \"label\": \"tag8\", \"value\": \"tag8\" },\n\t\t{ \"label\": \"tag9\", \"value\": \"tag9\" }, { \"label\": \"tag10\", \"value\": \"tag10\" },\n\t\t{ \"label\": \"tag11\", \"value\": \"tag11\" }]\n\t\n}"
 				},
 				"url": {
 					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources",
@@ -287,7 +274,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?added-by={{username}}",
+					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?addedBy={{username}}",
 					"protocol": "http",
 					"host": [
 						"{{api-url}}"
@@ -299,7 +286,7 @@
 					],
 					"query": [
 						{
-							"key": "added-by",
+							"key": "addedBy",
 							"value": "{{username}}"
 						}
 					]
@@ -333,7 +320,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?added-by=notUser",
+					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?addedBy=notUser",
 					"protocol": "http",
 					"host": [
 						"{{api-url}}"
@@ -345,7 +332,7 @@
 					],
 					"query": [
 						{
-							"key": "added-by",
+							"key": "addedBy",
 							"value": "notUser"
 						}
 					]
@@ -360,7 +347,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?added-by=userWithoutResources",
+					"raw": "http://{{api-url}}:{{api-port}}/api/zikresources?addedBy=userWithoutResources",
 					"protocol": "http",
 					"host": [
 						"{{api-url}}"
@@ -372,7 +359,7 @@
 					],
 					"query": [
 						{
-							"key": "added-by",
+							"key": "addedBy",
 							"value": "userWithoutResources"
 						}
 					]
@@ -422,6 +409,5 @@
 			},
 			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
