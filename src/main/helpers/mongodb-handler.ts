@@ -7,15 +7,15 @@ export class MongoDbHandler implements IDbHandler {
     uri: string;
     db?: Db;
 
-    constructor() { // TODO : change the URI
-        this.uri = 'mongodb://localhost:27017';
+    constructor() {
+        this.uri = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT;
         this.client = new MongoClient(this.uri, { useUnifiedTopology: true });
     }
 
     async connect() {
         // Connect the client to the server
         await this.client.connect();
-        this.db = this.client.db("spot4zik");
+        this.db = this.client.db(process.env.DB_NAME);
         console.log("Connected successfully to server");
     }
 

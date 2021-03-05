@@ -72,7 +72,7 @@ export class UserBLO {
     // At least one special character
     // No other kind of characters than alpha-num
     private passwordIsValid(password: string): boolean {
-        return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/.test(password);
+        return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,32})$/.test(password);
     }
 
 }
