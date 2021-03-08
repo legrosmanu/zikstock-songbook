@@ -1,6 +1,7 @@
 FROM node:latest
-WORKDIR /usr/src/app
-COPY package*.json ./
+ENV NODE_ENV=production
+WORKDIR /app
+COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
-COPY ./dist .
-CMD [ "sh", "-c", "node ./index.js" ]
+COPY ["./dist", "./dist"]
+CMD [ "npm", "start" ]
