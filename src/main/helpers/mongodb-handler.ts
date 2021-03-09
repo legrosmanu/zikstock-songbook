@@ -8,7 +8,9 @@ export class MongoDbHandler implements IDbHandler {
     db?: Db;
 
     constructor() {
-        this.uri = 'mongodb://' + process.env.DB_HOST + ':' + process.env.DB_PORT;
+        const dbHost = process.env.DB_HOST || "localhost";
+        const dbPort = process.env.DB_PORT || 27017;
+        this.uri = 'mongodb://' + dbHost + ':' + dbPort;
         this.client = new MongoClient(this.uri, { useUnifiedTopology: true });
     }
 

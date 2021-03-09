@@ -3,3 +3,4 @@ globalConfig.json
 coverage
 **/.DS_store
 dist
+data
