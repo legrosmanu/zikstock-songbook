@@ -1,7 +1,5 @@
 # spot4zik-core
 
-> Not ready yet for production. Dev in progress
-
 spot4zik is a platform to help the musicians to play music.  
 And because spot4zik is very new, we propose only one functionality for now: **save in spot4zik the musical resources you need to play music**.  
 
@@ -11,30 +9,49 @@ So what is the value to use spot4zik? It's because, you'll be able to share easi
 
 To be continued...
 
-[//]: < not docker for now >
 
-[//]: < ## How to run it>
+## How to test and run it
 
-[//]: < When you are in the root folder of the Dockerfile, first, you have to create the docker image:  >
-[//]: < `docker build -t=spot4zik-core .`  >
-[//]: < After that, you just have to run it:  >
-[//]: < `docker-compose up -V`  >
-[//]: < If you did no changes, you'll be able to use it on http://localhost:3000/api/zikresources.>
+### Unit tests
+
+You can look at the package.json file to see how to run tests, but the easy way is to run `npm run prepush` 
+which will transpile the Typescript into JS, check the ESlint rules and run the Jest tests.
+
+### Integration tests or UI development
+
+When you are in the root folder you can do a `docker-compose up` and the api will be accessible on http://localhost:3000/api.  
+For now, docker is proposed only for dev or tests.
+
+### Run it
+
+For now, you are free to use the cloud you want with a nodeJS and a MongoDB, and after a `npm run prepush`, you'll have just to do a `npm start` if you MongDB instance is running.  
+Too easy? you're right :-) The API will not work while you don't add a document in the secrets collection of your MongDB.  
+The document must be like the one you can find in [./integration-tests/dev-secret-key.json](./integration-tests/dev-secret-key.json).
 
 ## API usage
 
-### Errors  
+A Postman file is in the [./integration-tests](./integration-tests) folder to give you some examples how to use the API, so you can check it.
+
+### errors  
 
 The example of an error below shows you the format of the error you'll always have. Of course, you'll need also to take care the HTTP code of the HTTP response.  
 
 ```json
 {
-  "code": "403-1",
-  "details" : "You can't delete a zikresource you didn't create"
+    "code": "409-1",
+    "status": 409,
+    "message": "The User can't be created because this email has been already used by a User."
 }
 ```  
 
 All the endpoints need to be logged in. So, if you are not, you'll have a `401 Unauthorized`.
+
+### users
+
+Description will be here soon. For now, the main informations are :
+
+- You can create a user on /POST /users
+- You can login with /POST /users/login, which will give you a JWT in the body of the response.
 
 ### zikresources
 
@@ -58,9 +75,7 @@ It looks like:
       "value": "My personal tag"
     }
   ],
-  "createdAt": "2019-08-19T01:33:39Z",
-  "updatedAt": "2019-12-10T10:33:39Z",
-  "addedBy": "legrosmanu"
+  "addedBy": "test@test.com"
 }
 ```
 
