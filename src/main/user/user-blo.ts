@@ -66,13 +66,13 @@ export class UserBLO {
     }
 
     // check if the password is enough good
-    // Between 8 and 15 characters
+    // Between 8 and 32 characters
     // At least one lowcase and one uppercase
     // At least one number
     // At least one special character
     // No other kind of characters than alpha-num
     private passwordIsValid(password: string): boolean {
-        return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,32})$/.test(password);
+        return /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_#])([-+!*$@%_#\w]{8,32})$/.test(password);
     }
 
 }

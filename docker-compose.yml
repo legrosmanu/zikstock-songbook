@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+  mongo-insert-data:
+    build: ./integration-tests
+    depends_on:
+      - mongo
+  spot4zik-core:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo-insert-data
