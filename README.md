@@ -24,8 +24,8 @@ For now, docker is proposed only for dev or tests.
 
 ### Run it
 
-For now, you are free to use the cloud you want with a nodeJS and a MongoDB, and after a `npm run prepush`, you'll have just to do a `npm start` if you MongDB instance is running.  
-Too easy? you're right :-) The API will not work while you don't add a document in the secrets collection of your MongDB.  
+For now, you are free to use the cloud you want with a nodeJS and a MongoDB, and after a `npm run prepush`, you'll have just to do a `npm start` if your MongDB instance is running.  
+Too easy? you're right :-) The API will not work while you don't add a document in the secrets collection of your MongoDB.  
 The document must be like the one you can find in [./integration-tests/dev-secret-key.json](./integration-tests/dev-secret-key.json).
 
 ## API usage
