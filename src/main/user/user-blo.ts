@@ -27,6 +27,9 @@ export class UserBLO {
             throw new AppError("409-1");
         }
         const encryptedPassword = await this.encryptPassword(data.password);
+        if (!data.displayName || data.displayName == null) {
+            data.displayName = data.email;
+        }
         const newUser = new User(data.email, data.displayName, encryptedPassword);
         return await this.userDAO.create(newUser);
     }

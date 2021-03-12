@@ -75,7 +75,11 @@ It looks like:
       "value": "My personal tag"
     }
   ],
-  "addedBy": "test@test.com"
+  "addedBy": {
+    "email": "test@test.com",
+    "displayName": "what a user",
+    "link": "/users/e6c14f7c-ee7a-79e8-a0cf-5ff67e2224el"
+  }
 }
 ```
 
