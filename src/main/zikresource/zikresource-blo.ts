@@ -92,7 +92,7 @@ export class ZikresourceBLO {
         if (data.type) { zikresource.type = data.type; }
         if (data.artist) { zikresource.artist = data.artist; }
         if (data.tags) { zikresource.tags = data.tags; }
-        if (data._id && data.email && data.displayName) {
+        if (data._id && data.email) {
             zikresource.addedBy =  new AddedByUser(data._id, data.email, data.displayName);
         }
         return zikresource;
