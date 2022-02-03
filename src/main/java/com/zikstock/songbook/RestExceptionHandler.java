@@ -17,7 +17,7 @@ public class RestExceptionHandler {
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
     public ResponseEntity<ApiError> handleDataFormatError(RuntimeException ex, WebRequest request, HttpServletRequest httpRequest) {
         var apiError = new ApiError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), httpRequest.getRequestURI(), ex.getLocalizedMessage());
-        return new ResponseEntity<ApiError>(apiError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
 }
