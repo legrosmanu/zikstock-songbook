@@ -1,28 +1,42 @@
 package com.zikstock.songbook.zikresource;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@Data
+import java.util.UUID;
+
+@Entity
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class Zikresource {
 
-    @NonNull @NotNull  @Size(min=10, max=2048)
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    @NonNull
+    @NotNull
+    @Size(min = 10, max = 2048)
     private String url;
 
-    @NonNull @NotNull @Size(min=1, max=255)
+    @NonNull
+    @NotNull
+    @Size(min = 1, max = 255)
     private String title;
 
-    @Size(max=25)
+    @Size(max = 25)
     private String type;
-    @Size(max=50)
+    @Size(max = 50)
     private String artist;
 
     @Size(max = 10)
+    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name="zikresource_id")
+    @OrderColumn(name="tag_index")
     private ZikresourceTag[] tags;
 
     // TODO: addedBy?: AddedByUser;
