@@ -41,7 +41,7 @@ public class ZikresourceController {
     public Zikresource updateZikresource(@PathVariable UUID id, @RequestBody @Valid Zikresource zikresource) {
         if (!id.equals(zikresource.getId())) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "the zikresource in the body must have the same id than the id in uri");
+                    HttpStatus.BAD_REQUEST, "the zikresource in the body must have the same id than the id in the uri");
         }
         return this.repository.save(zikresource);
     }
