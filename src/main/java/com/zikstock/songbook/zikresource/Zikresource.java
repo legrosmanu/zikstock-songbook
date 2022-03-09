@@ -13,6 +13,7 @@ import java.util.UUID;
 @Setter
 @RequiredArgsConstructor
 @NoArgsConstructor
+@Table(name = "zikresources")
 public class Zikresource {
 
     @Id

@@ -16,6 +16,7 @@ public class ZikresourceController {
     private ZikresourceRepository repository;
 
     @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public Zikresource createZikresource(@RequestBody @Valid Zikresource zikresource){
         return this.repository.save(zikresource);
     }
