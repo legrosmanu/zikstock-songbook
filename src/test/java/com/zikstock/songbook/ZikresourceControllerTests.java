@@ -1,5 +1,7 @@
 package com.zikstock.songbook;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,7 @@ public class ZikresourceControllerTests {
     @Test
     public void creationIsOk() throws Exception {
         // GIVEN the simplest zikresource
-        var newZikresource = new JSONObject();
-        newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
-        newZikresource.put("title", "Sober");
+        JSONObject newZikresource = this.getSimpleZikresourceJson();
 
         // WHEN we add it into our system
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/zikresources")
@@ -41,8 +41,7 @@ public class ZikresourceControllerTests {
     @Test
     public void creationFailsWithMissedMandatoryData() throws Exception {
         // GIVEN a zikresource with a missed mandatory information
-        var newZikresource = new JSONObject();
-        newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
+        JSONObject newZikresource = this.getZikresourceJsonWithMissedMandatoryData();
 
         // WHEN we add it into our system
         MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/zikresources")
@@ -55,8 +54,18 @@ public class ZikresourceControllerTests {
     }
 
     @Test
-    public void creationFailsWithTooMuchTags() {
+    public void creationFailsWithTooMuchTags() throws Exception {
+        // GIVEN a zikresource with 11 tags
+        var newZikresource = this.getZikresourceJsonWithTooMuchTags();
 
+        // WHEN we add it into our system
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/zikresources")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newZikresource.toString())).andReturn();
+
+        // THEN we have a 400 AND the response contains a message to explain the error
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
+        assertTrue(result.getResponse().getContentAsString().contains("\"message\":\"Validation failed"));
     }
 
     @Test
@@ -92,6 +101,34 @@ public class ZikresourceControllerTests {
     @Test
     public void updateFailsWithTooMuchTags() {
 
+    }
+
+    private JSONObject getSimpleZikresourceJson() throws JSONException {
+        var newZikresource = new JSONObject();
+        newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
+        newZikresource.put("title", "Sober");
+        return newZikresource;
+    }
+
+    private JSONObject getZikresourceJsonWithMissedMandatoryData() throws JSONException {
+        var newZikresource = new JSONObject();
+        newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
+        return newZikresource;
+    }
+
+    private JSONObject getZikresourceJsonWithTooMuchTags() throws JSONException {
+        var newZikresource = new JSONObject();
+        newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
+        newZikresource.put("title", "Sober");
+        var tags = new JSONArray();
+        for (int i = 0 ; i < 11 ; i++) {
+            var tag = new JSONObject();
+            tag.put("label", "tag" + i);
+            tag.put("value", "value" + i);
+            tags.put(tag);
+        }
+        newZikresource.put("tags", tags);
+        return newZikresource;
     }
 
 }
