@@ -15,6 +15,9 @@ public class ZikresourceController {
     @Autowired
     private ZikresourceRepository repository;
 
+    @Autowired
+    private ZikresourceService service;
+
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Zikresource createZikresource(@RequestBody @Valid Zikresource zikresource){
@@ -22,15 +25,14 @@ public class ZikresourceController {
     }
 
     @GetMapping
-    public Collection<Zikresource> getZikresources() {
-        List<Zikresource> zikresources = new ArrayList<>();
-        this.repository.findAll().forEach(zikresources::add);
-        return zikresources;
+    public Iterable<Zikresource> getZikresources() {
+        // TODO: will be modified later with business rules and pagination.
+        return this.repository.findAll();
     }
 
     @GetMapping("/{id}")
     public Zikresource getZikresource(@PathVariable UUID id) {
-        Optional<Zikresource> zikresource = this.repository.findById(id);
+        Optional<Zikresource> zikresource = this.service.getZikresource(id);
         if (!zikresource.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     String.join(" ", "the zikresource", id.toString(),"doesn't exist."));
@@ -40,11 +42,11 @@ public class ZikresourceController {
 
     @PutMapping("/{id}")
     public Zikresource updateZikresource(@PathVariable UUID id, @RequestBody @Valid Zikresource zikresource) {
-        if (!id.equals(zikresource.getId())) {
+        if (zikresource.getId() != null && !id.equals(zikresource.getId())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "the zikresource in the body must have the same id than the id in the uri");
         }
-        return this.repository.save(zikresource);
+        return this.service.updateZikresource(zikresource);
     }
 
     @DeleteMapping("/{id}")

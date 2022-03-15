@@ -13,7 +13,7 @@
 	<name>songbook</name>
 	<description>Service to manage zikresources and categorized them.</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

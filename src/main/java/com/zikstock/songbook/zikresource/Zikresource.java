@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class Zikresource {
 
     @Id
+    @Type(type="uuid-char")
     @GeneratedValue
     private UUID id;
 
