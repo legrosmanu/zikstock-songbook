@@ -133,13 +133,31 @@ public class ZikresourceControllerTests {
     }
 
     @Test
-    public void updateFailsWithMissedMandatoryData() {
+    public void updateFailsWithMissedMandatoryData() throws Exception {
+        // GIVEN a zikresource with a missed mandatory information
+        String existingZikresource = this.getZikresourceJsonWithMissedMandatoryData();
 
+    // WHEN we update it in our system
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/zikresources/" + this.getExistingZikresourceId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(existingZikresource)).andReturn();
+
+        // THEN we have a 400
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
     }
 
     @Test
-    public void updateFailsWithTooMuchTags() {
+    public void updateFailsWithTooMuchTags() throws Exception {
+        // GIVEN a zikresource with 11 tags
+        String existingZikresource = this.getZikresourceJsonWithTooMuchTags();
 
+        // WHEN we update it in our system
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/zikresources/" + this.getExistingZikresourceId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(existingZikresource)).andReturn();
+
+        // THEN we have a 400
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
     }
 
     private String getSimpleZikresourceJson() {
@@ -181,16 +199,19 @@ public class ZikresourceControllerTests {
         return String.format(existingZikresource, this.getExistingZikresourceId());
     }
 
-    private String getZikresourceJsonWithMissedMandatoryData() throws JSONException {
-        return """
+    private String getZikresourceJsonWithMissedMandatoryData() {
+        String tooMuchTags = """
                 {
+                    "id": "%s",
                     "url": "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2"
                 }
                 """;
+        return String.format(tooMuchTags, this.getExistingZikresourceId());
     }
 
     private String getZikresourceJsonWithTooMuchTags() throws JSONException {
         var newZikresource = new JSONObject();
+        newZikresource.put("id", this.getExistingZikresourceId());
         newZikresource.put("url", "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
         newZikresource.put("title", "Sober");
         var tags = new JSONArray();
