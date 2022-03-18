@@ -26,4 +26,9 @@ public class ZikresourceService {
 
         return this.repository.save(zikresource);
     }
+
+    void deleteZikresource(UUID id) {
+        Optional<Zikresource> existingZikresource = this.getZikresource(id);
+        existingZikresource.ifPresent(zikresource -> this.repository.delete(zikresource));
+    }
 }

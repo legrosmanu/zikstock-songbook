@@ -1,12 +1,10 @@
 package com.zikstock.songbook.zikresource;
 
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import lombok.*;
-import org.hibernate.annotations.Type;
-
 import java.util.UUID;
 
 @Entity
@@ -18,8 +16,8 @@ import java.util.UUID;
 public class Zikresource {
 
     @Id
-    @Type(type="uuid-char")
     @GeneratedValue
+    @Column(name = "id", columnDefinition = "uuid", updatable = false, nullable = false)
     private UUID id;
 
     @NonNull
@@ -38,11 +36,16 @@ public class Zikresource {
     private String artist;
 
     @Size(max = 10)
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="zikresource_id")
-    @OrderColumn(name="tag_index")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "zikresource_id")
+    @OrderColumn(name = "tag_index")
     private ZikresourceTag[] tags;
 
+    @Version
+    private Long version;
+
     // TODO: addedBy?: AddedByUser;
+
+
 
 }

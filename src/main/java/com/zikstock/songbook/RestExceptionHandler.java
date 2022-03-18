@@ -1,5 +1,6 @@
 package com.zikstock.songbook;
 
+import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(
-            Exception ex, @Nullable Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected @NonNull ResponseEntity<Object> handleExceptionInternal(
+            Exception ex, @Nullable Object body, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
 
         var specificBody = new ApiError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getLocalizedMessage());
 

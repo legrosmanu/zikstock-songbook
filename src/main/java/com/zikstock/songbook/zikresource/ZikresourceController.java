@@ -2,6 +2,7 @@ package com.zikstock.songbook.zikresource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,7 +21,11 @@ public class ZikresourceController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Zikresource createZikresource(@RequestBody @Valid Zikresource zikresource){
+    public Zikresource createZikresource(@RequestBody @Valid Zikresource zikresource) {
+        if (zikresource.getId() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avoid to add an id in the body of the request during creation");
+        }
+        // TODO: catch to log ObjectOptimisticLockingFailureException
         return this.repository.save(zikresource);
     }
 
@@ -33,9 +38,9 @@ public class ZikresourceController {
     @GetMapping("/{id}")
     public Zikresource getZikresource(@PathVariable UUID id) {
         Optional<Zikresource> zikresource = this.service.getZikresource(id);
-        if (!zikresource.isPresent()) {
+        if (zikresource.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    String.join(" ", "the zikresource", id.toString(),"doesn't exist."));
+                    String.join(" ", "the zikresource", id.toString(), "doesn't exist."));
         }
         return zikresource.get();
     }
@@ -51,8 +56,7 @@ public class ZikresourceController {
 
     @DeleteMapping("/{id}")
     public void deleteZikresource(@PathVariable UUID id) {
-        Optional<Zikresource> zikresource = this.repository.findById(id);
-        zikresource.ifPresent(this.repository::delete);
+        this.service.deleteZikresource(id);
     }
 
 }

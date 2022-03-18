@@ -39,6 +39,21 @@ public class ZikresourceControllerTests {
     }
 
     @Test
+    public void creationFailsIfTheSubresourceAlreadyExists() throws Exception {
+        // GIVEN a zikresource already saved in our system
+        String existingZikresource = this.getExistingZikresourceJson();
+
+        // WHEN we add it into our system
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/zikresources")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(existingZikresource)).andReturn();
+
+        // THEN we have a ???
+        System.out.println(result.getResponse().getContentAsString());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), result.getResponse().getStatus());
+    }
+
+    @Test
     public void creationFailsWithMissedMandatoryData() throws Exception {
         // GIVEN a zikresource with a missed mandatory information
         String newZikresource = this.getZikresourceJsonWithMissedMandatoryData();
@@ -69,23 +84,39 @@ public class ZikresourceControllerTests {
     }
 
     @Test
-    public void getIsOkForKnownZikresource() {
+    public void getIsOkForKnownZikresource() throws Exception {
+        String knownId = this.getExistingZikresourceId();
 
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/zikresources/" + knownId)).andReturn();
+
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
 
     @Test
-    public void getIsNotFoundForUnknownZikresource() {
+    public void getIsNotFoundForUnknownZikresource() throws Exception {
+        String unknownId = this.getUnknownZikresourceId();
 
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/zikresources/" + unknownId)).andReturn();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), result.getResponse().getStatus());
     }
 
     @Test
-    public void deleteIsOkForKnownZikresource() {
+    public void deleteIsOkForKnownZikresource() throws Exception {
+        String knownId = this.getExistingZikresourceId();
 
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/api/zikresources/" + knownId)).andReturn();
+
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
 
     @Test
-    public void deleteHasNoEffectForUnknownZikresource() {
+    public void deleteHasNoEffectForUnknownZikresource() throws Exception{
+        String unknownId = this.getUnknownZikresourceId();
 
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/api/zikresources/" + unknownId)).andReturn();
+
+        assertEquals(HttpStatus.OK.value(), result.getResponse().getStatus());
     }
 
     @Test
@@ -137,7 +168,7 @@ public class ZikresourceControllerTests {
         // GIVEN a zikresource with a missed mandatory information
         String existingZikresource = this.getZikresourceJsonWithMissedMandatoryData();
 
-    // WHEN we update it in our system
+        // WHEN we update it in our system
         MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/zikresources/" + this.getExistingZikresourceId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(existingZikresource)).andReturn();
@@ -179,23 +210,23 @@ public class ZikresourceControllerTests {
 
     private String getUnknownZikresourceJson() {
         String unknownZikresource = """
-            {
-                "id": "%s",
-                "url": "https://www.fake.fr/tabs-pdf/unknown-tab",
-                "title": "Unknown zikresource"
-            }
-            """;
+                {
+                    "id": "%s",
+                    "url": "https://www.fake.fr/tabs-pdf/unknown-tab",
+                    "title": "Unknown zikresource"
+                }
+                """;
         return String.format(unknownZikresource, this.getUnknownZikresourceId());
     }
 
     private String getExistingZikresourceJson() {
         String existingZikresource = """
-            {
-                "id": "%s",
-                "url": "https://www.guitare6.fr/tabs-pdf/tabs.php?pdf=JimiHendrix/LittleWing-1",
-                "title": "Little wing"
-            }
-            """;
+                {
+                    "id": "%s",
+                    "url": "https://www.guitare6.fr/tabs-pdf/tabs.php?pdf=JimiHendrix/LittleWing-1",
+                    "title": "Little wing"
+                }
+                """;
         return String.format(existingZikresource, this.getExistingZikresourceId());
     }
 
