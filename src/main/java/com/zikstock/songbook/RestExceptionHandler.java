@@ -11,14 +11,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
-
     @Override
-    protected @NonNull ResponseEntity<Object> handleExceptionInternal(
-            Exception ex, @Nullable Object body, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
-
-        var specificBody = new ApiError(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getLocalizedMessage());
-
+    protected @NonNull ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, @NonNull HttpHeaders headers, @NonNull HttpStatus status, @NonNull WebRequest request) {
+        var specificBody = new ApiError(status, ex.getLocalizedMessage());
         return super.handleExceptionInternal(ex, specificBody, headers, status, request);
     }
-
 }

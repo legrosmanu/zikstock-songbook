@@ -14,10 +14,10 @@ public class ApiError {
     private String error;
     private String message;
 
-    public ApiError(HttpStatus status, String error, String message) {
+    public ApiError(HttpStatus status, String message) {
         this.timestamp = Timestamp.from(Instant.now());
         this.status = status.value();
-        this.error = error;
+        this.error = status.getReasonPhrase();
         this.message = message;
     }
 
