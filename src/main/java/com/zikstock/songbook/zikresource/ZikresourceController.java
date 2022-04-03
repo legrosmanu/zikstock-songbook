@@ -1,6 +1,6 @@
 package com.zikstock.songbook.zikresource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,13 +11,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/zikresources")
+@RequiredArgsConstructor
 public class ZikresourceController {
 
-    @Autowired
-    private ZikresourceRepository repository;
-
-    @Autowired
-    private ZikresourceService service;
+    private final ZikresourceRepository repository;
+    private final ZikresourceService service;
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)

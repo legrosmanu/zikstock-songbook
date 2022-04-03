@@ -1,6 +1,6 @@
 package com.zikstock.songbook.zikresource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,10 +9,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ZikresourceService {
 
-    @Autowired
-    private ZikresourceRepository repository;
+    private final ZikresourceRepository repository;
 
     Optional<Zikresource> getZikresource(UUID id){
         return this.repository.findById(id);
@@ -29,6 +29,6 @@ public class ZikresourceService {
 
     void deleteZikresource(UUID id) {
         Optional<Zikresource> existingZikresource = this.getZikresource(id);
-        existingZikresource.ifPresent(zikresource -> this.repository.delete(zikresource));
+        existingZikresource.ifPresent(this.repository::delete);
     }
 }
