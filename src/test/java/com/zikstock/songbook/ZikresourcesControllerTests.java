@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = SongbookApplication.class)
 @AutoConfigureMockMvc
-public class ZikresourceControllerTests {
+public class ZikresourcesControllerTests {
 
     @Autowired
     private MockMvc mvc;
