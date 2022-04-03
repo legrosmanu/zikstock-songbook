@@ -1,6 +1,8 @@
-package com.zikstock.songbook.zikresource;
+package com.zikstock.songbook.zikresource.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zikstock.songbook.zikresource.IZikresourcesController;
+import com.zikstock.songbook.zikresource.IZikresourceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,17 +12,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/zikresources")
-public class ZikresourceController {
+@RequiredArgsConstructor
+public class ZikresourcesController implements IZikresourcesController {
 
-    @Autowired
-    private ZikresourceRepository repository;
+    private final IZikresourceRepository repository;
+    private final ZikresourcesService service;
 
-    @Autowired
-    private ZikresourceService service;
-
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
+    @Override
     public Zikresource createZikresource(@RequestBody @Valid Zikresource zikresource) {
         if (zikresource.getId() != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avoid to add an id in the body of the request during creation");
@@ -29,13 +27,13 @@ public class ZikresourceController {
         return this.repository.save(zikresource);
     }
 
-    @GetMapping
+    @Override
     public Iterable<Zikresource> getZikresources() {
         // TODO: will be modified later with business rules and pagination.
         return this.repository.findAll();
     }
 
-    @GetMapping("/{id}")
+    @Override
     public Zikresource getZikresource(@PathVariable UUID id) {
         Optional<Zikresource> zikresource = this.service.getZikresource(id);
         if (zikresource.isEmpty()) {
@@ -45,7 +43,7 @@ public class ZikresourceController {
         return zikresource.get();
     }
 
-    @PutMapping("/{id}")
+    @Override
     public Zikresource updateZikresource(@PathVariable UUID id, @RequestBody @Valid Zikresource zikresource) {
         if (zikresource.getId() != null && !id.equals(zikresource.getId())) {
             throw new ResponseStatusException(
@@ -54,7 +52,7 @@ public class ZikresourceController {
         return this.service.updateZikresource(zikresource);
     }
 
-    @DeleteMapping("/{id}")
+    @Override
     public void deleteZikresource(@PathVariable UUID id) {
         this.service.deleteZikresource(id);
     }

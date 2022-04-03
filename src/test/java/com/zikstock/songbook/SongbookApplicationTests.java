@@ -1,6 +1,6 @@
 package com.zikstock.songbook;
 
-import com.zikstock.songbook.zikresource.ZikresourceController;
+import com.zikstock.songbook.zikresource.IZikresourcesController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,11 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SongbookApplicationTests {
 
 	@Autowired
-	private ZikresourceController zikresourceController;
+	private IZikresourcesController restZikresourceController;
 
 	@Test
 	void contextLoads() {
-		assertThat(zikresourceController).isNotNull();
+		assertThat(restZikresourceController).isNotNull();
 	}
 
 }

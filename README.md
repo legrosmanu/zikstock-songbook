@@ -46,7 +46,7 @@ The example of an error below shows you the format of the error you'll always ha
   "timestamp": "2022-02-17T20:58:52.355+00:00",
   "status": 400,
   "error": "Bad Request",
-  "message": "Required request body is missing: public com.zikstock.songbook.zikresource.Zikresource com.zikstock.songbook.zikresource.ZikresourceController.createZikresource(com.zikstock.songbook.zikresource.Zikresource)"
+  "message": "Required request body is missing: public com.zikstock.songbook.zikresource.Zikresource"
 }
 ```  
 

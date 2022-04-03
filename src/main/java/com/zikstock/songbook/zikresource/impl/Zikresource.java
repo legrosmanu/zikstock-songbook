@@ -1,4 +1,4 @@
-package com.zikstock.songbook.zikresource;
+package com.zikstock.songbook.zikresource.impl;
 
 import lombok.*;
 

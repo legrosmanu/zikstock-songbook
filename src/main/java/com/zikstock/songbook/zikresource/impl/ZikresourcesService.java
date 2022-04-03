@@ -1,6 +1,8 @@
-package com.zikstock.songbook.zikresource;
+package com.zikstock.songbook.zikresource.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zikstock.songbook.zikresource.IZikresourcesService;
+import com.zikstock.songbook.zikresource.IZikresourceRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,16 +11,18 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ZikresourceService {
+@RequiredArgsConstructor
+public class ZikresourcesService implements IZikresourcesService {
 
-    @Autowired
-    private ZikresourceRepository repository;
+    private final IZikresourceRepository repository;
 
-    Optional<Zikresource> getZikresource(UUID id){
+    @Override
+    public Optional<Zikresource> getZikresource(UUID id){
         return this.repository.findById(id);
     }
 
-    Zikresource updateZikresource(Zikresource zikresource) throws ResponseStatusException {
+    @Override
+    public Zikresource updateZikresource(Zikresource zikresource) throws ResponseStatusException {
         Optional<Zikresource> existingZikresource = this.getZikresource(zikresource.getId());
         if (existingZikresource.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The zikresource to update has not been found.");
@@ -27,8 +31,9 @@ public class ZikresourceService {
         return this.repository.save(zikresource);
     }
 
-    void deleteZikresource(UUID id) {
+    @Override
+    public void deleteZikresource(UUID id) {
         Optional<Zikresource> existingZikresource = this.getZikresource(id);
-        existingZikresource.ifPresent(zikresource -> this.repository.delete(zikresource));
+        existingZikresource.ifPresent(this.repository::delete);
     }
 }
