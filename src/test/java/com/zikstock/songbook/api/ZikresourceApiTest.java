@@ -132,11 +132,11 @@ class ZikresourceApiTest {
   }
 
   @Test
-  @DisplayName("Should throw a not found error when trying to delete an unknown zikresource")
+  @DisplayName("Should return a 204 on the delete because indempotent, even if the resource doesn't exist")
   void shouldNotDeleteTheUnknownResource() {
     given()
         .when().delete("/zikresources/56d4ff88-6606-4b48-b430-ab4cf9be061b")
-        .then().statusCode(404);
+        .then().statusCode(204);
   }
 
 }

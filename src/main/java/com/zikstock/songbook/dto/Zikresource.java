@@ -2,8 +2,8 @@ package com.zikstock.songbook.dto;
 
 import java.util.UUID;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +17,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record Zikresource(
         @JsonProperty(access = Access.READ_ONLY)
-        UUID _id,
+        UUID id,
 
         @NotEmpty(message = "The url field is mandatory")
         @Size(min = 10, max = 2048, message = "The url field can't be longer than 2048 caracters.")
@@ -33,6 +33,6 @@ public record Zikresource(
         List<ZikresourceTag> tags) {
 
         public Zikresource(ZikresourceEntity entity) {
-            this(entity.get_id(), entity.getUrl(), entity.getTitle(), entity.getArtist(), entity.getTags());
+            this(entity.getId(), entity.getUrl(), entity.getTitle(), entity.getArtist(), null);
         }
 }
