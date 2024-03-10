@@ -11,85 +11,27 @@ To be continued...
 
 ## How to test and run it
 
-### Environment variables
-
-You'll need these variables (of course, use the values related to your context):  
-
-```bash
-In progress
-```
-
-If you use colima on macOs, you could need to have also these variables:
-```bash
-export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker/sock
-export DOCKER_HOST="unix://${HOME}/.colima/docker.sock"
-export TESTCONTAINERS_RYUK_DISABLED=true
-```
-
 ### Unit tests
 
-TODO
+Need a bit more time before describing it here ;-)
 
 ### Integration tests or UI development
 
-TODO
+Need a bit more time before describing it here ;-)
 
 ### Run it
 
-zikstock is a Quarkus app. If you know Quarkus, you know how to run it ;-).  
+Need a bit more time before describing it here ;-)
 
 #### Running the application in dev mode
 
-You can run your application in dev mode that enables live coding using:
-
-```shell script
-./mvnw compile quarkus:dev
-```
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+In progress
 
 #### Packaging and running the application
 
-The application can be packaged using:
-
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-#### Creating a native executable
-
-You can create a native executable using:  
-
-```shell script
-./mvnw package -Pnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:  
-
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/zikstock-songbook-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+In progress
 
 ## API usage
-
-TODO
 
 ### errors
 
@@ -108,10 +50,7 @@ All the endpoints need to be logged in. So, if you are not, you'll have a `401 U
 
 ### users
 
-Description will be here soon. For now, the main information are :
-
-- You can create a user on /POST /users
-- You can log in with /POST /users/login, which will give you a JWT in the body of the response.
+Need a bit more time before describing it here ;-)
 
 ### zikresources
 
