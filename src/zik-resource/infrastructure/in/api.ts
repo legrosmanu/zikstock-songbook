@@ -1,5 +1,5 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { logger } from '../util/logger';
+import { logger } from '../../../shared/logger';
 
 const router: Router = express.Router();
 

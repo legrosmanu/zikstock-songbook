@@ -1,8 +1,8 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
-import { logger } from './util/logger';
-import zikResourcesRoutes from './zik-resource/api';
-import { errorMiddleware } from './util/api-error';
+import { logger } from './shared/logger';
+import zikResourcesRoutes from './zik-resource/infrastructure/in/api';
+import { errorMiddleware } from './shared/api-error';
 
 dotenv.config();
 const port = process.env.PORT || 3000;
