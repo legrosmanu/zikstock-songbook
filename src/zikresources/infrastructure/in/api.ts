@@ -11,6 +11,6 @@ const getZikresources = async function(req: Request, res: Response, next: NextFu
         next(err);
     }
 };
-router.get('/', (req: Request, res: Response, next: NextFunction) => getZikresources(req, res, next));
+router.get('/', getZikresources);
 
 export default router;
