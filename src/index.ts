@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import { logger } from './shared/logger';
-import zikResourcesRoutes from './zikresources/infrastructure/in/api';
+import zikResourcesRoutes from './zikresources/api';
 import { errorMiddleware } from './shared/api-error';
 
 dotenv.config();
