@@ -24,7 +24,7 @@ router.get('/:userId', getZikresources);
 
 const postZikresource = async function(req: Request, res: Response, next: NextFunction) {
     try {
-        await createZikresource(req.body, db);
+        await createZikresource(req.body);
     } catch (err) {
         next(err);
     }
