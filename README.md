@@ -25,7 +25,8 @@ Need a bit more time before describing it here ;-)
 
 #### Running the application in dev mode
 
-In progress
+In progress... but because we use Firestore, the firestore emulator is used for test and dev mode: 
+```gcloud emulators firestore start```
 
 #### Packaging and running the application
 

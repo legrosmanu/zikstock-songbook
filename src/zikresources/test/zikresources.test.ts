@@ -1,8 +1,14 @@
 import { getZikresourcesOfUser } from '../service';
 
-test('should retrieve only the zikresources of the expected user', async () => {
-  var zikresources = await getZikresourcesOfUser('legrosmanu');
+describe("Retrieve behavior on zikresource", () => {
 
-  expect(zikresources).not.toBeNull();
-  expect(zikresources).toHaveLength(2);
+  const testTimeout = 10000;
+
+  test('should retrieve only the zikresources of the expected user', async () => {
+    var zikresources = await getZikresourcesOfUser('legrosmanu');
+
+    expect(zikresources).not.toBeNull();
+    expect(zikresources).toHaveLength(2);
+  }, testTimeout);
+
 });
