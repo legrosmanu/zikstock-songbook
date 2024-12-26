@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.zikstock.songbook.dto.Zikresource;
+import com.zikstock.songbook.model.Zikresource;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -48,7 +48,7 @@ class ZikresourceApiTest {
           "title": "Sober",
           "artist": "Tool"
         }
-          """;
+        """;
     var response = given()
         .request().contentType("application/json").body(body)
         .when().post("zikresources")
@@ -110,7 +110,7 @@ class ZikresourceApiTest {
             { "label": "label10", "value": "value11" }
           ]
         }
-          """;
+        """;
 
     var response = given()
         .request().contentType("application/json").body(body)
@@ -125,7 +125,7 @@ class ZikresourceApiTest {
 
   @Test
   @DisplayName("Should delete the zikresource that must be deleted")
-  void shouldDeleteTheExpedResource() {
+  void shouldDeleteTheExpectedResource() {
     given()
         .when().delete("/zikresources/e337298e-eec1-4443-b0b7-77e9f307dec9")
         .then().statusCode(204);
