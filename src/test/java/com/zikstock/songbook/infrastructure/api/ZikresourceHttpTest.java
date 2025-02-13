@@ -1,4 +1,4 @@
-package com.zikstock.songbook.api;
+package com.zikstock.songbook.infrastructure.api;
 
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -8,13 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.zikstock.songbook.model.Zikresource;
+import com.zikstock.songbook.domain.Zikresource;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
-class ZikresourceApiTest {
+class ZikresourceHttpTest {
 
   @Test
   void shouldGetAllZikresources() {

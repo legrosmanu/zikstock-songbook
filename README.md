@@ -1,11 +1,11 @@
 # zikstock-songbook
 
-zikstock is a platform to help the musicians to play music.  
-And because zikstock is very new, we propose only one functionality for now: **save in zikstock the musical resources you need to play music**.
+Zikstock is a platform to help the musicians to play music.  
+And because Zikstock is very new, we propose only one functionality for now: **save in Zikstock the musical resources you need to play music**.
 
 A musical resource is a Web link to a tablature, tutorial, movies, all you need to play music alone or together.  
 So you'll find in one place all the Web links you saved to play music. But, you certainly already have them saved in your browser. Isn't it?  
-So what is the value to use zikstock? It's because, you'll be able to share easily all your musical resources with your friends, and it's only a beginning.
+So what is the value to use Zikstock? It's because, you'll be able to share easily all your musical resources with your friends, and it's only a beginning.
 
 To be continued...
 
@@ -19,13 +19,6 @@ You'll need these variables (of course, use the values related to your context):
 In progress
 ```
 
-If you use colima on macOs, you could need to have also these variables:
-```bash
-export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker/sock
-export DOCKER_HOST="unix://${HOME}/.colima/docker.sock"
-export TESTCONTAINERS_RYUK_DISABLED=true
-```
-
 ### Unit tests
 
 TODO
@@ -36,7 +29,7 @@ TODO
 
 ### Run it
 
-zikstock is a Quarkus app. If you know Quarkus, you know how to run it ;-).  
+Zikstock is a Quarkus app. If you know Quarkus, you know how to run it ;-)
 
 #### Running the application in dev mode
 
@@ -69,24 +62,6 @@ If you want to build an _über-jar_, execute the following command:
 
 The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
 
-#### Creating a native executable
-
-You can create a native executable using:  
-
-```shell script
-./mvnw package -Pnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:  
-
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/zikstock-songbook-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
 ## API usage
 
 TODO
@@ -100,7 +75,7 @@ The example of an error below shows you the format of the error you'll always ha
   "timestamp": "2022-02-17T20:58:52.355+00:00",
   "status": 400,
   "error": "Bad Request",
-  "message": "Required request body is missing: public com.zikstock.songbook.zikresource.Zikresource"
+  "message": "Required request body is missing: ..."
 }
 ```  
 
