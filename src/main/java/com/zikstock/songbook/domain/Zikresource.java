@@ -1,7 +1,5 @@
 package com.zikstock.songbook.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -9,8 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record Zikresource(
-        @JsonProperty(access = Access.READ_ONLY)
-        UUID _id,
+        UUID id,
 
         @NotEmpty(message = "The url field is mandatory")
         @Size(min = 10, max = 2048, message = "The url field can't be longer than 2048 characters.")

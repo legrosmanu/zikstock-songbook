@@ -25,7 +25,7 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         var newZikresourceId = UUID.randomUUID();
         var zikResourceToCreate = zikresource.withId(newZikresourceId);
 
-        var command = collection.document(newZikresourceId.toString()).set(zikResourceToCreate);
+        var command = collection.document(zikResourceToCreate.id().toString()).set(zikResourceToCreate);
         command.get();
 
         return zikResourceToCreate;

@@ -33,7 +33,7 @@ class ZikresourceHttpTest {
     then(response.url()).isEqualTo("https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
     then(response.title()).isEqualTo("Sober");
     then(response.artist()).isEqualTo("Tool");
-    then(response._id()).isNotNull();
+    then(response.id()).isNotNull();
   }
 
   @Test
