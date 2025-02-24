@@ -24,4 +24,9 @@ public record Zikresource(
 
         @Size(max = 10, message = "Maximum 10 tags are allowed.")
         List<ZikresourceTag> tags) {
+
+    public Zikresource withId(UUID id) {
+        return new Zikresource(id, this.url, this.title, this.artist, this.tags);
+    }
+
 }

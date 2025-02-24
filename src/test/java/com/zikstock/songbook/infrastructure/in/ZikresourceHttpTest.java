@@ -1,4 +1,4 @@
-package com.zikstock.songbook.infrastructure.api;
+package com.zikstock.songbook.infrastructure.in;
 
 import com.zikstock.songbook.domain.Zikresource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -6,35 +6,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.BDDAssertions.then;
 
 @QuarkusTest
 class ZikresourceHttpTest {
-
-  /* Need to implement the GET
-  @Test
-  void shouldGetAllZikresources() {
-    given()
-        .when().get("/zikresources")
-        .then()
-        .statusCode(200)
-        .assertThat()
-        .body("size()", is(2));
-  }
-
-  @Test
-  void shouldGetZikresource() {
-    var response = given().when().get("/zikresources/c5d027da-1689-4217-8309-edd8283e99fe")
-        .then()
-        .statusCode(200)
-        .extract()
-        .as(Zikresource.class);
-
-    assertEquals("https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2", response.url());
-    assertEquals("Sober", response.title());
-    assertEquals("Tool", response.artist());
-  }*/
 
   @Test
   @DisplayName("If the zikresource contains all the mandatory fields, the zikresource should be created.")
@@ -54,9 +29,11 @@ class ZikresourceHttpTest {
         .extract()
         .as(Zikresource.class);
 
-    assertEquals("https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2", response.url());
-    assertEquals("Sober", response.title());
-    assertEquals("Tool", response.artist());
+    // THEN
+    then(response.url()).isEqualTo("https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2");
+    then(response.title()).isEqualTo("Sober");
+    then(response.artist()).isEqualTo("Tool");
+    then(response._id()).isNotNull();
   }
 
   @Test
@@ -117,24 +94,7 @@ class ZikresourceHttpTest {
         .extract()
         .asString();
 
-    assertTrue(response.contains("Maximum 10 tags are allowed"));
+    then(response).contains("Maximum 10 tags are allowed");
   }
-
-  /* Need to implement DELETE
-  @Test
-  @DisplayName("Should delete the zikresource that must be deleted")
-  void shouldDeleteTheExpectedResource() {
-    given()
-        .when().delete("/zikresources/e337298e-eec1-4443-b0b7-77e9f307dec9")
-        .then().statusCode(204);
-  }
-
-  @Test
-  @DisplayName("Should throw a not found error when trying to delete an unknown zikresource")
-  void shouldNotDeleteTheUnknownResource() {
-    given()
-        .when().delete("/zikresources/56d4ff88-6606-4b48-b430-ab4cf9be061b")
-        .then().statusCode(404);
-  } */
 
 }
