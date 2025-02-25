@@ -8,7 +8,7 @@ jobs:
 
     services:
       firestore-emulator:
-        image: gcr.io/google.com/cloudsdktool/google-cloud-cli:emulators
+        image: mtlynch/firestore-emulator:latest
         ports:
           - 8080:8080
         options: >-
@@ -18,10 +18,6 @@ jobs:
           --health-retries 5
         env:
           FIRESTORE_PROJECT_ID: ${{ env.GOOGLE_ID_PROJECT }}
-        volumes:
-          - ${{ github.workspace }}/emulator-data:/data
-        entrypoint: /bin/sh -c "gcloud beta emulators firestore start --host-port=0.0.0.0:8080 --project=${{ env.GOOGLE_ID_PROJECT }}"
-
 
     steps:
       - uses: actions/checkout@v3
