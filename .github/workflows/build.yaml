@@ -17,7 +17,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         env:
-          FIRESTORE_PROJECT_ID: test-project-id
+          FIRESTORE_PROJECT_ID: ${{ secrets.GOOGLE_ID_PROJECT }}
 
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +31,7 @@ jobs:
       - name: Configure Firestore Emulator environment variables
         run: |
           echo "FIRESTORE_EMULATOR_HOST=localhost:8080" >> $GITHUB_ENV
-          echo "GOOGLE_CLOUD_PROJECT=${{ env.GOOGLE_ID_PROJECT }}" >> $GITHUB_ENV
+          echo "GOOGLE_CLOUD_PROJECT=${{ secrets.GOOGLE_ID_PROJECT }}" >> $GITHUB_ENV
 
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
