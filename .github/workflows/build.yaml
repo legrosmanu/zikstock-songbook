@@ -17,7 +17,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
         env:
-          FIRESTORE_PROJECT_ID: ${{ env.GOOGLE_ID_PROJECT }}
+          FIRESTORE_PROJECT_ID: test-project-id
 
     steps:
       - uses: actions/checkout@v3
