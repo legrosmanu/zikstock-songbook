@@ -53,6 +53,14 @@ class ZikresourceHttpTest {
     }
 
     @Test
+    @DisplayName("Should tell that the zikresource is unknown")
+    void shouldReturnAnUnknownErrorWhenGettingOneZikresource() {
+        given().when().get("/zikresources/9da93f5e-f52d-44c6-bc59-000fabacfc0b")
+                .then()
+                .statusCode(404);
+    }
+
+    @Test
     @DisplayName("If the zikresource contains all the mandatory fields, the zikresource should be created.")
     void shouldCreateZikresource() {
         var body = """

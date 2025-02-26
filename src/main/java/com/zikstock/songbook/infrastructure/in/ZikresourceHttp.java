@@ -5,11 +5,11 @@ import com.zikstock.songbook.domain.in.CrudZikresource;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
@@ -21,8 +21,8 @@ public class ZikresourceHttp {
 
     @GET
     @Path("/{id}")
-    public Optional<Zikresource> getOne(UUID id) throws ExecutionException, InterruptedException {
-        return crudZikresource.findOne(id);
+    public Zikresource getOne(UUID id) throws ExecutionException, InterruptedException {
+        return crudZikresource.findOne(id).orElseThrow(() -> new NotFoundException("zikresource not found"));
     }
 
     @POST
