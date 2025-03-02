@@ -5,14 +5,14 @@ import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.zikstock.songbook.domain.ZikresourceRepositoryException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import static org.assertj.core.api.BDDAssertions.thenExceptionOfType;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class ZikresourceRepositoryFromFirestoreTest {
@@ -25,19 +25,19 @@ public class ZikresourceRepositoryFromFirestoreTest {
         // GIVEN a Firestore exception
         var documentReference = mockDocumentReference();
         var documentSnapshot = mock(ApiFuture.class);
-        BDDMockito.given(documentReference.get()).willReturn(documentSnapshot);
-        BDDMockito.given(documentSnapshot.get()).willThrow(new InterruptedException());
+        given(documentReference.get()).willReturn(documentSnapshot);
+        given(documentSnapshot.get()).willThrow(new InterruptedException());
 
         // WHEN a get one zikresource // THEN a custom exception is thrown
-        Assertions.assertThatThrownBy(() -> repository.findById(UUID.randomUUID()))
-                .isInstanceOf(ZikresourceRepositoryException.class);
+        thenExceptionOfType(ZikresourceRepositoryException.class)
+                        .isThrownBy(() -> repository.findById(UUID.randomUUID()));
     }
 
     private DocumentReference mockDocumentReference() {
         CollectionReference collectionReference = mock(CollectionReference.class);
-        BDDMockito.given(firestore.collection(anyString())).willReturn(collectionReference);
+        given(firestore.collection(anyString())).willReturn(collectionReference);
         var documentReference = mock(DocumentReference.class);
-        BDDMockito.given(collectionReference.document(anyString())).willReturn(documentReference);
+        given(collectionReference.document(anyString())).willReturn(documentReference);
         return documentReference;
     }
 
