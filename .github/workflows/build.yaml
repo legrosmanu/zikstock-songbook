@@ -6,12 +6,32 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      firestore-emulator:
+        image: mtlynch/firestore-emulator:latest
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd "curl -s http://localhost:8080 || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          FIRESTORE_PROJECT_ID: ${{ secrets.GOOGLE_ID_PROJECT }}
+
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 19
+
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
-          java-version: '19'
+          java-version: '21'
           distribution: 'temurin'
+
+      - name: Configure Firestore Emulator environment variables
+        run: |
+          echo "FIRESTORE_EMULATOR_HOST=localhost:8080" >> $GITHUB_ENV
+          echo "GOOGLE_CLOUD_PROJECT=${{ secrets.GOOGLE_ID_PROJECT }}" >> $GITHUB_ENV
+
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
