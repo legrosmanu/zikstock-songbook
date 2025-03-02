@@ -1,15 +1,15 @@
 package com.zikstock.songbook.domain.out;
 
 import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.ZikresourceRepositoryException;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 public interface ZikresourceRepository {
 
-    Optional<Zikresource> findById(UUID zikresourceId) throws ExecutionException, InterruptedException;
+    Optional<Zikresource> findById(UUID zikresourceId) throws ZikresourceRepositoryException;
 
-    Zikresource save(Zikresource zikresource) throws ExecutionException, InterruptedException;
+    Zikresource save(Zikresource zikresource);
 
 }

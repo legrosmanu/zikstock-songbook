@@ -3,9 +3,9 @@ package com.zikstock.songbook.infrastructure.out;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.ZikresourceRepositoryException;
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -15,37 +15,41 @@ import java.util.concurrent.ExecutionException;
 @ApplicationScoped
 public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository {
 
-    @Inject
-    Firestore firestore;
+    private final Firestore firestore;
+
+    public ZikresourceRepositoryFromFirestore(Firestore firestore) {
+        this.firestore = firestore;
+    }
 
     private final String ZIKRESOURCE_COLLECTION_NAME = "zikresources";
 
     @Override
-    public Optional<Zikresource> findById(UUID zikresourceId) throws ExecutionException, InterruptedException {
-        var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
+    public Optional<Zikresource> findById(UUID zikresourceId) throws ZikresourceRepositoryException {
+        try {
+            var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
-        var docRef = collection.document(zikresourceId.toString());
-        var doc = docRef.get().get();
-        var expectedZikresource = mapDocumentToZikresource(doc);
+            var docRef = collection.document(zikresourceId.toString());
+            var doc = docRef.get();
+            var expectedZikresource = mapDocumentToZikresource(doc.get());
 
-        if (expectedZikresource == null) {
-            return Optional.empty();
+            if (expectedZikresource == null) {
+                return Optional.empty();
+            }
+
+            return Optional.of(expectedZikresource);
+        } catch (ExecutionException | InterruptedException ex) {
+            throw new ZikresourceRepositoryException("‼ Error when finding a zikresource by id", ex);
         }
-
-        return Optional.of(expectedZikresource);
-
     }
 
     @Override
-    public Zikresource save(Zikresource zikresource) throws ExecutionException, InterruptedException {
-
+    public Zikresource save(Zikresource zikresource) {
         var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
         var newZikresourceId = UUID.randomUUID();
         var zikResourceToCreate = zikresource.withId(newZikresourceId);
 
-        var command = collection.document(zikResourceToCreate.id().toString()).set(zikResourceToCreate);
-        command.get();
+        collection.document(zikResourceToCreate.id().toString()).set(zikResourceToCreate);
 
         return zikResourceToCreate;
     }
