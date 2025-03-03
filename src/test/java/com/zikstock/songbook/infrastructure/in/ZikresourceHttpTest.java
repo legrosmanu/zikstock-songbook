@@ -146,6 +146,32 @@ class ZikresourceHttpTest {
         then(response).contains("Maximum 10 tags are allowed");
     }
 
+    @Test
+    void should_delete_the_expected_zikresource() throws ExecutionException, InterruptedException {
+        // GIVEN a delete of a known zikresource
+        // WHEN the HTTP endpoint for the delete is called
+        // THEN a 204 is returned
+        given()
+                .when().delete("/zikresources/9da93f5e-f52d-44c6-bc59-299fabacfc6b")
+                .then().statusCode(204);
+
+        // AND one of the two zikresource has been deleted
+        then(countDocumentsInCollection()).isEqualTo(1);
+    }
+
+    @Test
+    void should_not_delete_the_unknown_zikresource() throws ExecutionException, InterruptedException {
+        // GIVEN a delete of an unknown zikresource
+        // WHEN the HTTP endpoint for the delete is called
+        // THEN a 404 is returned
+        given()
+                .when().delete("/zikresources/56d4ff88-6606-4b48-b430-ab4cf9be061b")
+                .then().statusCode(404);
+
+        // AND the both zikresource are still in the DB
+        then(countDocumentsInCollection()).isEqualTo(2);
+    }
+
     private void injectData() throws ExecutionException, InterruptedException {
         var collection = firestore.collection(COLLECTION_NAME);
 
@@ -173,6 +199,11 @@ class ZikresourceHttpTest {
         for (QueryDocumentSnapshot document : documents) {
             document.getReference().delete().get();
         }
+    }
+
+    private long countDocumentsInCollection() throws ExecutionException, InterruptedException {
+        var collection = firestore.collection(COLLECTION_NAME);
+        return collection.count().get().get().getCount();
     }
 
 }
