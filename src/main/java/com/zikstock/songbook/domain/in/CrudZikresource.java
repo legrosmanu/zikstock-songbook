@@ -12,4 +12,6 @@ public interface CrudZikresource {
 
     Zikresource create(Zikresource zikresource);
 
+    void delete(UUID zikresourceId) throws ZikresourceRepositoryException;
+
 }

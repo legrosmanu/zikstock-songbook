@@ -1,14 +1,12 @@
 package com.zikstock.songbook.infrastructure.in;
 
 import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.ZikresourceNotFoundException;
 import com.zikstock.songbook.domain.ZikresourceRepositoryException;
 import com.zikstock.songbook.domain.in.CrudZikresource;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.NotFoundException;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
 import org.jboss.resteasy.reactive.ResponseStatus;
 
 import java.util.UUID;
@@ -27,8 +25,19 @@ public class ZikresourceHttp {
 
     @POST
     @ResponseStatus(201)
-    public Zikresource createZikresource(@Valid Zikresource zikresource) {
+    public Zikresource create(@Valid Zikresource zikresource) {
         return crudZikresource.create(zikresource);
+    }
+
+    @DELETE
+    @Path("/{zikresourceId}")
+    public void delete(UUID zikresourceId) throws ZikresourceRepositoryException {
+        try {
+            crudZikresource.delete(zikresourceId);
+        } catch (ZikresourceNotFoundException e) {
+            throw new NotFoundException();
+        }
+
     }
 
 }

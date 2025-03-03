@@ -54,6 +54,19 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         return zikResourceToCreate;
     }
 
+    @Override
+    public void delete(Zikresource zikresource) throws ZikresourceRepositoryException {
+        try {
+            var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
+
+            var writeResult = collection.document(zikresource.id().toString()).delete();
+
+            writeResult.get();
+        } catch (ExecutionException | InterruptedException ex) {
+            throw new ZikresourceRepositoryException("‼ Error when deleting a zikresource by id", ex);
+        }
+    }
+
     private Zikresource mapDocumentToZikresource(DocumentSnapshot document) {
         if (document == null || !document.exists()) {
             return null;

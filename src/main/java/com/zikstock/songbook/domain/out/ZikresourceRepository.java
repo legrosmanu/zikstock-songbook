@@ -12,4 +12,6 @@ public interface ZikresourceRepository {
 
     Zikresource save(Zikresource zikresource);
 
+    void delete(Zikresource zikresource) throws ZikresourceRepositoryException;
+
 }

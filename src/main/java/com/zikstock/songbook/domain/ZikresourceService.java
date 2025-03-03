@@ -28,4 +28,14 @@ public class ZikresourceService implements CrudZikresource {
         return repository.save(zikresource);
     }
 
+    @Override
+    @Transactional
+    public void delete(UUID zikresourceId) throws ZikresourceRepositoryException {
+        var optOfZikresource = findOne(zikresourceId);
+        if (optOfZikresource.isEmpty()) {
+            throw new ZikresourceNotFoundException("Impossible to delete the unknown resource" + zikresourceId);
+        }
+
+        repository.delete(optOfZikresource.get());
+    }
 }
