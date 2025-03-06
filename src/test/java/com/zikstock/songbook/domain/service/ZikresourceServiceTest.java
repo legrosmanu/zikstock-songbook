@@ -1,4 +1,4 @@
-package com.zikstock.songbook.domain;
+package com.zikstock.songbook.domain.service;
 
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
 import org.junit.jupiter.api.Test;

@@ -1,12 +1,15 @@
-package com.zikstock.songbook.domain;
+package com.zikstock.songbook.domain.service;
 
+import com.zikstock.songbook.domain.Zikresource;
 import com.zikstock.songbook.domain.in.CrudZikresource;
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @ApplicationScoped
 public class ZikresourceService implements CrudZikresource {
@@ -23,6 +26,11 @@ public class ZikresourceService implements CrudZikresource {
     }
 
     @Override
+    public List<Zikresource> findByCreatedBy(String username) throws ExecutionException, InterruptedException {
+        return repository.findByCreatedBy(username);
+    }
+
+    @Override
     @Transactional
     public Zikresource create(Zikresource zikresource) {
         return repository.save(zikresource);
@@ -33,9 +41,9 @@ public class ZikresourceService implements CrudZikresource {
     public void delete(UUID zikresourceId) throws ZikresourceRepositoryException {
         var optOfZikresource = findOne(zikresourceId);
         if (optOfZikresource.isEmpty()) {
-            throw new ZikresourceNotFoundException("Impossible to delete the unknown resource" + zikresourceId);
+            return;
         }
 
-        repository.delete(optOfZikresource.get());
+        repository.delete(zikresourceId);
     }
 }

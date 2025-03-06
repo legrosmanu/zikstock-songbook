@@ -2,6 +2,7 @@ package com.zikstock.songbook.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -24,10 +25,13 @@ public record Zikresource(
         String artist,
 
         @Size(max = 10, message = "Maximum 10 tags are allowed.")
-        List<ZikresourceTag> tags) {
+        List<ZikresourceTag> tags,
+
+        @JsonProperty("created-by")
+        String createBy) {
 
     public Zikresource withId(UUID id) {
-        return new Zikresource(id, this.url, this.title, this.artist, this.tags);
+        return new Zikresource(id, this.url, this.title, this.artist, this.tags, this.createBy);
     }
 
 }
