@@ -6,7 +6,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.zikstock.songbook.domain.Zikresource;
-import com.zikstock.songbook.domain.ZikresourceRepositoryException;
+import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -53,10 +53,12 @@ public class ZikresourceRepositoryFromFirestoreTest {
     @Test
     void should_return_custom_exception_when_error_on_deleting_one_zikresource() throws ExecutionException, InterruptedException {
         // GIVEN a known zikresource
-        var zikresource =  new Zikresource(UUID.randomUUID(),
+        var zikresourceId = UUID.randomUUID();
+        var zikresource =  new Zikresource(zikresourceId,
                 "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
                 "Sober",
                 "Tool",
+                null,
                 null);
         // AND a Firestore exception during the deletion
         var documentReference = mockDocumentReference();
@@ -66,7 +68,7 @@ public class ZikresourceRepositoryFromFirestoreTest {
 
         // WHEN a get one zikresource // THEN a custom exception is thrown
         thenExceptionOfType(ZikresourceRepositoryException.class)
-                .isThrownBy(() -> repository.delete(zikresource));
+                .isThrownBy(() -> repository.delete(zikresourceId));
     }
 
     private DocumentReference mockDocumentReference() {

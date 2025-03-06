@@ -1,13 +1,12 @@
 package com.zikstock.songbook.infrastructure.out;
 
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.zikstock.songbook.domain.Zikresource;
-import com.zikstock.songbook.domain.ZikresourceRepositoryException;
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
+import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
 import jakarta.enterprise.context.ApplicationScoped;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -29,17 +28,27 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
             var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
             var docRef = collection.document(zikresourceId.toString());
-            var doc = docRef.get();
-            var expectedZikresource = mapDocumentToZikresource(doc.get());
+            var docAsFuture = docRef.get();
+            var expectedZikresource = docAsFuture.get().toObject(ZikresourceInFirestore.class);
 
             if (expectedZikresource == null) {
                 return Optional.empty();
             }
 
-            return Optional.of(expectedZikresource);
+            return Optional.of(mapToZikresource(expectedZikresource));
         } catch (ExecutionException | InterruptedException ex) {
             throw new ZikresourceRepositoryException("‼ Error when finding a zikresource by id", ex);
         }
+    }
+
+    @Override
+    public List<Zikresource> findByCreatedBy(String username) throws ExecutionException, InterruptedException {
+        var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
+
+        var queryAsFuture = collection.whereEqualTo("created-by", username).get();
+        var zikresourcesInDb = queryAsFuture.get().toObjects(ZikresourceInFirestore.class);
+
+        return zikresourcesInDb.stream().map(this::mapToZikresource).toList();
     }
 
     @Override
@@ -49,17 +58,19 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         var newZikresourceId = UUID.randomUUID();
         var zikResourceToCreate = zikresource.withId(newZikresourceId);
 
-        collection.document(zikResourceToCreate.id().toString()).set(zikResourceToCreate);
+        var zikresourceToCreateInDb = mapToZikresourceInFirestore(zikResourceToCreate);
+
+        collection.document(zikresourceToCreateInDb.id()).set(zikresourceToCreateInDb);
 
         return zikResourceToCreate;
     }
 
     @Override
-    public void delete(Zikresource zikresource) throws ZikresourceRepositoryException {
+    public void delete(UUID zikresourceId) throws ZikresourceRepositoryException {
         try {
             var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
-            var writeResult = collection.document(zikresource.id().toString()).delete();
+            var writeResult = collection.document(zikresourceId.toString()).delete();
 
             writeResult.get();
         } catch (ExecutionException | InterruptedException ex) {
@@ -67,19 +78,29 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         }
     }
 
-    private Zikresource mapDocumentToZikresource(DocumentSnapshot document) {
-        if (document == null || !document.exists()) {
-            return null;
-        }
-
-        var id = UUID.fromString(Objects.requireNonNull(document.getId()));
+    private Zikresource mapToZikresource(ZikresourceInFirestore zikresourceInDb) {
+        if (zikresourceInDb == null) return null;
 
         return new Zikresource(
-                id,
-                document.getString("url"),
-                document.getString("title"),
-                document.getString("artist"),
-                null
+                UUID.fromString(zikresourceInDb.id()),
+                zikresourceInDb.url(),
+                zikresourceInDb.title(),
+                zikresourceInDb.artist(),
+                null,
+                zikresourceInDb.createBy()
+        );
+    }
+
+    private ZikresourceInFirestore mapToZikresourceInFirestore(Zikresource zikresource) {
+        if (zikresource == null) return null;
+
+        return new ZikresourceInFirestore(
+                zikresource.id().toString(),
+                zikresource.url(),
+                zikresource.title(),
+                zikresource.artist(),
+                null,
+                zikresource.createBy()
         );
     }
 }
