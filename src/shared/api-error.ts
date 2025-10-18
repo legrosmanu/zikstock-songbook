@@ -19,7 +19,7 @@ export const isApiError = (error: any): error is ApiError => {
     return typeof error.status === 'number' && typeof error.message === 'string';
 };
 
-export const errorMiddleware = (err: unknown, req: Request, res: Response, next: Function) => {
+export const errorMiddleware = (err: unknown, req: Request, res: Response) => {
     let status = 500;
     let error = null;
     if (err != null) {

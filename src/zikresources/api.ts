@@ -8,8 +8,7 @@ const router: Router = express.Router();
 
 const getZikresources = async function (req: Request, res: Response, next: NextFunction) {
     try {
-        let user: string;
-        user = req.params.userId as string;
+        const user: string = req.params.userId as string;
         if (!user) throw new ZikstockError({status: 400, message: `It is not possible to get the zikresources for {user}`});
 
         logger.debug(`Get zikresources of the user {user}`);

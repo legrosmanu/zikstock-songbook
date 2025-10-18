@@ -25,7 +25,7 @@ Need a bit more time before describing it here ;-)
 
 #### Running the application in dev mode
 
-In progress... but because we use Firestore, the firestore emulator is used for test and dev mode: 
+In progress... but because we use Firestore, the firestore emulator is used for test and dev mode:  
 ```gcloud emulators firestore start```
 
 #### Packaging and running the application
@@ -83,9 +83,9 @@ It looks like:
 }
 ```
 
-#### Create a zikresource (`POST /zikresources`)
+#### Create a zikresource
 
-##### Request
+##### POST /zikresources
 
 Your first usage will be to save in spot4zik a resource. The operation to use is `POST /zikresources`  
 The resource has at least an url, and a title to use it easily. These two fields are the mandatory fields to create a zikresource.
@@ -101,42 +101,42 @@ So, an example of the minimal body of a request could be:
 You can see above in the example of a whole zikresource, you can add other information, like an artist (of a song), and some tags.  
 The tags are here to let you free to add information you need. But you can't add more than 10 tags.
 
-###### Responses
+###### Responses on POST /zikresources
 
 - `201 Created` if everything is ok, and so your zikresource has been created.
 - `400 Bad request` if your request is not correct.
 
-#### Get your zikresources (`GET /zikresources?addedBy={your-username}`)
+#### Get your zikresources
 
-##### Request
+##### GET /zikresources?addedBy={your-username}
 
 After creating some zikresources, you'll want to get them.  
 To get your zikresources, you just have to do a `GET /zikresources?addedBy={your-username}`.
 Of course, you have to replace `you-username` by your zikstock username (which is your email), but you can also get the zikresources of another user for example to see what to learn if you want to play with her/him.
 
-##### Responses
+##### Responses GET /zikresources?addedBy={your-username}
 
 - `200 OK` with the array of the zikresources in the body or an empty array if no zikresource has been found.
 
-#### Get a zikresource (`GET /zikresources/{id}`)
+#### Get a zikresource
 
-##### Request
+##### GET /zikresources/{id}
 
 To get a zikresource, you just have to do a `GET /zikresources/{id}` with the id of the zikresource added when the zikresource has been created.
 
-##### Response
+##### Response on GET /zikresources/{id}
 
 - `200 OK` with the zikresource in the body.
 - `404 Not Found` if the zikresource with this id doesn't exist.
 
-#### Delete a zikresource (`DELETE /zikresources/{id})
+#### Delete a zikresource
 
-##### Request
+##### DELETE /zikresources/{id}
 
 To delete a zikresource, you just have to do a `DELETE /zikresources/{id}` with the id of the zikresource added when the zikresource has been created.  
 You can do it only for a resource you added in zikstock.
 
-##### Response
+##### Response on DELETE /zikresources/{id}
 
 - `204 No Content` if the deleted has worked fine.
 - `403 Forbidden` if you try to delete a zikresource you didn't create.
