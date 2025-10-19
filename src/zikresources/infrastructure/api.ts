@@ -1,8 +1,8 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { logger } from '../shared/logger';
+import { logger } from '../../shared/logger';
 
-import { getZikresourcesOfUser, createZikresource } from './service';
-import { ZikstockError } from '../shared/api-error';
+import { getZikresourcesOfUser, createZikresource } from '../domain/service';
+import { ZikstockError } from '../../shared/api-error';
 
 const router: Router = express.Router();
 

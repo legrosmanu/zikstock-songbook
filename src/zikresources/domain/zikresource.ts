@@ -3,7 +3,7 @@ export interface Tag {
     value: string;
 }
 
-export interface Zikresource {
+export interface ZikResource {
     url: string;
     title: string;
     artist?: string;
