@@ -19,6 +19,7 @@ import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.zikstock.songbook.domain.model.QueryZikResourceException;
 import com.zikstock.songbook.domain.model.ZikResource;
 import com.zikstock.songbook.domain.model.ZikResourceId;
 
@@ -104,7 +105,7 @@ class QueryZikResourceFirestoreRepositoryTest {
         var exception = catchException(() -> repository.findById(zikResourceId));
 
         // THEN - Exception should be thrown
-        assertThat(exception).isInstanceOf(ExecutionException.class);
+        assertThat(exception).isInstanceOf(QueryZikResourceException.class);
     }
 
     @Test
@@ -119,6 +120,6 @@ class QueryZikResourceFirestoreRepositoryTest {
         var exception = catchException(() -> repository.findById(zikResourceId));
 
         // THEN - Exception should be thrown
-        assertThat(exception).isInstanceOf(InterruptedException.class);
+        assertThat(exception).isInstanceOf(QueryZikResourceException.class);
     }
 }
