@@ -1,9 +1,9 @@
 package com.zikstock.songbook.domain;
 
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 
 import com.zikstock.songbook.domain.api.QueryZikResource;
+import com.zikstock.songbook.domain.model.QueryZikResourceException;
 import com.zikstock.songbook.domain.model.ZikResource;
 import com.zikstock.songbook.domain.model.ZikResourceId;
 import com.zikstock.songbook.domain.spi.ZikResourceRepository;
@@ -17,9 +17,12 @@ public class QueryZikResourceService implements QueryZikResource {
     }
 
     @Override
-    public Optional<ZikResource> findById(ZikResourceId id) throws InterruptedException, ExecutionException {
-        return repository.findById(id);
-        // TODO: handle exception properly with logging and custom exception
+    public Optional<ZikResource> findById(ZikResourceId id) throws QueryZikResourceException {
+        try {
+            return repository.findById(id);
+        } catch (Exception e) {
+            throw new QueryZikResourceException("‼️ Failed to query ZikResource", e);
+        }
     }
 
 }
