@@ -18,18 +18,17 @@ public class App {
     private static final Logger logger = Logger.getLogger(App.class.getName());
 
     public static void main(String... args) throws IOException {
-        logger.info("Starting zikstock-songbook application...");
+        logger.info("******** Starting zikstock-songbook application ********");
         var configApp = new ConfigApp();
 
         var projectId = configApp.getGcpProjectId();
+        logger.log(Level.INFO, "******** Starting the Firestore database with the project id {0} ********", projectId);
         var database = initFirestoreDb(projectId);
-
-        logger.log(Level.INFO, "with the project id {0}", projectId);
 
         var zikResourceRepository = new QueryZikResourceFirestoreRepository(database);
         var queryZikResourceService = new QueryZikResourceService(zikResourceRepository);
 
-        logger.fine("Starting http server...");
+        logger.log(Level.INFO, "******** Starting http server with port {0} ********", configApp.getAppPort());
         var httpServerHandler = new HttpServerHandler(configApp.getAppPort());
 
         new QueryZikResourceHttp(httpServerHandler, queryZikResourceService);

@@ -45,7 +45,7 @@ public class HttpServerHandler extends AbstractVerticle {
         server.requestHandler(this.router)
             .listen(port)
             .onSuccess(unused -> {
-                logger.info("HTTP server started on port " + port);
+                logger.info("------ HTTP server started ------");
                 startPromise.complete();
             })
             .onFailure(startPromise::fail);
