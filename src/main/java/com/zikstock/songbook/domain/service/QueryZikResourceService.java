@@ -1,4 +1,4 @@
-package com.zikstock.songbook.domain;
+package com.zikstock.songbook.domain.service;
 
 import java.util.Optional;
 
