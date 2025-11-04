@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
-import com.zikstock.songbook.domain.QueryZikResourceService;
+import com.zikstock.songbook.domain.service.QueryZikResourceService;
 import com.zikstock.songbook.infrastructure.api.QueryZikResourceHttp;
 import com.zikstock.songbook.infrastructure.spi.QueryZikResourceFirestoreRepository;
 

@@ -11,6 +11,8 @@ To be continued...
 
 ## How to test and run it
 
+Zikstock is a Java app, without framework. So, after building it, you'll be able to run a JAR.
+
 ### Environment variables
 
 You'll need these variables (of course, use the values related to your context):  
@@ -31,25 +33,12 @@ TODO
 
 TODO
 
-#### Running the application in dev mode
-
-You can run your application in dev mode that enables live coding using:
-
-```shell script
-./mvnw compile quarkus:dev
-```
-
-Because it is a Quarkus app, testcontainers is used. If you are on macOS, maybe you use Colima or Rancher desktop. 
-In that case, you'll need to check on the testcontainers website to know which environment variables to add on your machine.  
-
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
 #### Packaging and running the application
 
 The application can be packaged using:
 
 ```shell script
-./mvnw package
+mvn package
 ```
 
 TODO
