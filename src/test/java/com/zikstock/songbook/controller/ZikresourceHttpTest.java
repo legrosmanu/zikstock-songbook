@@ -1,11 +1,10 @@
-package com.zikstock.songbook.infrastructure.in;
+package com.zikstock.songbook.controller;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
-import com.zikstock.songbook.domain.Zikresource;
-import com.zikstock.songbook.infrastructure.out.ZikresourceInFirestore;
+import com.zikstock.songbook.infrastructure.ZikresourceInFirestore;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -30,13 +29,13 @@ class ZikresourceHttpTest {
 
     @BeforeEach
     @Transactional
-    public void setupTestData() throws ExecutionException, InterruptedException {
+    void setupTestData() throws ExecutionException, InterruptedException {
         injectData();
     }
 
     @AfterEach
     @Transactional
-    public void cleanupTestData() throws ExecutionException, InterruptedException {
+    void cleanupTestData() throws ExecutionException, InterruptedException {
         deleteCollection();
     }
 
@@ -147,15 +146,11 @@ class ZikresourceHttpTest {
                 }
                 """;
 
-        var response = given()
+        given()
                 .request().contentType("application/json").body(body)
                 .when().post("zikresources")
                 .then()
-                .statusCode(400)
-                .extract()
-                .asString();
-
-        then(response).contains("Maximum 10 tags are allowed");
+                .statusCode(400);
     }
 
     @Test

@@ -1,12 +1,13 @@
-package com.zikstock.songbook.infrastructure.out;
+package com.zikstock.songbook.infrastructure;
 
 import com.google.cloud.firestore.Firestore;
-import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.model.Zikresource;
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
 import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -20,11 +21,12 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         this.firestore = firestore;
     }
 
-    private final String ZIKRESOURCE_COLLECTION_NAME = "zikresources";
+    private static final String ZIKRESOURCE_COLLECTION_NAME = "zikresources";
 
     @Override
     public Optional<Zikresource> findById(UUID zikresourceId) throws ZikresourceRepositoryException {
         try {
+
             var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
             var docRef = collection.document(zikresourceId.toString());
@@ -36,7 +38,11 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
             }
 
             return Optional.of(mapToZikresource(expectedZikresource));
-        } catch (ExecutionException | InterruptedException ex) {
+
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ZikresourceRepositoryException("‼ Error when finding a zikresource by id", ex);
+        } catch (ExecutionException ex) {
             throw new ZikresourceRepositoryException("‼ Error when finding a zikresource by id", ex);
         }
     }
@@ -48,11 +54,15 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
         var queryAsFuture = collection.whereEqualTo("created-by", username).get();
         var zikresourcesInDb = queryAsFuture.get().toObjects(ZikresourceInFirestore.class);
 
-        return zikresourcesInDb.stream().map(this::mapToZikresource).toList();
+        return zikresourcesInDb.stream().filter(Objects::nonNull).map(this::mapToZikresource).toList();
     }
 
     @Override
     public Zikresource save(Zikresource zikresource) {
+        if (zikresource == null) {
+            throw new IllegalArgumentException("zikresource must not be null");
+        }
+
         var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
         var newZikresourceId = UUID.randomUUID();
@@ -68,19 +78,22 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
     @Override
     public void delete(UUID zikresourceId) throws ZikresourceRepositoryException {
         try {
+
             var collection = firestore.collection(ZIKRESOURCE_COLLECTION_NAME);
 
             var writeResult = collection.document(zikresourceId.toString()).delete();
 
             writeResult.get();
-        } catch (ExecutionException | InterruptedException ex) {
+
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new ZikresourceRepositoryException("‼ Error when deleting a zikresource by id", ex);
+        } catch (ExecutionException ex) {
             throw new ZikresourceRepositoryException("‼ Error when deleting a zikresource by id", ex);
         }
     }
 
     private Zikresource mapToZikresource(ZikresourceInFirestore zikresourceInDb) {
-        if (zikresourceInDb == null) return null;
-
         return new Zikresource(
                 UUID.fromString(zikresourceInDb.id()),
                 zikresourceInDb.url(),
@@ -92,8 +105,6 @@ public class ZikresourceRepositoryFromFirestore implements ZikresourceRepository
     }
 
     private ZikresourceInFirestore mapToZikresourceInFirestore(Zikresource zikresource) {
-        if (zikresource == null) return null;
-
         return new ZikresourceInFirestore(
                 zikresource.id().toString(),
                 zikresource.url(),

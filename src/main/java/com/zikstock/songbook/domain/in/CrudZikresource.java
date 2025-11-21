@@ -1,7 +1,8 @@
 package com.zikstock.songbook.domain.in;
 
-import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.model.Zikresource;
 import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public interface CrudZikresource {
 
     List<Zikresource> findByCreatedBy(String username) throws ExecutionException, InterruptedException;
 
-    Zikresource create(Zikresource zikresource);
+    Zikresource create(@Valid Zikresource zikresource);
 
     void delete(UUID zikresourceId) throws ZikresourceRepositoryException;
 

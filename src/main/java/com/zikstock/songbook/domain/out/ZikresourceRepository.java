@@ -1,6 +1,6 @@
 package com.zikstock.songbook.domain.out;
 
-import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.model.Zikresource;
 import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
 
 import java.util.List;
