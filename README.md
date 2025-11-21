@@ -11,7 +11,7 @@ To be continued...
 
 ## How to test and run it
 
-Zikstock is a Java app, without framework. So, after building it, you'll be able to run a JAR.
+Zikstock is a Java app, without framework (just for fun 😁). So, after building it, you'll be able to run a JAR.
 
 ### Environment variables
 
