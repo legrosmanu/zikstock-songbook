@@ -1,11 +1,7 @@
-package com.zikstock.songbook.infrastructure.out;
+package com.zikstock.songbook.infrastructure;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.zikstock.songbook.domain.Zikresource;
+import com.google.cloud.firestore.*;
 import com.zikstock.songbook.domain.service.ZikresourceRepositoryException;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +14,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class ZikresourceRepositoryFromFirestoreTest {
+class ZikresourceRepositoryFromFirestoreTest {
 
     Firestore firestore = mock(Firestore.class);
     ZikresourceRepositoryFromFirestore repository = new ZikresourceRepositoryFromFirestore(firestore);
@@ -54,12 +50,7 @@ public class ZikresourceRepositoryFromFirestoreTest {
     void should_return_custom_exception_when_error_on_deleting_one_zikresource() throws ExecutionException, InterruptedException {
         // GIVEN a known zikresource
         var zikresourceId = UUID.randomUUID();
-        var zikresource =  new Zikresource(zikresourceId,
-                "https://www.songsterr.com/a/wsa/tool-sober-tab-s19923t2",
-                "Sober",
-                "Tool",
-                null,
-                null);
+
         // AND a Firestore exception during the deletion
         var documentReference = mockDocumentReference();
         var writeResult = mock(ApiFuture.class);

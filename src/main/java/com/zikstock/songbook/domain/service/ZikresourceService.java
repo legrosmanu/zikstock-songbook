@@ -1,10 +1,11 @@
 package com.zikstock.songbook.domain.service;
 
-import com.zikstock.songbook.domain.Zikresource;
+import com.zikstock.songbook.domain.model.Zikresource;
 import com.zikstock.songbook.domain.in.CrudZikresource;
 import com.zikstock.songbook.domain.out.ZikresourceRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class ZikresourceService implements CrudZikresource {
 
     @Override
     @Transactional
-    public Zikresource create(Zikresource zikresource) {
+    public Zikresource create(@Valid Zikresource zikresource) {
         return repository.save(zikresource);
     }
 

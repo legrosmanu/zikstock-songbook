@@ -1,4 +1,4 @@
-package com.zikstock.songbook.domain;
+package com.zikstock.songbook.domain.model;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

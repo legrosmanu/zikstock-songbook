@@ -1,16 +1,11 @@
-package com.zikstock.songbook.domain;
+package com.zikstock.songbook.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
 import java.util.UUID;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public record Zikresource(
         UUID id,
 
@@ -27,7 +22,6 @@ public record Zikresource(
         @Size(max = 10, message = "Maximum 10 tags are allowed.")
         List<ZikresourceTag> tags,
 
-        @JsonProperty("created-by")
         String createBy) {
 
     public Zikresource withId(UUID id) {

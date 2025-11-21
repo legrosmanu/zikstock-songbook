@@ -1,4 +1,4 @@
-package com.zikstock.songbook.infrastructure.out;
+package com.zikstock.songbook.infrastructure;
 
 import com.google.cloud.firestore.annotation.PropertyName;
 
