@@ -14,23 +14,23 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-public class HttpServerHandler extends AbstractVerticle {
+public class HttpServerVerticle extends AbstractVerticle {
 
     private HttpServer server;
-    
+
     private final ObjectMapper jsonMapper;
     private final int port;
 
-    private static final Logger logger = Logger.getLogger(HttpServerHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(HttpServerVerticle.class.getName());
     private static final String CONTENT_TYPE_HEADER = "content-type";
     private static final String APPLICATION_JSON = "application/json";
 
-    private Router router;
+    private final Router router;
     public Router getRouter() {
         return router;
     }
 
-    public HttpServerHandler(final int port) {
+    public HttpServerVerticle(final int port) {
         this.router = Router.router(vertx);
         this.jsonMapper = createObjectMapper();
         this.port = port;

@@ -2,7 +2,7 @@ package com.zikstock.songbook.infrastructure.api;
 
 import java.util.UUID;
 
-import com.zikstock.songbook.application.HttpServerHandler;
+import com.zikstock.songbook.application.HttpServerVerticle;
 import com.zikstock.songbook.domain.api.QueryZikResource;
 import com.zikstock.songbook.domain.model.ZikResourceId;
 
@@ -10,10 +10,10 @@ import io.vertx.ext.web.RoutingContext;
 
 public class QueryZikResourceHttp {
 
-    private final HttpServerHandler httpServerHandler;
+    private final HttpServerVerticle httpServerHandler;
     private final QueryZikResource queryZikResource;
 
-    public QueryZikResourceHttp(HttpServerHandler httpServerHandler, QueryZikResource queryZikResource) {
+    public QueryZikResourceHttp(HttpServerVerticle httpServerHandler, QueryZikResource queryZikResource) {
         this.httpServerHandler = httpServerHandler;
         this.queryZikResource = queryZikResource;
         setupRoutes();
