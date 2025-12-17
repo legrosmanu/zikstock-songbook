@@ -19,21 +19,38 @@ public class HttpServerVerticle extends AbstractVerticle {
     private HttpServer server;
 
     private final ObjectMapper jsonMapper;
-    private final int port;
+    private int port;
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
     private static final Logger logger = Logger.getLogger(HttpServerVerticle.class.getName());
     private static final String CONTENT_TYPE_HEADER = "content-type";
     private static final String APPLICATION_JSON = "application/json";
 
+    private static HttpServerVerticle instance;
+
+    public static HttpServerVerticle getInstance() {
+        if (instance == null) {
+            instance = new HttpServerVerticle();
+        }
+        return instance;
+    }
+
     private final Router router;
+
     public Router getRouter() {
         return router;
     }
 
-    public HttpServerVerticle(final int port) {
+    private HttpServerVerticle() {
         this.router = Router.router(vertx);
         this.jsonMapper = createObjectMapper();
-        this.port = port;
     }
 
     @Override
@@ -43,12 +60,12 @@ public class HttpServerVerticle extends AbstractVerticle {
 
         server = vertx.createHttpServer();
         server.requestHandler(this.router)
-            .listen(port)
-            .onSuccess(unused -> {
-                logger.info("------ HTTP server started ------");
-                startPromise.complete();
-            })
-            .onFailure(startPromise::fail);
+                .listen(port)
+                .onSuccess(unused -> {
+                    logger.info("------ HTTP server started ------");
+                    startPromise.complete();
+                })
+                .onFailure(startPromise::fail);
     }
 
     @Override

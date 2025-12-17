@@ -29,7 +29,8 @@ public class App {
         var queryZikResourceService = new QueryZikResourceService(zikResourceRepository);
 
         logger.log(Level.INFO, "******** Starting http server with port {0} ********", configApp.getAppPort());
-        var httpServerHandler = new HttpServerVerticle(configApp.getAppPort());
+        var httpServerHandler = HttpServerVerticle.getInstance();
+        httpServerHandler.setPort(configApp.getAppPort());
 
         new QueryZikResourceHttp(httpServerHandler, queryZikResourceService);
 
